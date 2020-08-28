@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <title>ROSロボットプログラミング</title>
+  </head>
+  <body>
+    <header>
+      <h1>ROSロボットプログラミング</h1>
+      <p>2020年度タイ新卒教育</p>
+    </header>
+    <section>
+
+    <h1 id="ロボットの作り方-移動ロボットの制御とrosによる動作計画実習">ロボットの作り方 ～移動ロボットの制御とROSによる動作計画実習～</h1>
+
+    <h2 id="セミナーに必要な物品の準備">セミナーに必要な物品の準備</h2>
+
+    <p>下記3点を<em style="color: red">必ず</em>持参してください。</p>
+
+    <ul>
+      <li>PC
+        <ul>
+          <li>TeratermとVNC viewerをインストールします</li>
+          <li>インストール方法は以下の<a href="https://bnd-tc.github.io/ros_mobile_robot_rsj_tutorial/index.html#%E4%BA%8B%E5%89%8D%E6%BA%96%E5%82%99">事前準備</a>を参考にしてください</li>
+          <li>USBポートを2つ以上持つタイプか、ポート数が足りない場合はUSBハブをご用意ください</li>
+          <li>LANポートを1つ持つタイプか、ない場合はUSB-LANアダプタをご用意ください</li>
+        </ul>
+      </li>
+      <li>ロボット
+        <ul>
+          <li>Ubuntu Mate、ROS、Arduino IDEをインストール済み</li>
+          <li>インストール方法は以下の<a href="https://bnd-tc.github.io/ros_mobile_robot_rsj_tutorial/index.html#%E4%BA%8B%E5%89%8D%E6%BA%96%E5%82%99">事前準備</a>を参考にしてください</li>
+          <li>USBポートを2つ以上持つタイプか、ポート数が足りない場合はUSBハブをご用意ください</li>
+          <li>LANポートを1つ持つタイプか、ない場合はUSB-LANアダプタをご用意ください</li>
+        </ul>
+      </li>
+      <li>ジョイスティック</li>
+      <li>Webカメラ</li>
+      <li>USB A-miniBケーブル (長さ50cm程度) 2本</li>
+      <li>単三乾電池 4本</li>
+    </ul>
+
+    <p>教材として使うロボットは<a href="http://t-frog.com/products/icart_edu/">Zumo</a>です。PC が載るスペースとしては幅約 32cm 奥行き約 20cm 程度となります。もちろんこの大きさ以上の PC でも構いませんが選定の目安としてください。<a href="https://panasonic.biz/cns/pc/prod/asia/sx/">Lets’ note CF-SX4</a> と Xtion PRO Live を搭載した様子は以下のようになります。</p>
+
+    <p><img src="zumo.png" alt="Zumo"></p>
+
+    <p>不明な点や、事前準備がうまく行かない点については、オーガナイザまでお問い合わせ下さい。</p>
+
+    <h2 id="事前準備">事前準備</h2>
+    <p>10/1に行います</p>
+
+    <ul>
+      <li><a href="linux_install.html">Linuxのインストール（実施済み）</a></li>
+      <li><a href="ros_install.html">ROSのインストール（実施済み）</a></li>
+      <li><a href="ip_address.html">IPアドレスの固定</a></li>
+      <li><a href="linux_basics.html">Linuxの基本操作</a></li>
+      <!-- <li><a href="https://bnd-tc.github.io/ros_mobile_robot_rsj_tutorial/linux_basics.html">Linuxの基本操作</a></li> -->
+    </ul>
+
+    <h2 id="スケジュール">スケジュール</h2>
+
+    <h3 id="1日目1007">1日目（10/7）</h3>
+
+    <table>
+      <tbody>
+        <tr>
+          <td>10:00-12:00</td>
+          <td>開発環境の確認</td>
+        </tr>
+        <tr>
+          <td>12:00-13:00</td>
+          <td>昼休み</td>
+        </tr>
+        <tr>
+          <td>13:00-14:30</td>
+          <td>ROSとは</td>
+        </tr>
+        <tr>
+          <td>14:30-16:00</td>
+          <td>ROSでHello World</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="2日目1008">2日目（10/8）</h3>
+
+    <table>
+      <tbody>
+        <tr>
+          <td>10:00-12:00</td>
+          <td>ROSのプログラムを書く</td>
+        </tr>
+        <tr>
+          <td>12:00-13:00</td>
+          <td>昼休み</td>
+        </tr>
+        <tr>
+          <td>13:00-16:00</td>
+          <td>シミュレータ上のロボットを動かす</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="3日目1014">3日目（10/14）</h3>
+
+    <table>
+      <tbody>
+        <tr>
+          <td>10:00-12:00</td>
+          <td>ジョイスティックを使う</td>
+        </tr>
+        <tr>
+          <td>12:00-13:00</td>
+          <td>昼休み</td>
+        </tr>
+        <tr>
+          <td>13:00-16:00</td>
+          <td>2台のコンピュータを接続する</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="4日目1015">4日目（10/15）</h3>
+
+    <table>
+      <tbody>
+        <tr>
+          <td>10:00-12:00</td>
+          <td>OpenCVライブラリを使う</td>
+        </tr>
+        <tr>
+          <td>12:00-13:00</td>
+          <td>昼休み</td>
+        </tr>
+        <tr>
+          <td>13:00-16:00</td>
+          <td>Webカメラを使う</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="5日目1021">5日目（10/21）</h3>
+
+    <table>
+      <tbody>
+        <tr>
+          <td>10:00-12:00</td>
+          <td>Arduinoを使う</td>
+        </tr>
+        <tr>
+          <td>12:00-13:00</td>
+          <td>昼休み</td>
+        </tr>
+        <tr>
+          <td>13:00-16:00</td>
+          <td>実習1：ロボットの遠隔操作</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="6日目1022">6日目（10/22）</h3>
+
+    <table>
+      <tbody>
+        <tr>
+          <td>10:00-16:00</td>
+          <td>実習1：ロボットの遠隔操作</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="7日目1028">7日目（10/28）</h3>
+
+    <table>
+      <tbody>
+        <tr>
+          <td>10:00-12:00</td>
+          <td>進捗確認</td>
+        </tr>
+        <tr>
+          <td>12:00-13:00</td>
+          <td>昼休み</td>
+        </tr>
+        <tr>
+          <td>13:00-16:00</td>
+          <td>実習2：OpenCVライブラリを使った車線検出</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="8日目1029">8日目（10/29）</h3>
+
+    <table>
+      <tbody>
+        <tr>
+          <td>10:00-16:00</td>
+          <td>実習2：OpenCVライブラリを使った車線検出</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>スケジュールは、演習の進行に応じて変更する場合があります。</p>
+  </body>
+</html>
