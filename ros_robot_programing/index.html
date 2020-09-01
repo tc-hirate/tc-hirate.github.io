@@ -3,56 +3,63 @@
   <head>
     <meta charset="utf-8">
     <title>ROSロボットプログラミング</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <header>
+    <!-- <header>
       <h1>ROSロボットプログラミング</h1>
       <p>2020年度タイ新卒教育</p>
     </header>
+    <section> -->
+
+    <h1>ROSロボットプログラミング</h1>
+    <p>2020年度タイ新卒教育</p>
     <section>
 
-    <h1 id="ロボットの作り方-移動ロボットの制御とrosによる動作計画実習">ロボットの作り方 ～移動ロボットの制御とROSによる動作計画実習～</h1>
+    <p>ROSは・・・・・</p>
 
-    <h2 id="セミナーに必要な物品の準備">セミナーに必要な物品の準備</h2>
-
-    <p>下記3点を<em style="color: red">必ず</em>持参してください。</p>
+    <h2>使用する機器</h2>
 
     <ul>
-      <li>PC
-        <ul>
-          <li>TeratermとVNC viewerをインストールします</li>
-          <li>インストール方法は以下の<a href="https://bnd-tc.github.io/ros_mobile_robot_rsj_tutorial/index.html#%E4%BA%8B%E5%89%8D%E6%BA%96%E5%82%99">事前準備</a>を参考にしてください</li>
-          <li>USBポートを2つ以上持つタイプか、ポート数が足りない場合はUSBハブをご用意ください</li>
-          <li>LANポートを1つ持つタイプか、ない場合はUSB-LANアダプタをご用意ください</li>
-        </ul>
-      </li>
+      <li>PC(Windows 10)</li>
       <li>ロボット
         <ul>
-          <li>Ubuntu Mate、ROS、Arduino IDEをインストール済み</li>
-          <li>インストール方法は以下の<a href="https://bnd-tc.github.io/ros_mobile_robot_rsj_tutorial/index.html#%E4%BA%8B%E5%89%8D%E6%BA%96%E5%82%99">事前準備</a>を参考にしてください</li>
-          <li>USBポートを2つ以上持つタイプか、ポート数が足りない場合はUSBハブをご用意ください</li>
-          <li>LANポートを1つ持つタイプか、ない場合はUSB-LANアダプタをご用意ください</li>
+          <li>Raspberry Pi Model B</li>
+          <li>Arduino Leonard</li>
+          <li>Zumo Shield</li>
         </ul>
       </li>
       <li>ジョイスティック</li>
       <li>Webカメラ</li>
-      <li>USB A-miniBケーブル (長さ50cm程度) 2本</li>
+      <li>USBケーブル ABタイプ</li>
       <li>単三乾電池 4本</li>
     </ul>
 
-    <p>教材として使うロボットは<a href="http://t-frog.com/products/icart_edu/">Zumo</a>です。PC が載るスペースとしては幅約 32cm 奥行き約 20cm 程度となります。もちろんこの大きさ以上の PC でも構いませんが選定の目安としてください。<a href="https://panasonic.biz/cns/pc/prod/asia/sx/">Lets’ note CF-SX4</a> と Xtion PRO Live を搭載した様子は以下のようになります。</p>
-
-    <p><img src="zumo.png" alt="Zumo"></p>
-
-    <p>不明な点や、事前準備がうまく行かない点については、オーガナイザまでお問い合わせ下さい。</p>
+    <p>ロボットは<a href="https://www.physical-computing.jp/product/1302">Zumo</a>を使います。
+      Zumoはコンパクトなロボット用プラットフォームキットで、
+      Raspberry PiとArduinoを使って制御します。</p>
+    <div style="text-align:center">
+      <img src="images/zumo.jpeg" alt="Zumo" width="50%" height="50%">
+    </div>
 
     <h2 id="事前準備">事前準備</h2>
-    <p>10/1に行います</p>
+    <p>10/1に行います。</p>
 
     <ul>
-      <li><a href="linux_install.html">Linuxのインストール（実施済み）</a></li>
-      <li><a href="ros_install.html">ROSのインストール（実施済み）</a></li>
-      <li><a href="ip_address.html">IPアドレスの固定</a></li>
+      <li>PC
+        <ul>
+          <li><a href="teraterm_install.html">Tera Termのインストール</a></li>
+          <li><a href="vncviewer_install.html">VNC Viewerのインストール</a></li>
+        </ul>
+      </li>
+      <li>ロボット
+        <ul>
+          <li><a href="linux_install.html">Linuxのインストール（実施済み）</a></li>
+          <li><a href="ros_install.html">ROSのインストール（実施済み）</a></li>
+          <li><a href="arduino_install.html">Arduino IDEのインストール（実施済み）</a></li>
+          <li><a href="ip_address.html">IPアドレスの固定</a></li>
+        </ul>
+      </li>
       <li><a href="linux_basics.html">Linuxの基本操作</a></li>
       <!-- <li><a href="https://bnd-tc.github.io/ros_mobile_robot_rsj_tutorial/linux_basics.html">Linuxの基本操作</a></li> -->
     </ul>
