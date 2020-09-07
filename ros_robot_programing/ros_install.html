@@ -1,1 +1,116 @@
-ros install
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <title>ROSのインストール</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>ROSのインストール</h1>
+
+    <ul>
+      <li><a href="#sources.listの設定">sources.listの設定</a></li>
+      <li><a href="#鍵の設定">鍵の設定</a></li>
+      <li><a href="#ROSのインストール">ROSのインストール</a></li>
+      <li><a href="#ROSの環境設定">ROSの環境設定</a></li>
+      <li><a href="#rosinstallの準備">rosinstallの準備</a></li>
+      <li><a href="#rosdepの初期化">rosdepの初期化</a></li>
+      <li><a href="#ROSの実行">ROSの実行</a></li>
+    </ul>
+
+    <section>
+
+    <p>Raspberry Piをネットワークに接続した状態にします。次に、ターミナルを1つ起動します。</p>
+
+    <p>以下の手順に従って、コマンドを実行してください。</p>
+
+    <br>
+
+    <h3 id="sources.listの設定">sources.listの設定</h3>
+
+    <p>ターミナルで次のコマンドを実行して、packages.ros.orgからのソフトウェアを受け入れるための設定を行います。</p>
+
+    <pre>$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'</pre>
+
+    <pre>[sudo] password for pi:</pre>
+
+    <br>
+
+    <h3 id="鍵の設定">鍵の設定</h3>
+
+    <pre>$ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654</pre>
+
+    <br>
+
+    <h3 id="ROSのインストール">ROSのインストール</h3>
+
+    <pre>$ sudo apt update</pre>
+    <pre>$ sudo apt install ros-melodic-desktop-full</pre>
+    <pre>Do you want to continue? [Y/n]</pre>
+
+    <br>
+
+    <h3 id="ROSの環境設定">ROSの環境設定</h3>
+
+    <pre>$ echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc</pre>
+    <pre>$source ~/.bashrc</pre>
+
+    <br>
+
+    <h3 id="rosinstallの準備">rosinstallの準備</h3>
+
+    <pre>$ sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential</pre>
+    <pre>[sudo] password for pi:</pre>
+    <pre>Do you want to continue? [Y/n]</pre>
+
+    <br>
+
+    <h3 id="rosdepの初期化">rosdepの初期化</h3>
+
+    <pre>$ sudo apt install python-rosdep</pre>
+    <pre>$ sudo rosdep init</pre>
+    <pre>$ rosdep update</pre>
+
+    <br>
+
+    <h3 id="ROSの実行">ROSの実行</h3>
+
+    <pre>$ roscore</pre>
+
+    <pre>... logging to /home/pi/.ros/log/2219fcc6-f097-11ea-8eef-b827eb56a1bd/roslaunch-htc02-27106.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is &lt;1GB.
+
+started roslaunch server http://htc02:32817/
+ros_comm version 1.14.9
+
+
+SUMMARY
+========
+
+PARAMETERS
+* /rosdistro: melodic
+* /rosversion: 1.14.9
+
+NODES
+
+auto-starting new master
+process[master]: started with pid [27120]
+ROS_MASTER_URI=http://htc02:11311/
+
+setting /run_id to 2219fcc6-f097-11ea-8eef-b827eb56a1bd
+process[rosout-1]: started with pid [27131]
+started core service [/rosout]</pre>
+
+    <p>[Ctrl-c]（「コントロール」キーを押しながら「c」キー）を押して止めましょう。</p>
+
+    <pre>^C[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+done</pre>
+
+    <br>
+
+    <p>詳しいインストール方法は<a href="http://wiki.ros.org/melodic/Installation/Ubuntu">ROS Wiki</a>を見てください。
