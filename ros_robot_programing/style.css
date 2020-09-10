@@ -118,6 +118,10 @@ section {
   margin: 0 0 20px;
 }
 
+small {
+  font-size: 85%;
+}
+
 pre {
   display: block;
   border: 1pt solid #AEBDCC;

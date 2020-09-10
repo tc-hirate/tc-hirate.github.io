@@ -1,1 +1,154 @@
-linux install
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <title>Linuxのインストール</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>Linuxのインストール</h1>
+
+    <p>
+      Ubuntuではaptというコマンドを使ってソフトウェアをインストールします。
+      UbuntuのバージョンとROSのバージョンには1対1の対応関係があり、
+      Ubuntu 18.04の場合はMelodicになります。
+    </p>
+    <p>
+      APT（Advanced Package Tool）とは、
+      Linuxでソフトウェアのインストールや管理、削除に用いられる
+      パッケージ管理システムの一つです。
+      また、それを操作する「コマンド」のことをいいます。
+    </p>
+    <br>
+
+    <ul>
+      <li><a href="#Linuxのダウンロード">Linuxのダウンロード</a></li>
+      <li><a href="#SDカードのフォーマット">SDカードのフォーマット</a></li>
+      <li><a href="#ディスクイメージの書き込み">ディスクイメージの書き込み</a></li>
+      <li><a href="#Linuxの設定">Linuxの設定</a></li>
+    </ul>
+
+    <section>
+
+    <h3 id="Linuxのダウンロード">Linuxのダウンロード</h3>
+    <p>packages.ros.orgからのソフトウェアを受け入れるための設定を行います。</p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_01.png">
+    </div>
+
+    <div style="text-align:center">
+      <img src="images/linux_install_img_02.png">
+    </div>
+
+    <div style="text-align:center">
+      <img src="images/linux_install_img_03.png">
+    </div>
+
+    <div style="text-align:center">
+      <img src="images/linux_install_img_04.png">
+    </div>
+
+    <div style="text-align:center">
+      <img src="images/linux_install_img_04.png">
+    </div>
+
+    <div style="text-align:center">
+      <img src="images/linux_install_img_05.png">
+    </div>
+
+    <div style="text-align:center">
+      <img src="images/linux_install_img_06.png">
+    </div>
+
+    <div style="text-align:center">
+      <img src="images/linux_install_img_06.png">
+    </div>
+
+    <ul>
+      <pre>$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'</pre>
+    </ul>
+    <p>途中で次のように表示されたら、パスワードを入力してください。</p>
+    <ul>
+      <pre>[sudo] password for pi:</pre>
+    </ul>
+    <br>
+
+    <h3 id="SDカードのフォーマット">SDカードのフォーマット</h3>
+    <p>パッケージを認証する鍵の設定を行います。</p>
+
+    <div style="text-align:center">
+      <img src="images/linux_install_img_07.png">
+    </div>
+
+    <div style="text-align:center">
+      <img src="images/linux_install_img_08.png">
+    </div>
+
+    <div style="text-align:center">
+      <img src="images/linux_install_img_09.png">
+    </div>
+
+    <div style="text-align:center">
+      <img src="images/linux_install_img_10.png">
+    </div>
+
+    <ul>
+      <pre>$ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654</pre>
+    </ul>
+    <br>
+
+    <h3 id="ディスクイメージの書き込み">ディスクイメージの書き込み</h3>
+    <p>最初にソフトウェア・パッケージの情報を最新のものにします。</p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_11.png">
+    </div>
+
+    <div style="text-align:center">
+      <img src="images/linux_install_img_12.png">
+    </div>
+
+    <div style="text-align:center">
+      <img src="images/linux_install_img_13.png">
+    </div>
+
+    <div style="text-align:center">
+      <img src="images/linux_install_img_14.png">
+    </div>
+
+    <div style="text-align:center">
+      <img src="images/linux_install_img_15.png">
+    </div>
+
+    <div style="text-align:center">
+      <img src="images/linux_install_img_16.png">
+    </div>
+
+    <ul>
+      <pre>$ sudo apt update</pre>
+    </ul>
+    <p>次にROSをインストールします。</p>
+    <ul>
+      <pre>$ sudo apt install ros-melodic-desktop-full</pre>
+    </ul>
+    <p>途中で次のように表示されたら、そのまま[Enter]を押してください。</p>
+    <ul>
+      <pre>Do you want to continue? [Y/n]</pre>
+    </ul>
+    <br>
+
+    <h3 id="Linuxの設定">Linuxの設定</h3>
+    <p>
+      ROSのソフトウェアを使えるようにするには、
+      「ターミナル」を起動するたびに環境設定を行う必要があります。
+      次のコマンドを実行することで、「ターミナル」起動時に自動的に
+      環境設定が行われるようになります。
+    </p>
+    <ul>
+      <pre>$ echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc</pre>
+    </ul>
+    <ul>
+      <pre>$ source ~/.bashrc</pre>
+    </ul>
+    <br>
+  </body>
+</html>
