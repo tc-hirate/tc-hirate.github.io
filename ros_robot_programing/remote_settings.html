@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <title>リモート環境の設定</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>リモート環境の設定</h1>
+
+    <p>
+      Ubuntuではaptというコマンドを使ってソフトウェアをインストールします。
+      UbuntuのバージョンとROSのバージョンには1対1の対応関係があり、
+      Ubuntu 18.04の場合はMelodicになります。
+    </p>
+    <p>
+      APT（Advanced Package Tool）とは、
+      Linuxでソフトウェアのインストールや管理、削除に用いられる
+      パッケージ管理システムの一つです。
+      また、それを操作する「コマンド」のことをいいます。
+    </p>
+    <br>
+
+    <ul>
+      <li><a href="#SSHのインストール（Raspberry Pi）">SSHのインストール（Raspberry Pi）</a></li>
+      <li><a href="#22番ポートの開放（Raspberry Pi）">22番ポートの開放（Raspberry Pi）</a></li>
+      <li><a href="#Tera Termから接続（PC）">Tera Termから接続（PC）</a></li>
+      <li><a href="#TeraTermからRaspberry Piを終了する">TeraTermからRaspberry Piを終了する</a></li>
+      <li><a href="#VNCサーバのインストール（Raspberry Pi）">VNCサーバのインストール（Raspberry Pi）</a></li>
+      <li><a href="#VNCから接続（PC）">VNCから接続（PC）</a></li>
+    </ul>
+    <section>
+
+    <h3 id="SSHのインストール（Raspberry Pi）">SSHのインストール（Raspberry Pi）</h3>
+    <p>ソフトウェア・パッケージの情報を最新のものにする。</p>
+    <ul>
+      <pre>$ sudo apt update</pre>
+    </ul>
+    <p>openssh-serverをインストール。</p>
+    <ul>
+      <pre>$ sudo apt install openssh-server</pre>
+    </ul>
+    <p>次のように表示されたら、そのまま[Enter]を押す。</p>
+    <ul>
+      <pre>Do you want to continue? [Y/n]</pre>
+    </ul>
+    <br>
+
+    <h3 id="22番ポートの開放（Raspberry Pi）">22番ポートの開放（Raspberry Pi）</h3>
+    <p>
+      Raspberry Pi側の22番ポートが塞がっていると接続できないので、
+      以下のコマンドを実行して、22番ポートを開放する。
+    </p>
+    <ul>
+      <pre>$ sudo ufw allow 2</pre>
+    </ul>
+    <ul>
+      <pre>$ sudo /etc/init.d/ssh restart</pre>
+    </ul>
+    <ul>
+      <pre>$ sudo systemctl enable ssh</pre>
+    </ul>
+    <br>
+
+    <h3 id="Tera Termから接続（PC）">Tera Termから接続（PC）</h3>
+    <p>Tera Termを起動する。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_01.png">
+    </div>
+    <p>「ホスト」と「IPアドレス」を入力して［OK］ボタンをクリック。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_02.png">
+    </div>
+    <p>［続行］ボタンをクリック。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_03.png">
+    </div>
+    <p>「ユーザ名」と「パスフレーズ」を入力して、［OK］ボタンをクリック。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_04.png">
+    </div>
+    <p>接続が完了すると、次のような画面が表示される。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_05.png">
+    </div>
+    <br>
+     
+    <h3 id="TeraTermからRaspberry Piを終了する">TeraTermからRaspberry Piを終了する</h3>
+    <p>シャットダウン</p>
+    <ul>
+      <pre>$ sudo shutdown -h now</pre>
+    </ul>
+    <p>再起動</p>
+    <ul>
+      <pre>$ sudo shutdown -r now</pre>
+    </ul>
+    <br>
+
+    <h3 id="VNCサーバのインストール（Raspberry Pi）">VNCサーバのインストール（Raspberry Pi）</h3>
+    <p>ソフトウェア・パッケージの情報を最新のものにする。</p>
+    <ul>
+      <pre>$ sudo apt update</pre>
+    </ul>
+    <p>VNCサーバーをインストールする。</p>
+    <ul>
+      <pre>$ sudo apt install vnc4server</pre>
+    </ul>
+    <p>次のように表示されたら、そのまま[Enter]を押す。</p>
+    <ul>
+      <pre>Do you want to continue? [Y/n]</pre>
+    </ul>
+    <p>パスワードを設定する。（zumo**、**は各自のZumoの番号）</p>
+    <ul>
+      <pre>$ vncpasswd
+Password:
+Verify:</pre>
+    </ul>
+    <p>VNCサーバーを起動する。（ディスプレイ番号1として）</p>
+    <ul>
+      <pre>$ vncserver :1</pre>
+    </ul>
+    <p>VNCサーバーを停止する。</p>
+    <ul>
+      <pre>$ vncserver -kill :1</pre>
+    </ul>
+    <p>エディタでxstartupを編集する。</p>
+    <ul>
+      <pre>$ nano ~/.vnc/xstartup</pre>
+    </ul>
+    <p>以下の2行を追記する。</p>
+    <ul>
+      <pre>...
+# exec /etc/x11/xinit/xinitrc	この次の行に追加する
+unset DBUS_SESSION_BUS_ADDRESS
+...
+exec /usr/bin/mate-session &	最終行に追加する</pre>
+    </ul>
+    <p>Ctrl + Oで保存、Ctrl + Xでエディタを終了。</p>
+    <br>
+
+    <h3 id="VNCから接続（PC）">VNCから接続（PC）</h3>
+    <p></p>
+    <p>デスクトップにある[VNC-Viewer]のショートカットをダブルクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_06.png">
+    </div>
+    <p>[File]－[New connection]をクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_07.png">
+    </div>
+    <p>「VNC Server」に172.16.21.**:1（**は各自のIPアドレスによる）と入力して、［OK］ボタンをクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_08.png">
+    </div>
+    <p>接続先が追加された。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_09.png">
+    </div>
+    <p>右クリック－[Connect]をクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_10.png">
+    </div>
+    <p>次のウィンドウが出てきたら［Continue］ボタンをクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_11.png">
+    </div>
+    <p>「Password」を入力して、［OK］ボタンをクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_12.png">
+    </div>
+    <p>Windows上にubuntuのデスクトップが表示される。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_13.png">
+    </div>
+
+  </body>
+</html>

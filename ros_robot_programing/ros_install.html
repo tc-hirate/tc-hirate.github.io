@@ -34,33 +34,33 @@
     <section>
 
     <h3 id="sources.listの設定">sources.listの設定</h3>
-    <p>packages.ros.orgからのソフトウェアを受け入れるための設定を行います。</p>
+    <p>packages.ros.orgからのソフトウェアを受け入れるための設定。</p>
     <ul>
       <pre>$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'</pre>
     </ul>
-    <p>途中で次のように表示されたら、パスワードを入力してください。</p>
+    <p>次のように表示されたら、パスワードを入力。</p>
     <ul>
       <pre>[sudo] password for pi:</pre>
     </ul>
     <br>
 
     <h3 id="鍵の設定">鍵の設定</h3>
-    <p>パッケージを認証する鍵の設定を行います。</p>
+    <p>パッケージを認証する鍵の設定。</p>
     <ul>
       <pre>$ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654</pre>
     </ul>
     <br>
 
     <h3 id="ROSのインストール">ROSのインストール</h3>
-    <p>最初にソフトウェア・パッケージの情報を最新のものにします。</p>
+    <p>最初にソフトウェア・パッケージの情報を最新のものにする。</p>
     <ul>
       <pre>$ sudo apt update</pre>
     </ul>
-    <p>次にROSをインストールします。</p>
+    <p>次にROSをインストール。</p>
     <ul>
       <pre>$ sudo apt install ros-melodic-desktop-full</pre>
     </ul>
-    <p>途中で次のように表示されたら、そのまま[Enter]を押してください。</p>
+    <p>次のように表示されたら、そのまま[Enter]を押す。</p>
     <ul>
       <pre>Do you want to continue? [Y/n]</pre>
     </ul>
@@ -69,9 +69,9 @@
     <h3 id="ROSの環境設定">ROSの環境設定</h3>
     <p>
       ROSのソフトウェアを使えるようにするには、
-      「ターミナル」を起動するたびに環境設定を行う必要があります。
+      「ターミナル」を起動するたびに環境設定を行う必要がある。
       次のコマンドを実行することで、「ターミナル」起動時に自動的に
-      環境設定が行われるようになります。
+      環境設定が行われるようになる。
     </p>
     <ul>
       <pre>$ echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc</pre>
@@ -82,41 +82,41 @@
     <br>
 
     <h3 id="rosinstallの準備">rosinstallの準備</h3>
-    <p>rosinstallは複数のソース・ツリーを一括して扱うためのコマンドです。</p>
+    <p>rosinstallは複数のソース・ツリーを一括して扱うためのコマンド。</p>
     <ul>
       <pre>$ sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential</pre>
     </ul>
-    <p>途中で次のように表示されたら、パスワードを入力してください。</p>
+    <p>次のように表示されたら、パスワードを入力。</p>
     <ul>
       <pre>[sudo] password for pi:</pre>
     </ul>
-    <p>途中で次のように表示されたら、そのまま[Enter]を押してください。</p>
+    <p>次のように表示されたら、そのまま[Enter]を押す。</p>
     <ul>
       <pre>Do you want to continue? [Y/n]</pre>
     </ul>
     <br>
 
     <h3 id="rosdepの初期化">rosdepの初期化</h3>
-    <p>rosdepは、自分でROSのパッケージをビルドするときに、依存するライブラリを自動でインストールしてくれるツールです。</p>
+    <p>rosdepは、自分でROSのパッケージをビルドするときに、依存するライブラリを自動でインストールしてくれるツール。</p>
     <ul>
       <pre>$ sudo apt install python-rosdep</pre>
     </ul>
-    <p>rosdepを初期化する。</p>
+    <p>rosdepを初期化。</p>
     <ul>
       <pre>$ sudo rosdep init</pre>
     </ul>
-    <p>rosdepを更新する。</p>
+    <p>rosdepを更新。</p>
     <ul>
       <pre>$ rosdep update</pre>
     </ul>
     <br>
 
     <h3 id="動作確認">動作確認</h3>
-    <p>インストールが終わったら、次のコマンドを実行してください。</p>
+    <p>インストールが終わったら、次のコマンドを実行。</p>
     <ul>
       <pre>$ roscore</pre>
     </ul>
-    <p>次のような表示が出れば成功です。</p>
+    <p>次のような表示が出れば成功。</p>
     <ul>
       <pre>... logging to /home/pi/.ros/log/2219fcc6-f097-11ea-8eef-b827eb56a1bd/roslaunch-htc02-27106.log
 Checking log directory for disk usage. This may take a while.
@@ -146,7 +146,7 @@ started core service [/rosout]</pre>
     </ul>
 
     <p>
-      [Ctrl-c]（[Ctrl]キーを押しながら[c]キー）を押すと、プログラムが終了します。
+      [Ctrl-c]（[Ctrl]キーを押しながら[c]キー）を押すと、プログラムが終了。
     </p>
 
     <ul>

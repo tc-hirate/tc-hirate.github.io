@@ -9,15 +9,11 @@
     <h1>Arduino IDEのインストール</h1>
 
     <p>
-      Ubuntuではaptというコマンドを使ってソフトウェアをインストールします。
-      UbuntuのバージョンとROSのバージョンには1対1の対応関係があり、
-      Ubuntu 18.04の場合はMelodicになります。
-    </p>
-    <p>
-      APT（Advanced Package Tool）とは、
-      Linuxでソフトウェアのインストールや管理、削除に用いられる
-      パッケージ管理システムの一つです。
-      また、それを操作する「コマンド」のことをいいます。
+      Arduino IDEは、Arduinoのプログラム（スケッチ）を書くための
+      ソフトウェアです。
+      Windows / Mac / Linux に対応していて、
+      どのOSでもArduinoを使った開発を始めることができます。
+      今回は、「Linux ARM 32 bits」版を使います。
     </p>
     <br>
 
@@ -30,13 +26,17 @@
     <section>
 
     <h3 id="Arduino IDEのダウンロード">Arduino IDEのダウンロード</h3>
-    <p>https://www.arduino.cc/en/Main/Software</p>
-    <p>Linux ARM 32 bitsをクリック。</p>
+    <p>
+      Arduino IDEを
+      <a href=https://www.arduino.cc/en/Main/Software>公式HP</a>
+      からダウンロード。
+    </p>
+    <p>「Download the Arduino IDE」の「Linux ARM 32 bits」をクリック。</p>
     <div style="text-align:center">
       <img src="images/arduino_install_img_01.png">
     </div>
 
-    <p>JUST DOWNLOADをクリック。</p>
+    <p>「JUST DOWNLOAD」をクリック。</p>
     <div style="text-align:center">
       <img src="images/arduino_install_img_02.png">
     </div>
@@ -47,31 +47,32 @@
     </div>
 
     <p>Downloadsディレクトリにファイルが保存される。</p>
+    <br>
 
     <h3 id="Arduino IDEのインストール">Arduino IDEのインストール</h3>
-    <p>ターミナルを起動して、Downloadsに移動</p>
+    <p>ターミナルを起動して、Downloadsディレクトリに移動。</p>
     <ul>
       <pre>$ cd Downloads/</pre>
     </ul>
 
-    <p>ファイルを確認</p>
+    <p>ダウンロードしたファイルがあるか確認。</p>
     <ul>
       <pre>$ ls
 arduino-1.8.13-linuxarm.tar.xz</pre>
     </ul>
 
-    <p>ファイルを展開</p>
+    <p>ダウンロードしたファイルを展開。</p>
     <ul>
       <pre>$ tar -Jxvf arduino-1.8.13-linuxarm.tar.xz</pre>
     </ul>
 
-    <p>展開したファイルを確認</p>
+    <p>展開したファイルを確認。</p>
     <ul>
       <pre>$ ls
 arduino-1.8.13  arduino-1.8.13-linuxarm.tar.xz</pre>
     </ul>
 
-    <p>展開したファイルを移動。</p>
+    <p>展開したファイルを別のディレクトリに移動。</p>
     <ul>
       <pre>$ sudo mv arduino-1.8.13 /opt/</pre>
     </ul>
@@ -86,7 +87,7 @@ arduino-1.8.13  arduino-1.8.13-linuxarm.tar.xz</pre>
       <pre>$ cd /opt/arduino-1.8.13/</pre>
     </ul>
 
-    <p>ショートカットを作成。</p>
+    <p>次のコマンドを実行して、ショートカットを作成。</p>
     <ul>
       <pre>$ sudo ./install.sh</pre>
     </ul>
@@ -104,22 +105,31 @@ done!</pre>
 
     <h3 id="サンプルプログラムを動かす">サンプルプログラムを動かす</h3>
 
-    <p>Arduino IDEを起動。</p>
+    <p>デスクトップにあるショートカットをダブルクリックしてArduino IDEを起動。</p>
     <div style="text-align:center">
       <img src="images/arduino_install_img_04.png">
     </div>
 
-    <p>サンプルプログラムを開く。</p>
+    <p>
+      [File]-[Examples]-[01.Basics]-[Blink]をクリックして、
+      サンプルプログラムを開く。
+    </p>
     <div style="text-align:center">
       <img src="images/arduino_install_img_05.png">
     </div>
 
-    <p>LEDを点滅させるプログラムが書かれている。</p>
+    <p>
+      LEDを点滅させるプログラムが書かれている。
+      ここで最初に開いたウィンドウは閉じておく。
+    </p>
     <div style="text-align:center">
       <img src="images/arduino_install_img_06.png">
     </div>
 
-    <p>プログラムを保存する。</p>
+    <p>
+      [File]-[Save As]をクリックして、
+      名前を付けてプログラムを保存。
+    </p>
     <div style="text-align:center">
       <img src="images/arduino_install_img_07.png">
     </div>
@@ -129,12 +139,21 @@ done!</pre>
       <img src="images/arduino_install_img_08.png">
     </div>
 
-    <p>BoardとPortを設置する。</p>
+    <p>
+      Raspberry PiとArduinoを接続し、
+      [Tools]からBoardとPortを設置。
+    </p>
+    <ul>
+      <li>Board:"Arduino Uno"</li>
+      <li>Port:"/dev/ttyACM0(Arduino Uno)"</li>
+    </ul>
+
+
     <div style="text-align:center">
       <img src="images/arduino_install_img_09.png">
     </div>
 
-    <p>Uploadボタンを押すと、コンパイルと書き込みをしてくれる。</p>
+    <p>Uploadボタンを押すと、コンパイルと書き込みが行われる。</p>
     <div style="text-align:center">
       <img src="images/arduino_install_img_10.png">
     </div>
@@ -148,36 +167,40 @@ done!</pre>
       can't open device "/dev/ttyACM0"というエラーメッセージが見える。
       次のコマンドを実行してポートを開けるようにする。
     </p>
-    <p>最初にdialoutにユーザーを追加する。</p>
+    <p>dialoutにユーザーを追加。</p>
     <ul>
       <pre>$ sudo usermod -a -G dialout pi</pre>
     </ul>
-    <p>パスワードを入力する。</p>
+    <p>パスワードを入力。</p>
     <ul>
       <pre>[sudo] password for pi:</pre>
     </ul>
-    <p>次にポートの権限を確認する。</p>
+    <p>ポートの権限を確認。</p>
     <ul>
       <pre>$ ls -l /dev/ttyAMA0
 crw-rw---- 1 root dialout 204, 64  9月  7 09:32 /dev/ttyAMA0</pre>
     </ul>
-    <p>権限を追加する。</p>
+    <p>権限を変更。</p>
     <ul>
-      <pre>sudo chmod a+rw /dev/ttyAMA0</pre>
+      <pre>$ sudo chmod a+rw /dev/ttyAMA0</pre>
     </ul>
-    <p>権限が追加された。</p>
+    <p>権限が変更された。</p>
     <ul>
       <pre>$ ls -l /dev/ttyAMA0
 crw-rw-rw- 1 root dialout 204, 64  9月  7 09:32 /dev/ttyAMA0
     </ul>
 
-    <p>今度はうまくいった。</p>
+    <p>ここでRaspberry Piを再起動する。</p>
+    <br>
+    <p>
+      もう一度Arduino IDEを起動してUploadボタンを押すと、
+      今度はコンパイルと書き込みができた。
+    </p>
+
     <div style="text-align:center">
       <img src="images/arduino_install_img_12.png">
     </div>
 
-    <p>Arduinoのボード上にあるLEDが点滅します。</p>
-    <br>
-
+    <p>Arduinoのボード上にあるLEDが点滅していることを確認。</p>
   </body>
 </html>

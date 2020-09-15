@@ -9,15 +9,9 @@
     <h1>Linuxのインストール</h1>
 
     <p>
-      Ubuntuではaptというコマンドを使ってソフトウェアをインストールします。
-      UbuntuのバージョンとROSのバージョンには1対1の対応関係があり、
-      Ubuntu 18.04の場合はMelodicになります。
-    </p>
-    <p>
-      APT（Advanced Package Tool）とは、
-      Linuxでソフトウェアのインストールや管理、削除に用いられる
-      パッケージ管理システムの一つです。
-      また、それを操作する「コマンド」のことをいいます。
+      Linuxはオープンソースのオペレーティングシステム（OS）です。
+      今回は、Raspberry Piで使うことができるUbuntu MATE 18.04の
+      32bit版を使います。
     </p>
     <br>
 
@@ -31,46 +25,48 @@
     <section>
 
     <h3 id="Linuxのダウンロード">Linuxのダウンロード</h3>
-    <p>packages.ros.orgからのソフトウェアを受け入れるための設定を行います。</p>
+    <p>
+      Ubuntu MATE 18.04のディスクイメージを
+      <a href=https://ubuntu-mate.org/download/>公式HP</a>
+      からダウンロード。
+    </p>
+    <p>
+      「Or.... choose a hardware port:」の「Raspberry Pi 32-bit」
+      をクリック。
+    </p>
     <div style="text-align:center">
       <img src="images/linux_install_img_01.png">
     </div>
+    <p>Downloadsディレクトリにファイルが保存される。</p>
+    <br>
 
+    <p>
+      7zipを起動し、Downloadフォルダに移動する。
+      ダウンロードしたファイルを選択して、「展開」ボタンを押す。
+    </p>
     <div style="text-align:center">
       <img src="images/linux_install_img_02.png">
     </div>
 
+    <p>設定はデフォルトのままで、[OK]ボタンを押す。</p>
     <div style="text-align:center">
       <img src="images/linux_install_img_03.png">
     </div>
 
+    <p>解凍されるまで、しばらく待つ。</p>
     <div style="text-align:center">
       <img src="images/linux_install_img_04.png">
     </div>
 
-    <div style="text-align:center">
-      <img src="images/linux_install_img_04.png">
-    </div>
-
+    <p>解凍された。</p>
     <div style="text-align:center">
       <img src="images/linux_install_img_05.png">
     </div>
 
+    <p>エクスプローラでダウンロードフォルダを確認する。</p>
     <div style="text-align:center">
       <img src="images/linux_install_img_06.png">
     </div>
-
-    <div style="text-align:center">
-      <img src="images/linux_install_img_06.png">
-    </div>
-
-    <ul>
-      <pre>$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'</pre>
-    </ul>
-    <p>途中で次のように表示されたら、パスワードを入力してください。</p>
-    <ul>
-      <pre>[sudo] password for pi:</pre>
-    </ul>
     <br>
 
     <h3 id="SDカードのフォーマット">SDカードのフォーマット</h3>
