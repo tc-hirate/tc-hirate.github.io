@@ -58,7 +58,7 @@
     </div>
     <p>以下のコマンドを実行して、22番ポートを開放する。</p>
     <ul>
-      <pre>$ sudo ufw allow 2</pre>
+      <pre>$ sudo ufw allow 22</pre>
     </ul>
     <ul>
       <pre>$ sudo /etc/init.d/ssh restart</pre>
@@ -74,7 +74,7 @@
       ホストキーを手動で生成する。
     </p>
     <ul>
-      <pre>$ sudo ssh-keygen –A</pre>
+      <pre>$ sudo ssh-keygen -A</pre>
     </ul>
     <ul>
       <pre>$ sudo /etc/init.d/ssh restart</pre>
