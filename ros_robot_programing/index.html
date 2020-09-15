@@ -65,6 +65,38 @@
       <!-- <li><a href="https://bnd-tc.github.io/ros_mobile_robot_rsj_tutorial/linux_basics.html">Linuxの基本操作</a></li> -->
     </ul>
 
+    <ul>
+      <pre>void setup() {
+  pinMode(7, OUTPUT);
+  pinMode(8, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(10, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(7, LOW);
+  digitalWrite(8, LOW);
+  analogWrite(9, 50);
+  analogWrite(10, 50);
+  delay(3000);
+
+  analogWrite(9, 0);
+  analogWrite(10, 0);
+  delay(1000);
+
+  digitalWrite(7, HIGH);
+  digitalWrite(8, HIGH);
+  analogWrite(9, 50);
+  analogWrite(10, 50);
+  delay(3000);
+
+  analogWrite(9, 0);
+  analogWrite(10, 0);
+  delay(1000);
+}</pre>
+    </ul>
+
+
     <h2 id="スケジュール">スケジュール</h2>
 
     <h3 id="1日目1007">1日目（10/7）</h3>
