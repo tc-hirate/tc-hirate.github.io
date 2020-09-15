@@ -27,7 +27,7 @@
       <li><a href="#鍵の生成（Raspberry Pi）">鍵の生成（Raspberry Pi）</a></li>
       <li><a href="#Tera Termから接続（PC）">Tera Termから接続（PC）</a></li>
       <li><a href="#TeraTermからRaspberry Piを終了する">TeraTermからRaspberry Piを終了する</a></li>
-      <li><a href="#VNCサーバのインストール（Raspberry Pi）">VNCサーバのインストール（Raspberry Pi）</a></li>
+      <li><a href="#VNC Serverのインストール（Raspberry Pi）">VNC Serverのインストール（Raspberry Pi）</a></li>
       <li><a href="#VNCから接続（PC）">VNCから接続（PC）</a></li>
     </ul>
     <section>
@@ -52,10 +52,11 @@
     <br>
 
     <h3 id="22番ポートの開放（Raspberry Pi）">22番ポートの開放（Raspberry Pi）</h3>
-    <p>
-      Raspberry Pi側の22番ポートが塞がっていると接続できないので、
-      以下のコマンドを実行して、22番ポートを開放する。
-    </p>
+    <p>Raspberry Pi側の22番ポートが塞がっていると接続できない。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_01.png">
+    </div>
+    <p>以下のコマンドを実行して、22番ポートを開放する。</p>
     <ul>
       <pre>$ sudo ufw allow 2</pre>
     </ul>
@@ -82,10 +83,7 @@
 
     <h3 id="Tera Termから接続（PC）">Tera Termから接続（PC）</h3>
     <p>Tera Termを起動する。</p>
-    <div style="text-align:center">
-      <img src="images/remote_settings_img_01.png">
-    </div>
-    <p>「ホスト」と「IPアドレス」を入力して［OK］ボタンをクリック。</p>
+    <p>「ホスト」にIPアドレスを入力して［OK］ボタンをクリック。</p>
     <div style="text-align:center">
       <img src="images/remote_settings_img_02.png">
     </div>
@@ -114,12 +112,16 @@
     </ul>
     <br>
 
-    <h3 id="VNCサーバのインストール（Raspberry Pi）">VNCサーバのインストール（Raspberry Pi）</h3>
+    <h3 id="VNC Serverのインストール（Raspberry Pi）">VNC Serverのインストール（Raspberry Pi）</h3>
     <p>ソフトウェア・パッケージの情報を最新のものにする。</p>
     <ul>
       <pre>$ sudo apt update</pre>
     </ul>
-    <p>VNCサーバーをインストールする。</p>
+    <p>次のように表示されたら、パスワードを入力。</p>
+    <ul>
+      <pre>[sudo] password for pi:</pre>
+    </ul>
+    <p>VNC Serverをインストール。</p>
     <ul>
       <pre>$ sudo apt install vnc4server</pre>
     </ul>
@@ -127,69 +129,63 @@
     <ul>
       <pre>Do you want to continue? [Y/n]</pre>
     </ul>
-    <p>パスワードを設定する。（zumo**、**は各自のZumoの番号）</p>
+    <p>パスワードを設定。（zumo**、**は各自のZumoの番号）</p>
     <ul>
       <pre>$ vncpasswd
 Password:
 Verify:</pre>
     </ul>
-    <p>VNCサーバーを起動する。（ディスプレイ番号1として）</p>
+    <p>VNC Serverを起動。（ディスプレイ番号1として）</p>
     <ul>
       <pre>$ vncserver :1</pre>
     </ul>
-    <p>VNCサーバーを停止する。</p>
+    <p>VNC Serverを停止。</p>
     <ul>
       <pre>$ vncserver -kill :1</pre>
     </ul>
-    <p>エディタでxstartupを編集する。</p>
+    <p>エディタでxstartupを編集。</p>
     <ul>
-      <pre>$ nano ~/.vnc/xstartup</pre>
+      <pre>$ pluma ~/.vnc/xstartup</pre>
     </ul>
-    <p>以下の2行を追記する。</p>
+    <p>以下の2行を追記。</p>
     <ul>
       <pre>...
-# exec /etc/x11/xinit/xinitrc	この次の行に追加する
-unset DBUS_SESSION_BUS_ADDRESS
+# exec /etc/x11/xinit/xinitrc
+unset DBUS_SESSION_BUS_ADDRESS	6行目に追加する
 ...
+x-window-manager &
 exec /usr/bin/mate-session &	最終行に追加する</pre>
     </ul>
-    <p>Ctrl + Oで保存、Ctrl + Xでエディタを終了。</p>
+    <p>保存して、エディタを終了。</p>
     <br>
 
     <h3 id="VNCから接続（PC）">VNCから接続（PC）</h3>
     <p></p>
-    <p>デスクトップにある[VNC-Viewer]のショートカットをダブルクリックする。</p>
+    <p>VNC Viewerを起動。</p>
     <div style="text-align:center">
       <img src="images/remote_settings_img_06.png">
     </div>
-    <p>[File]－[New connection]をクリックする。</p>
+    <p>[File]－[New connection]をクリック。</p>
     <div style="text-align:center">
       <img src="images/remote_settings_img_07.png">
     </div>
-    <p>「VNC Server」に172.16.21.**:1（**は各自のIPアドレスによる）と入力して、［OK］ボタンをクリックする。</p>
+    <p>
+      「VNC Server」に172.16.21.**:1（**は各自のIPアドレスによる）と入力して、
+      ［OK］ボタンをクリック。
+    </p>
     <div style="text-align:center">
       <img src="images/remote_settings_img_08.png">
     </div>
     <p>接続先が追加された。</p>
+    <p>右クリック－[Connect]をクリック。</p>
+    <p>次のウィンドウが出てきたら［Continue］ボタンをクリック。</p>
     <div style="text-align:center">
       <img src="images/remote_settings_img_09.png">
     </div>
-    <p>右クリック－[Connect]をクリックする。</p>
+    <p>「Password」を入力して、［OK］ボタンをクリック。</p>
     <div style="text-align:center">
       <img src="images/remote_settings_img_10.png">
     </div>
-    <p>次のウィンドウが出てきたら［Continue］ボタンをクリックする。</p>
-    <div style="text-align:center">
-      <img src="images/remote_settings_img_11.png">
-    </div>
-    <p>「Password」を入力して、［OK］ボタンをクリックする。</p>
-    <div style="text-align:center">
-      <img src="images/remote_settings_img_12.png">
-    </div>
     <p>Windows上にubuntuのデスクトップが表示される。</p>
-    <div style="text-align:center">
-      <img src="images/remote_settings_img_13.png">
-    </div>
-
   </body>
 </html>
