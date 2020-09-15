@@ -24,6 +24,7 @@
     <ul>
       <li><a href="#SSHのインストール（Raspberry Pi）">SSHのインストール（Raspberry Pi）</a></li>
       <li><a href="#22番ポートの開放（Raspberry Pi）">22番ポートの開放（Raspberry Pi）</a></li>
+      <li><a href="#鍵の生成（Raspberry Pi）">鍵の生成（Raspberry Pi）</a></li>
       <li><a href="#Tera Termから接続（PC）">Tera Termから接続（PC）</a></li>
       <li><a href="#TeraTermからRaspberry Piを終了する">TeraTermからRaspberry Piを終了する</a></li>
       <li><a href="#VNCサーバのインストール（Raspberry Pi）">VNCサーバのインストール（Raspberry Pi）</a></li>
@@ -35,6 +36,10 @@
     <p>ソフトウェア・パッケージの情報を最新のものにする。</p>
     <ul>
       <pre>$ sudo apt update</pre>
+    </ul>
+    <p>次のように表示されたら、パスワードを入力。</p>
+    <ul>
+      <pre>[sudo] password for pi:</pre>
     </ul>
     <p>openssh-serverをインストール。</p>
     <ul>
@@ -59,6 +64,19 @@
     </ul>
     <ul>
       <pre>$ sudo systemctl enable ssh</pre>
+    </ul>
+    <br>
+
+    <h3 id="鍵の生成（Raspberry Pi）">鍵の生成（Raspberry Pi）</h3>
+    <p>
+      SSHのホストキーが自動生成されていないので、
+      ホストキーを手動で生成する。
+    </p>
+    <ul>
+      <pre>$ sudo ssh-keygen –A</pre>
+    </ul>
+    <ul>
+      <pre>$ sudo /etc/init.d/ssh restart</pre>
     </ul>
     <br>
 
