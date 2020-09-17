@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <title>VNC Serverのインストール</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>VNC Serverのインストール</h1>
+
+    <p>
+      VNCとは、Virtual Network Computingの略で、
+      ネットワークを通じて接続された他のコンピューターの画面を
+      遠隔操作するソフトウェアのことです。
+    </p>
+    <p>
+      PCにVNC Serverを、Raspberry PiにVNC Viewerをインストールして、
+      PCからRaspberry PiをGUI（Graphical User Interface）で
+      操作できるようにします。
+    </p>
+    <br>
+
+    <ul>
+      <li><a href="#VNC Serverのインストール">VNC Serverのインストール</a></li>
+    </ul>
+    <section>
+
+    <h3 id="VNC Serverのインストール">VNC Serverのインストール</h3>
+    <p>ソフトウェア・パッケージの情報を最新のものにする。</p>
+    <ul>
+      <pre>$ sudo apt update</pre>
+    </ul>
+    <p>次のように表示されたら、パスワードを入力。</p>
+    <ul>
+      <pre>[sudo] password for pi:</pre>
+    </ul>
+    <p>VNC Serverをインストール。</p>
+    <ul>
+      <pre>$ sudo apt install vnc4server</pre>
+    </ul>
+    <p>次のように表示されたら、そのまま[Enter]を押す。</p>
+    <ul>
+      <pre>Do you want to continue? [Y/n]</pre>
+    </ul>
+    <p>パスワードを設定。（zumo**、**は各自のZumoの番号）</p>
+    <ul>
+      <pre>$ vncpasswd
+Password:
+Verify:</pre>
+    </ul>
+    <p>VNC Serverを起動。（ディスプレイ番号1として）</p>
+    <ul>
+      <pre>$ vncserver :1</pre>
+    </ul>
+    <p>VNC Serverを停止。</p>
+    <ul>
+      <pre>$ vncserver -kill :1</pre>
+    </ul>
+    <p>エディタでxstartupを編集。</p>
+    <ul>
+      <pre>$ pluma ~/.vnc/xstartup</pre>
+    </ul>
+    <p>以下の2行を追記。</p>
+    <ul>
+      <pre>...
+# exec /etc/x11/xinit/xinitrc
+unset DBUS_SESSION_BUS_ADDRESS	6行目に追加する
+...
+x-window-manager &
+exec /usr/bin/mate-session &	最終行に追加する</pre>
+    </ul>
+    <p>保存して、エディタを終了。</p>
+
+  </body>
+</html>

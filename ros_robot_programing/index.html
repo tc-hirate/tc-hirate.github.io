@@ -25,7 +25,7 @@
       <li>ロボット
         <ul>
           <li>Raspberry Pi Model B</li>
-          <li>Arduino Leonard</li>
+          <li>Arduino Uno</li>
           <li>Zumo Shield</li>
         </ul>
       </li>
@@ -42,9 +42,7 @@
       <img src="images/zumo.jpeg" alt="Zumo" width="50%" height="50%">
     </div>
 
-    <h2 id="事前準備">事前準備</h2>
-    <p>10/1に行います。</p>
-
+    <h2>開発環境の構築</h2>
     <ul>
       <li>PC
         <ul>
@@ -52,116 +50,110 @@
           <li><a href="vncviewer_install.html">VNC Viewerのインストール</a></li>
         </ul>
       </li>
-      <li>ロボット
+      <li>Raspberry Pi
         <ul>
-          <li><a href="linux_install.html">Linuxのインストール（実施済み）</a></li>
-          <li><a href="ros_install.html">ROSのインストール（実施済み）</a></li>
-          <li><a href="arduino_install.html">Arduino IDEのインストール（実施済み）</a></li>
-          <li><a href="ip_address.html">IPアドレスの固定</a></li>
+          <li><a href="linux_install.html">Linuxのインストール</a></li>
+          <li><a href="ros_install.html">ROSのインストール</a></li>
+          <li><a href="arduino_install.html">Arduino IDEのインストール</a></li>
+          <li><a href="ssh_install.html">SSHのインストール</a></li>
+          <li><a href="vncserver_install.html">VNC Serverのインストール</a></li>
         </ul>
       </li>
-      <li><a href="remote_settings.html">リモート環境の設定</a></li>
-      <li><a href="linux_basics.html">Linuxの基本操作</a></li>
       <!-- <li><a href="https://bnd-tc.github.io/ros_mobile_robot_rsj_tutorial/linux_basics.html">Linuxの基本操作</a></li> -->
     </ul>
+    <br>
 
-    <ul>
-      <pre>void setup() {
-  pinMode(7, OUTPUT);
-  pinMode(8, OUTPUT);
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);
-}
+    <h2>スケジュール</h2>
 
-void loop() {
-  digitalWrite(7, LOW);
-  digitalWrite(8, LOW);
-  analogWrite(9, 50);
-  analogWrite(10, 50);
-  delay(3000);
-
-  analogWrite(9, 0);
-  analogWrite(10, 0);
-  delay(1000);
-
-  digitalWrite(7, HIGH);
-  digitalWrite(8, HIGH);
-  analogWrite(9, 50);
-  analogWrite(10, 50);
-  delay(3000);
-
-  analogWrite(9, 0);
-  analogWrite(10, 0);
-  delay(1000);
-}</pre>
-    </ul>
-
-
-    <h2 id="スケジュール">スケジュール</h2>
-
-    <h3 id="1日目1007">1日目（10/7）</h3>
-
+    <h3>1日目（10/1）</h3>
     <table>
       <tbody>
         <tr>
           <td>10:00-12:00</td>
-          <td>開発環境の確認</td>
+          <td><a href="remote_settings.html">リモート環境の設定</a></td>
         </tr>
         <tr>
           <td>12:00-13:00</td>
           <td>昼休み</td>
         </tr>
         <tr>
-          <td>13:00-14:30</td>
+          <td>13:00-15:00</td>
+          <td><a href="linux_basics.html">Linuxの基本操作</a></td>
+        </tr>
+        <tr>
+          <td>15:00-17:00</td>
+          <td><a href="python_basic.html">Pythonの基本</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+
+    <h3>2日目（10/7）</h3>
+    <table>
+      <tbody>
+        <tr>
+          <td>10:00-12:00</td>
           <td>ROSとは</td>
         </tr>
         <tr>
-          <td>14:30-16:00</td>
+          <td>12:00-13:00</td>
+          <td>昼休み</td>
+        </tr>
+        <tr>
+          <td>13:00-15:00</td>
           <td>ROSでHello World</td>
+        </tr>
+        <tr>
+          <td>15:00-17:00</td>
+          <td>ROSのプログラムを書く</td>
         </tr>
       </tbody>
     </table>
+    <br>
 
-    <h3 id="2日目1008">2日目（10/8）</h3>
-
+    <h3>3日目（10/8）</h3>
     <table>
       <tbody>
         <tr>
           <td>10:00-12:00</td>
-          <td>ROSのプログラムを書く</td>
+          <td>シミュレータ上のロボットを動かす</td>
         </tr>
         <tr>
           <td>12:00-13:00</td>
           <td>昼休み</td>
         </tr>
         <tr>
-          <td>13:00-16:00</td>
-          <td>シミュレータ上のロボットを動かす</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h3 id="3日目1014">3日目（10/14）</h3>
-
-    <table>
-      <tbody>
-        <tr>
-          <td>10:00-12:00</td>
+          <td>13:00-15:00</td>
           <td>ジョイスティックを使う</td>
         </tr>
         <tr>
+          <td>15:00-17:00</td>
+          <td>演習1「シミュレータ上のロボットをジョイスティックで動かす」</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+
+    <h3>4日目（10/14）</h3>
+    <table>
+      <tbody>
+        <tr>
+          <td>10:00-12:00</td>
+          <td>2台のコンピュータを接続する</td>
+        </tr>
+        <tr>
           <td>12:00-13:00</td>
           <td>昼休み</td>
         </tr>
         <tr>
-          <td>13:00-16:00</td>
-          <td>2台のコンピュータを接続する</td>
+          <td>13:00-17:00</td>
+          <td>演習2「相手のロボットをジョイスティックで動かす」</td>
         </tr>
       </tbody>
     </table>
+    <br>
 
-    <h3 id="4日目1015">4日目（10/15）</h3>
-
+    <h3>5日目（10/15）</h3>
     <table>
       <tbody>
         <tr>
@@ -173,14 +165,18 @@ void loop() {
           <td>昼休み</td>
         </tr>
         <tr>
-          <td>13:00-16:00</td>
+          <td>13:00-15:00</td>
           <td>Webカメラを使う</td>
+        </tr>
+        <tr>
+          <td>15:00-17:00</td>
+          <td>演習3「OpenCVライブラリを使った顔認識」</td>
         </tr>
       </tbody>
     </table>
+    <br>
 
-    <h3 id="5日目1021">5日目（10/21）</h3>
-
+    <h3>6日目（10/21）</h3>
     <table>
       <tbody>
         <tr>
@@ -192,25 +188,25 @@ void loop() {
           <td>昼休み</td>
         </tr>
         <tr>
-          <td>13:00-16:00</td>
-          <td>実習1：ロボットの遠隔操作</td>
+          <td>13:00-17:00</td>
+          <td>演習4「ロボットの遠隔操作」</td>
         </tr>
       </tbody>
     </table>
+    <br>
 
-    <h3 id="6日目1022">6日目（10/22）</h3>
-
+    <h3>7日目（10/22）</h3>
     <table>
       <tbody>
         <tr>
-          <td>10:00-16:00</td>
-          <td>実習1：ロボットの遠隔操作</td>
+          <td>10:00-17:00</td>
+          <td>演習4「ロボットの遠隔操作」のつづき</td>
         </tr>
       </tbody>
     </table>
+    <br>
 
-    <h3 id="7日目1028">7日目（10/28）</h3>
-
+    <h3>8日目（10/28）</h3>
     <table>
       <tbody>
         <tr>
@@ -222,22 +218,23 @@ void loop() {
           <td>昼休み</td>
         </tr>
         <tr>
-          <td>13:00-16:00</td>
-          <td>実習2：OpenCVライブラリを使った車線検出</td>
+          <td>13:00-17:00</td>
+          <td>演習5「OpenCVライブラリを使った車線検出」</td>
         </tr>
       </tbody>
     </table>
+    <br>
 
-    <h3 id="8日目1029">8日目（10/29）</h3>
-
+    <h3>9日目（10/29）</h3>
     <table>
       <tbody>
         <tr>
-          <td>10:00-16:00</td>
-          <td>実習2：OpenCVライブラリを使った車線検出</td>
+          <td>10:00-17:00</td>
+          <td>演習5「OpenCVライブラリを使った車線検出」のつづき</td>
         </tr>
       </tbody>
     </table>
+    <br>
 
     <p>スケジュールは、演習の進行に応じて変更する場合があります。</p>
   </body>
