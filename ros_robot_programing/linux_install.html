@@ -70,81 +70,84 @@
     <br>
 
     <h3 id="SDカードのフォーマット">SDカードのフォーマット</h3>
-    <p>パッケージを認証する鍵の設定を行います。</p>
-
+    <p>SDカードをSDカードリーダーなどに挿入します。</p>
+    <p>
+      SD Card Formatterを起動し、
+      「カードの選択」が挿入したSDカードになっているか確認してください。
+      「上書きフォーマット」を選択し、[フォーマット]ボタンをクリックする。
+    </p>
     <div style="text-align:center">
       <img src="images/linux_install_img_07.png">
     </div>
 
+    <p>[はい]ボタンをクリックする。</p>
     <div style="text-align:center">
       <img src="images/linux_install_img_08.png">
     </div>
 
+    <p>フォーマット中。</p>
     <div style="text-align:center">
       <img src="images/linux_install_img_09.png">
     </div>
 
+    <p>[OK]ボタンをクリックする。</p>
     <div style="text-align:center">
       <img src="images/linux_install_img_10.png">
     </div>
-
-    <ul>
-      <pre>$ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654</pre>
-    </ul>
     <br>
 
     <h3 id="ディスクイメージの書き込み">ディスクイメージの書き込み</h3>
-    <p>最初にソフトウェア・パッケージの情報を最新のものにします。</p>
+    <p>Win32 Disk Imagerを起動する。</p>
     <div style="text-align:center">
       <img src="images/linux_install_img_11.png">
     </div>
 
+    <p>ディスクイメージを選択する。</p>
     <div style="text-align:center">
       <img src="images/linux_install_img_12.png">
     </div>
 
+    <p>
+      「Device」に挿入したSDカードを選択して、
+      [Write]ボタンをクリックする。
+    </p>
     <div style="text-align:center">
       <img src="images/linux_install_img_13.png">
     </div>
 
+    <p>[Yes]ボタンをクリックする。</p>
     <div style="text-align:center">
       <img src="images/linux_install_img_14.png">
     </div>
 
+    <p>インストール中。</p>
     <div style="text-align:center">
       <img src="images/linux_install_img_15.png">
     </div>
 
+    <p>[OK]ボタンをクリックする。</p>
     <div style="text-align:center">
       <img src="images/linux_install_img_16.png">
     </div>
-
-    <ul>
-      <pre>$ sudo apt update</pre>
-    </ul>
-    <p>次にROSをインストールします。</p>
-    <ul>
-      <pre>$ sudo apt install ros-melodic-desktop-full</pre>
-    </ul>
-    <p>途中で次のように表示されたら、そのまま[Enter]を押してください。</p>
-    <ul>
-      <pre>Do you want to continue? [Y/n]</pre>
-    </ul>
     <br>
 
     <h3 id="Linuxの設定">Linuxの設定</h3>
     <p>
-      ROSのソフトウェアを使えるようにするには、
-      「ターミナル」を起動するたびに環境設定を行う必要があります。
-      次のコマンドを実行することで、「ターミナル」起動時に自動的に
-      環境設定が行われるようになります。
+      SDカードをRaspberry Piに挿入して電源を入れます。
+      ウィザードに従って設定してください。
     </p>
-    <ul>
-      <pre>$ echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc</pre>
-    </ul>
-    <ul>
-      <pre>$ source ~/.bashrc</pre>
-    </ul>
-    <br>
+    <p>今回使用するRaspberry Piは次のように設定してあります。</p>
+    <ol>
+      <li>Language: English</li>
+      <br>
+      <li>Keyboard Layout: English(US)</li>
+      <br>
+      <li>Time Zone: Tokyo</li>
+    </ol>
+    <p>
+      Langageは変更しないでください。
+      Keyboard Layoutは使用するキーボードに合わせて変更してください。
+      Time Zoneはタイ時間に合わせてください。
+    </p>
   </body>
 </html>
