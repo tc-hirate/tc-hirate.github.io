@@ -9,27 +9,101 @@
     <h1>リモート環境の設定</h1>
 
     <p>
-      Ubuntuではaptというコマンドを使ってソフトウェアをインストールします。
-      UbuntuのバージョンとROSのバージョンには1対1の対応関係があり、
-      Ubuntu 18.04の場合はMelodicになります。
-    </p>
-    <p>
-      APT（Advanced Package Tool）とは、
-      Linuxでソフトウェアのインストールや管理、削除に用いられる
-      パッケージ管理システムの一つです。
-      また、それを操作する「コマンド」のことをいいます。
+      PCとRaspberry Piを接続するためのソフトウェアのインストールと
+      設定を行います。
     </p>
     <br>
 
     <ul>
+      <li><a href="#Wi-Fiの設定（Raspberry Pi）">Wi-Fiの設定（Raspberry Pi）</a></li>
+      <li><a href="#IPアドレスの確認（Raspberry Pi）">IPアドレスの確認（Raspberry Pi）</a></li>
+      <li><a href="#デフォルトゲートウェイの確認（Raspberry Pi）">デフォルトゲートウェイの確認（Raspberry Pi）</a></li>
+      <li><a href="#DNSサーバーの確認（Raspberry Pi）">DNSサーバーの確認（Raspberry Pi）</a></li>
       <li><a href="#IPアドレスの固定（Raspberry Pi）">IPアドレスの固定（Raspberry Pi）</a></li>
+      <li><a href="#openssh-serverのインストール（Raspberry Pi）">openssh-serverのインストール（Raspberry Pi）</a></li>
       <li><a href="#Tera Termから接続（PC）">Tera Termから接続（PC）</a></li>
-      <li><a href="#TeraTermからRaspberry Piを終了する">TeraTermからRaspberry Piを終了する</a></li>
+      <li><a href="#TeraTermからRaspberry Piを終了する（PC）">TeraTermからRaspberry Piを終了する（PC）</a></li>
       <li><a href="#VNCから接続（PC）">VNCから接続（PC）</a></li>
     </ul>
     <section>
 
+    <h3 id="Wi-Fiの設定（Raspberry Pi）">Wi-Fiの設定（Raspberry Pi）</h3>
+    <p>デスクトップの右上のWi-Fiマークをクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_a1.png">
+    </div>
+    <p>使用する無線LANのSSIDを選択する。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_a2.png">
+    </div>
+    <p>パスワードを入力して、[Connect]ボタンをクリックする。</p>
+    <br>
+
+    <h3 id="IPアドレスの確認（Raspberry Pi）">IPアドレスの確認（Raspberry Pi）</h3>
+    <p>次のコマンドを実行して、IPアドレスを確認する。</p>
+    <ul>
+      <pre>$ ip address show</pre>
+    </ul>
+    <p>wlan0の下にあるinetの「***.**.**.**」がIPアドレスです。</p>
+    <ul>
+      <pre>---
+3: wlan0: ---
+    link/ether ---
+    inet ***.**.**.**/** ---
+---</pre>
+    </ul>
+    <br>
+
+    <h3 id="デフォルトゲートウェイの確認（Raspberry Pi）">デフォルトゲートウェイの確認（Raspberry Pi）</h3>
+    <p>次のコマンドを実行して、ゲートウェイを確認する。</p>
+    <ul>
+      <pre>$ ip route show</pre>
+    </ul>
+    <p>default viaの「***.**.**.**」がゲートウェイです。</p>
+    <ul>
+      <pre>default via ***.**.**.** dev wlan0 ---
+---</pre>
+    </ul>
+    <br>
+
+    <h3 id="DNSサーバーの確認（Raspberry Pi）">DNSサーバーの確認（Raspberry Pi）</h3>
+    <p>次のコマンドを実行して、DNSサーバーを確認する。</p>
+    <ul>
+      <pre>$ cat /etc/resolv.conf</pre>
+    </ul>
+    <p>nameserverの「***.**.**.**」がDNSサーバーです。</p>
+    <ul>
+      <pre>---
+nameserver ***.**.**.**
+---</pre>
+    </ul>
+    <br>
+
     <h3 id="IPアドレスの固定（Raspberry Pi）">IPアドレスの固定（Raspberry Pi）</h3>
+    <p>。</p>
+    <p>デスクトップの右上のWi-Fiマークをクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_a3.png">
+    </div>
+    <p>Wi-Fi選択して、左下の歯車のボタンをクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_a4.png">
+    </div>
+    <p>[IPv4 Settings]タグを選択し、[Add]ボタンをクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_a5.png">
+    </div>
+    <p>
+      先ほど調べたIPアドレス、ネットマスク（24）、ゲートウェイ、DNSサーバーを
+      入力して、[Save]ボタンをクリックする。
+    </p>
+    <div style="text-align:center">
+      <img src="images/remote_settings_img_a6.png">
+    </div>
+    <p>Raspberry Piを再起動して、IPアドレスが固定されているか確認する。</p>
+    <br>
+
+    <h3 id="openssh-serverのインストール（Raspberry Pi）">openssh-serverのインストール（Raspberry Pi）</h3>
     <p>ソフトウェア・パッケージの情報を最新のものにする。</p>
     <ul>
       <pre>$ sudo apt update</pre>
@@ -68,7 +142,7 @@
     </div>
     <br>
      
-    <h3 id="TeraTermからRaspberry Piを終了する">TeraTermからRaspberry Piを終了する</h3>
+    <h3 id="TeraTermからRaspberry Piを終了する（PC）">TeraTermからRaspberry Piを終了する（PC）</h3>
     <p>シャットダウン</p>
     <ul>
       <pre>$ sudo shutdown -h now</pre>
@@ -81,17 +155,28 @@
 
     <h3 id="VNCから接続（PC）">VNCから接続（PC）</h3>
     <p></p>
+    <p>
+      Tera TermでRaspberry Piと接続してから、
+      Raspberry PiのVNC Serverを起動。
+    </p>
+    <ul>
+      <pre>$ vncserver :1</pre>
+    </ul>
     <p>VNC Viewerを起動。</p>
     <div style="text-align:center">
       <img src="images/remote_settings_img_05.png">
     </div>
-    <p>[File]－[New connection]をクリック。</p>
+    <p>
+      [File]－[New connection]をクリック。
+      （IPアドレスが「172.16.21.5」の場合）
+    </p>
     <div style="text-align:center">
       <img src="images/remote_settings_img_06.png">
     </div>
     <p>
-      「VNC Server」に172.16.21.**:1（**は各自のIPアドレスによる）と入力して、
-      ［OK］ボタンをクリック。
+      「VNC Server」に172.16.21.5:1
+      （接続するRaspberry PiのIPアドレスの後ろに「:1」をつける）
+      と入力して、［OK］ボタンをクリック。
     </p>
     <div style="text-align:center">
       <img src="images/remote_settings_img_07.png">

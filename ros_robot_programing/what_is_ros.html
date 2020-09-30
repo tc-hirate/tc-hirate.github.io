@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <title>ROSとは</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>ROSとは</h1>
+
+    <p>
+      ROS（Robot Operating System）はロボットを扱うための
+      オープンソース・ソフトウェアです。
+      ロボットのソフトウェアの世界では、
+      デファクト・スタンダードとなりつつあります。
+    </p>
+    <br>
+
+    <ul>
+      <li><a href="#ROSの用語">ROSの用語</a></li>
+      <li><a href="#ROSの通信方法">ROSの通信方法</a></li>
+      <li><a href="#ROSを使ってみる">ROSを使ってみる</a></li>
+      <li><a href="#rqt_graphを使って可視化する">rqt_graphを使って可視化する</a></li>
+      <li><a href="#rostopicを使ってみる">rostopicを使ってみる</a></li>
+      <li><a href="#rosserviceを使ってみる">rosserviceを使ってみる</a></li>
+      <li><a href="#rosparamを使ってみる">rosparamを使ってみる</a></li>
+      <li><a href="#ROSの勉強の仕方">ROSの勉強の仕方</a></li>
+    </ul>
+    <section>
+
+    <h3 id="ROSの用語">ROSの用語</h3>
+    <dl>
+      <dt>Node</dt>
+      <dd>ROSでは1つのプロセスをNodeと呼びます。</dd>
+      <br>
+      <dt>Message</dt>
+      <dd>
+        ROSで通信するためには、あらかじめ決められた型が必要です。
+        Messageは、型をもった通信で受け渡しされるデータのことです。
+      </dd>
+      <br>
+      <dt>Master</dt>
+      <dd>
+        ROSのNode同士が通信するために「名前の解決」をするプロセスです。
+        roscoreというコマンドで起動します。
+      </dd>
+      <br>
+    </dl>
+    <br>
+
+    <h3 id="ROSの通信方法">ROSの通信方法</h3>
+    <p>ROSの通信には次の３種類があります。</p>
+    <dl>
+      <dt>Topic</dt>
+      <dd>
+        Topicは、ROSのNodeが送受信するデータです。
+        あるNodeがTopicにPublishしたデータを、
+        別のNodeがSubcribeしてデータを受信します。
+      </dd>
+      <br>
+      <dt>Service</dt>
+      <dd>
+        Topicは、相手を仮定せずに受け渡しする非同期の通信です。
+        相手のNodeに何かしてもらうときに、その成否を呼び出し側で
+        知りたいときにServiceを使います。
+      </dd>
+      <br>
+      <dt>Parameter</dt>
+      <dd>
+        ROSを使うと、同じプログラムでいろいろなロボットを動かせる
+        ようになります。
+        その制御に使うParameterはファイルやネットワークなどから
+        読み出すことができます。
+      </dd>
+      <br>
+    </dl>
+    <p>ROSのコンセプト図を以下に示します。</p>
+    <br>
+
+    <h3 id="ROSを使ってみる">ROSを使ってみる</h3>
+    <p>roscore（Masterを起動するコマンド）を実行しましょう。</p>
+    <ul>
+      <pre>$ roscore</pre>
+    </ul>
+    <p>
+      [Ctrl+Shift+t]でTerminalをもうひとつ立ち上げて、
+      「turtlesim_node」というプログラムを実行します。
+      ここではTab補完を使って入力する方法を説明します。
+    </p>
+    <p>rosrまで入力して［Tab］キーを押すと</p>
+    <ul>
+      <pre>$ rosr [Tab]</pre>
+    </ul>
+    <p>補完されます。</p>
+    <ul>
+      <pre>$ rosrun</pre>
+    </ul>
+    <p>tuと入力して［Tab］キーを押すと</p>
+    <ul>
+      <pre>$ rosrun tu [Tab]</pre>
+    </ul>
+    <p>補完されます。</p>
+    <ul>
+      <pre>$ rosrun turtle</pre>
+    </ul>
+    <p>sと入力して［Tab］キーを押すと</p>
+    <ul>
+      <pre>$ rosrun turtles [Tab]</pre>
+    </ul>
+    <p>補完されます。</p>
+    <ul>
+      <pre>$ rosrun turtlesim</pre>
+    </ul>
+    <p>ここで［Tab］キーを2回押すと</p>
+    <ul>
+      <pre>$ rosrun turtlesim [Tab] [Tab]</pre>
+    </ul>
+    <p>次の候補が表示されます。</p>
+    <ul>
+      <pre>$ rosrun turtlesim
+draw_square  mimic  turtlesim_node  turtle_teleop_key
+$ rosrun turtlesim
+</pre>
+    </ul>
+    <p>tuと入力して［Tab］キーを押すと</p>
+    <ul>
+      <pre>$ rosrun turtlesim tu [Tab]</pre>
+    </ul>
+    <p>補完されます。</p>
+    <ul>
+      <pre>$ rosrun turtlesim turtle</pre>
+    </ul>
+    <p>sと入力して［Tab］キーを押すと</p>
+    <ul>
+      <pre>$ rosrun turtlesim turtles [Tab]</pre>
+    </ul>
+    <p>
+      補完されます。
+      最後に[Enter]を押すと、TurtleSimが立ち上がります。
+    </p>
+    <ul>
+      <pre>$ rosrun turtlesim turtlesim_node [Enter]</pre>
+    </ul>
+    <br>
+    <div style="text-align:center">
+      <img src="images/what_is_ros_img_01.png">
+    </div>
+    <br>
+    <p>
+      ここで、[Ctrl+Shift+t]でTerminalをもうひとつ立ち上げて、
+      次のコマンドを実行し、「turtle_teleop_key」を立ち上げましょう。
+    </p>
+    <ul>
+      <pre>$ rosrun turtlesim turtle_teleop_key</pre>
+    </ul>
+    <p>このTerminal上で「矢印」キーを押すと、亀が動きます。</p>
+    <div style="text-align:center">
+      <img src="images/what_is_ros_img_02.png">
+    </div>
+    <br>
+
+    <h3 id="rqt_graphを使って可視化する">rqt_graphを使って可視化する</h3>
+    <p>
+      「turtlesim_node」と「turtle_teleop_key」はROSのTopicで通信しています。
+      「turtle_teleop_key」がキーボード入力を速度に変換してPublishし、
+      「turtlesim_node」がその速度をSubscribeしています。
+    </p>
+    <p>
+      [Ctrl+Shift+t]で新しいTerminalを立ち上げて、
+      次のコマンドを実行しましょう。
+    </p>
+    <ul>
+      <pre>$ rqt_graph</pre>
+    </ul>
+    <div style="text-align:center">
+      <img src="images/what_is_ros_img_03.png">
+    </div>
+    <p>
+      「teleop_turtle」ノードと「turtlesim」ノードが、
+      Topicである「/turtle1/cmd_vel」でつながっていることが
+      分かります。
+    </p>
+    <br>
+
+    <h3 id="rostopicを使ってみる">rostopicを使ってみる</h3>
+    <p>
+      [Ctrl+Shift+n]で新しいTerminalを立ち上げて、
+      次のコマンドを実行してください。
+    </p>
+    <ul>
+      <pre>$ rostopic echo /turtle1/cmd_vel</pre>
+    </ul>
+    <p>このままでは何も起きません。</p>
+    <p>
+      この状態で、「turtle_teleop_key」のTerminalで矢印を押して、
+      亀を動かしてみましょう。
+      すると、「rostopic」のターミナルにTopicが表示されます。
+    </p>
+    <ul>
+      <pre>linear:
+  x: 2.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+---
+linear:
+  x: -2.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+---
+linear:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: -2.0
+---
+linear:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 2.0
+---</pre>
+    </ul>
+    <p>
+      このデータが亀に与えられた速度を表しています。
+      linearのxが前進速度、angularのzが回転速度です。
+    </p>
+    <p>
+      「rqt_graph」の左上の更新ボタンを押してみてください。
+      グラフが更新され、「/turtle1/cmd_vel」が「rostopic」にも
+      送信されていることが分かります。
+    </p>
+    <div style="text-align:center">
+      <img src="images/what_is_ros_img_04.png">
+    </div>
+    <p>
+      「rostopic」で亀の速度を書き込んでみましょう。
+      そのためには、Topicの型をしらべる必要があります。
+    </p>
+    <p>
+      「rostopic」のTerminalを[Ctrl+c]で終了させ、
+      次のコマンドを実行してください。
+    </p>
+    <ul>
+      <pre>$ rostopic type /turtle1/cmd_vel
+geometry_msgs/Twist</pre>
+    </ul>
+    <p>「geometry_msgs/Twist」が「/turtle1/cmd_vel」の型です</p>
+    <p>
+      それでは、亀を動かしてみましょう。
+      「turtlesim_node」は一旦終了し、再度立ち上げ直してください。
+      次のコマンドを実行すると亀が動きます。
+    </p>
+    <div style="text-align:center">
+      <img src="images/what_is_ros_img_05.png">
+    </div>
+    <p>
+      亀が少しだけ動いて止まりました。
+      2.0が前進速度、1.8が左方向の回転速度です。
+    </p>
+    <p>
+      [Ctrl+c]で「rostopic」を終了してください。
+      今度は、次のコマンドを実行してください。
+      「-r 1」というオプションを付けて、回転速度を-1.8にしました。
+      「-r 1」をつけると1秒間に1回繰り返しデータを送信します。
+    </p>
+    <ul>
+      <pre>$ rostopic pub -r 1 /turtle1/cmd_vel geometry_msgs/Twist -- '[2.0,0.0,0.0]' '[0.0,0.0,-1.8]'</pre>
+    </ul>
+    <div style="text-align:center">
+      <img src="images/what_is_ros_img_06.png">
+    </div>
+    <p>現在登録されている全てのTopicを表示するにはlistを使います。</p>
+    <ul>
+      <pre>$ rostopic list
+/rosout
+/rosout_agg
+/statistics
+/turtle1/cmd_vel
+/turtle1/color_sensor
+/turtle1/pose</pre>
+    </ul>
+    <br>
+
+    <h3 id="rosserviceを使ってみる">rosserviceを使ってみる</h3>
+    <p>現在使用可能なServiceを表示します。</p>
+    <ul>
+      <pre>pi@htc02:~$ rosservice list
+/clear
+/kill
+/reset
+/rosout/get_loggers
+/rosout/set_logger_level
+/rqt_gui_py_node_3740/get_loggers
+/rqt_gui_py_node_3740/set_logger_level
+/spawn
+/teleop_turtle/get_loggers
+/teleop_turtle/set_logger_level
+/turtle1/set_pen
+/turtle1/teleport_absolute
+/turtle1/teleport_relative
+/turtlesim/get_loggers
+/turtlesim/set_logger_level</pre>
+    </ul>
+    <p>
+      次のコマンドを実行すると、どのような引数と返り値を受け取るのか
+      確認できます。
+    </p>
+    <ul>
+      <pre>pi@htc02:~$ rosservice type /spawn | rossrv show
+float32 x
+float32 y
+float32 theta
+string name
+---
+string name</pre>
+    </ul>
+    <p>
+      「---」の上が引数で、下が返り値です。
+      spawnはx、y,thetaの座標にnameという名前の亀を生成（spawn）する
+      Serviceです。
+    </p>
+    <p>rosservice callでServiceを呼び出してみましょう。</p>
+    <ul>
+      <pre>pi@htc02:~$ rosservice call /spawn 2 3 1 ""
+name: "turtle2"</pre>
+    </ul>
+    <p>
+      返り値が表示されます。4つ目の引数を""にしたので、turtle2
+      という名前が自動的に付けられました。
+      「x=2、y=3、theta=1」の位置に亀が出たことを確認しましょう。
+    </p>
+    <div style="text-align:center">
+      <img src="images/what_is_ros_img_07.png">
+    </div>
+    <p>Serviceでは、実行結果が返ってくるまで待つのが特徴です。</p>
+    <br>
+
+    <h3 id="rosparamを使ってみる">rosparamを使ってみる</h3>
+    <p>
+      ROSにはParameterという機能があります。
+      これは、同じプログラムをさまざまなロボットに適用するために
+      細かな「制御パラメータ」を変更するための機能です。
+      ここで、turtlesimのParameterを表示しましょう。
+    </p>
+    <ul>
+      <pre> pi@htc02:~$ rosparam list
+/rosdistro
+/roslaunch/uris/host_htc02__43789
+/rosversion
+/run_id
+/turtlesim/background_b
+/turtlesim/background_g
+/turtlesim/background_r</pre>
+    </ul>
+    <p>Parameterを使って、背景色の青を取得してみましょう。</p>
+    <ul>
+      <pre>pi@htc02:~$ rosparam get /turtlesim/background_b
+255</pre>
+    </ul>
+    <p>次に背景色の赤の値を変更してみましょう。</p>
+    <ul>
+      <pre>pi@htc02:~$ rosparam set /turtlesim/background_r 200
+pi@htc02:~$ rosparam get /turtlesim/background_r
+200</pre>
+    </ul>
+    <p>
+      Parameterは起動時に一回読み取るものなので、
+      通常はsetしたタイミングでは何も起きません。
+      turtlesimでは「/clear」というServiceを呼ぶことで
+      更新することができます。
+    </p>
+    <ul>
+      <pre>pi@htc02:~$ rosservice call /clear</pre>
+    </ul>
+    <div style="text-align:center">
+      <img src="images/what_is_ros_img_08.png">
+    </div>
+    <br>
+
+    <h3 id="ROSの勉強の仕方">ROSの勉強の仕方</h3>
+    <p>
+      ROSのドキュメントは、
+      <a href="http://wiki.ros.org/">Wiki</a>
+      にまとめられています。
+      もし分からないことがあれば、WikiやWebで調べてください。
+    </p>
+
+  </body>
+</html>

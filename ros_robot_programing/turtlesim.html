@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <title>turtlesimをプログラムで動かす</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>turtlesimをプログラムで動かす</h1>
+
+    <p>turtlesimをプログラムで動かしてみましょう。</p>
+    <br>
+
+    <ul>
+      <li><a href="#turtlesimを動かすプログラムを書く">turtlesimを動かすプログラムを書く</a></li>
+      <li><a href="#プログラムを実行する">プログラムを実行する</a></li>
+      <li><a href="#launchファイルを作る">launchファイルを作る</a></li>
+    </ul>
+    <section>
+
+    <h3 id="turtlesimを動かすプログラムを書く">turtlesimを動かすプログラムを書く</h3>
+    <p>「ros_start/scripts/」ディレクトリに移動します。</p>
+    <ul>
+      <pre>$ roscd ros_start/scripts/</pre>
+    </ul>
+    <p>「vel_publisher.py」というファイルを作ります。</p>
+    <ul>
+      <pre>$ pluma vel_publisher.py</pre>
+    </ul>
+    <p>プログラムの内容は以下の通りです。</p>
+    <ul>
+      <pre>#!/usr/bin/env python
+import rospy
+from geometry_msgs.msg import Twist
+
+rospy.init_node('vel_publisher')
+pub = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size=10)
+while not rospy.is_shutdown():
+    vel = Twist()
+    direction = raw_input('f: forward, b: backward, l: left, r:right > ')
+    if 'f' in direction:
+        vel.linear.x = 0.5
+    if 'b' in direction:
+        vel.linear.x = -0.5
+    if 'l' in direction:
+        vel.angular.z = 1.0
+    if 'r' in direction:
+        vel.angular.z = -1.0
+    if 'q' in direction:
+        break
+    print vel
+    pub.publish(vel)</pre>
+    </ul>
+    <p>一行づつ解説します。</p>
+    <ul>
+      <pre>#!/usr/bin/env python</pre>
+    </ul>
+    <p>先頭行にこれを書くと実行ファイルとして扱うことができます。</p>
+    <ul>
+      <pre>import rospy</pre>
+    </ul>
+    <p>rospyをインポートします。</p>
+    <ul>
+      <pre>from geometry_msgs.msg import Twist</pre>
+    </ul>
+    <p>std_msgsというパッケージからStringというMessage型を インポートします。</p>
+    <ul>
+      <pre>rospy.init_node('vel_publisher')</pre>
+    </ul>
+    <p>「vel_publisher」という名前のノードを作ります。</p>
+    <ul>
+      <pre>pub = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size=10)</pre>
+    </ul>
+    <p>
+      「/turtle1/cmd_vel」という名前で、
+      Twist型のTopicにPublishする
+      Publisherを作ります。</p>
+    <ul>
+      <pre>while not rospy.is_shutdown():</pre>
+    </ul>
+    <p>プログラムが[Ctrl-c]で終了するまでの無限ループを定義しています。</p>
+    <ul>
+      <pre>vel = Twist()</pre>
+    </ul>
+    <p>Twistのメッセージをvelとして作っています。</p>
+    <ul>
+      <pre>direction = raw_input('f: forward, b: backward, l: left, r:right > ')</pre>
+    </ul>
+    <p>
+      キーボード入力を受け付けています。
+      raw_inputはPythonの標準関数で、
+      入力があるまでプログラムがブロックされます。
+      Enterが押されると、それまでに入力された文字列が
+      directionに代入されます。
+    </p>
+    <ul>
+      <pre>if 'f' in direction:
+    vel.linear.x = 0.5</pre>
+    </ul>
+    <p>入力された文字列の中に「f」があれば前進します。</p>
+    <ul>
+      <pre>if 'b' in direction:
+    vel.linear.x = -0.5</pre>
+    </ul>
+    <p>入力された文字列の中に「b」があれば更新します。</p>
+    <ul>
+      <pre>if 'l' in direction:
+    vel.angular.z = 1.0</pre>
+    </ul>
+    <p>入力された文字列の中に「l」があれば左回転します。</p>
+    <ul>
+      <pre>if 'r' in direction:
+    vel.angular.z = -1.0</pre>
+    </ul>
+    <p>入力された文字列の中に「r」があれば右回転します。</p>
+    <ul>
+      <pre>if 'q' in direction:
+    break</pre>
+    </ul>
+    <p>入力された文字列の中に「q」があれば無限ループを抜けます。</p>
+    <ul>
+      <pre>print vel</pre>
+    </ul>
+    <p>Terminalにvelを出力します。</p>
+    <ul>
+      <pre>pub.publish(vel)</pre>
+    </ul>
+    <p>「pub」を使って「vel」をPublishします。</p>
+    <br>
+
+    <h3 id="プログラムを実行する">プログラムを実行する</h3>
+
+    <p>vel_publisher.pyを実行可能な状態にします。</p>
+    <ul>
+      <pre>$ chmod 755 vel_publisher.py</pre>
+    </ul>
+    <p>roscoreを実行します。</p>
+    <ul>
+      <pre>$ roscore</pre>
+    </ul>
+    <p>turtlesim_nodeを実行します。</p>
+    <ul>
+      <pre>$ rosrun turtlesim turtlesim_node</pre>
+    </ul>
+    <p>
+      vel_publisher.pyを実行します。
+      f、b、l、rを入力すると亀が動きます。
+      qを入力するとプログラムが終了します。
+    </p>
+    <ul>
+      <pre>$ rosrun ros_start vel_publisher.py
+f: forward, b: backward, l: left, r:right > f
+linear:
+  x: 0.5
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+f: forward, b: backward, l: left, r:right > b
+linear:
+  x: -0.5
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+f: forward, b: backward, l: left, r:right > l
+linear:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 1.0
+f: forward, b: backward, l: left, r:right > r
+linear:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: -1.0
+f: forward, b: backward, l: left, r:right > q</pre>
+    </ul>
+    <br>
+
+    <h3 id="launchファイルを作る">launchファイルを作る</h3>
+    <p>「launch」ディレクトリに移動する。</p>
+    <ul>
+      <pre>$ roscd ros_start/launch/</pre>
+    </ul>
+    <p>「launch」ディレクトリにあるファイルを確認する。</p>
+    <ul>
+      <pre>$ ls
+chat.launch</pre>
+    </ul>
+    <p>chat.launchをコピーして、turtlesim.launchを作る。</p>
+    <ul>
+      <pre>$ cp chat.launch turtlesim.launch</pre>
+    </ul>
+    <p>「launch」ディレクトリにあるファイルをもう一度確認する。</p>
+    <ul>
+      <pre>$ ls
+chat.launch  turtlesim.launch</pre>
+    </ul>
+    <p>turtlesim.launchをエディタで開く。</p>
+    <ul>
+      <pre>$ pluma turtlesim.launch</pre>
+    </ul>
+    <p>内容は以下の通りです。</p>
+    <ul>
+      <pre>&ltlaunch&gt
+  &ltnode pkg="turtlesim" name="turtlesim_node" type="turtlesim_node"/&gt
+  &ltnode pkg="ros_start" name="vel_publisher" type="vel_publisher.py" output="screen"/&gt
+&lt/launch&gt</pre>
+    </ul>
+    <p>roslaunchを実行しましょう。</p>
+    <ul>
+      <pre>$ roslaunch ros_start turtlesim.launch</pre>
+    </ul>
+  </body>
+</html>

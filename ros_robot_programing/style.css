@@ -131,3 +131,31 @@ pre {
   word-break: break-all;
   border-radius: 4px;
 }
+
+dl {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+dt {
+  display: block;
+  color: #444;
+  font-weight: 700;
+}
+
+dd {
+  display: block;
+  margin-inline-start: 40px;
+}
+
+ol li {
+  list-style-type: none;
+  counter-increment: cnt;
+}
+
+ol li::before {
+  content: "(" counter(cnt) ")";
+}
