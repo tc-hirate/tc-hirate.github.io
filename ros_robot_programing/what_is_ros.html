@@ -75,6 +75,9 @@
       <br>
     </dl>
     <p>ROSのコンセプト図を以下に示します。</p>
+    <div style="text-align:center">
+      <img src="images/what_is_ros_img_00.png">
+    </div>
     <br>
 
     <h3 id="ROSを使ってみる">ROSを使ってみる</h3>
@@ -264,6 +267,9 @@ geometry_msgs/Twist</pre>
       「turtlesim_node」は一旦終了し、再度立ち上げ直してください。
       次のコマンドを実行すると亀が動きます。
     </p>
+    <ul>
+      <pre>$ rostopic pub /turtle1/cmd_vel geometry_msgs/Twist -- '[2.0,0.0,0.0]' '[0.0,0.0,1.8]'</pre>
+    </ul>
     <div style="text-align:center">
       <img src="images/what_is_ros_img_05.png">
     </div>
