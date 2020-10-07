@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <title>OpenCVライブラリを使う</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>OpenCVライブラリを使う</h1>
+
+    <p>
+      ROSで「Hello World」という文字列を表示するプログラムを
+      作成し、実行します。
+    </p>
+    <br>
+
+    <ul>
+      <li><a href="#"></a></li>
+      <li><a href="#"></a></li>
+      <li><a href="#"></a></li>
+      <li><a href="#"></a></li>
+      <li><a href="#"></a></li>
+      <li><a href="#"></a></li>
+      <li><a href="#launchファイルを作る">launchファイルを作る</a></li>
+    </ul>
+    <section>
+
+    <h3 id="***">***</h3>
+    <p></p>
+    <br>
+
+    <h3 id="***">***</h3>
+    <p></p>
+    <br>
+
+    <h3 id="***">***</h3>
+    <p></p>
+    <br>
+
+    <h3 id="***">***</h3>
+    <p></p>
+    <br>
+
+
+    <h3 id="launchファイルを作る">launchファイルを作る</h3>
+    <p>
+      roslaunchはroscoreを含む複数のプログラムを
+      一斉に立ち上げるツールです。
+    </p>
+    <p>ここでは、talker.pyとlistener.pyを立ち上げる設定をします。</p>
+    <p>
+      全てのTerminalを閉じてください。
+      新しいTerminalを立ち上げて、「launch」というディレクトリを
+      作ります。
+    </p>
+    <ul>
+      <pre>$ roscd ros_start/
+$ mkdir launch</pre>
+    </ul>
+    <p>ここで、「chat.launch」というファイルを作ります。</p>
+    <ul>
+      <pre>$ pluma launch/chat.launch</pre>
+    </ul>
+    <p>内容は以下の通りです。</p>
+    <ul>
+      <pre>&ltlaunch&gt
+  &ltnode pkg="ros_start" name="talker" type="talker.py"/&gt
+  &ltnode pkg="ros_start" name="listener" type="listener.py"/&gt
+&lt/launch&gt</pre>
+    </ul>
+    <p>roslaunchコマンドを使って実行しましょう。</p>
+    <ul>
+      <pre>$ roslaunch ros_start chat.launch</pre>
+    </ul>
+    <p>
+      実行した結果は以下のようになります。
+      ここでは何も表示されません。
+    </p>
+    <ul>
+      <pre>... logging to /home/pi/.ros/log/85101ca6-fd45-11ea-95eb-b827eb56a1bd/roslaunch-htc02-4730.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is &lt1GB.
+
+started roslaunch server http://htc02:33975/
+
+SUMMARY
+========
+
+PARAMETERS
+ * /rosdistro: melodic
+ * /rosversion: 1.14.9
+
+NODES
+  /
+    listener (ros_start/listener.py)
+    talker (ros_start/talker.py)
+
+auto-starting new master
+process[master]: started with pid [4743]
+ROS_MASTER_URI=http://localhost:11311
+
+setting /run_id to 85101ca6-fd45-11ea-95eb-b827eb56a1bd
+process[rosout-1]: started with pid [4754]
+started core service [/rosout]
+process[talker-2]: started with pid [4757]
+process[listener-3]: started with pid [4762]</pre>
+    </ul>
+    <p>プログラムが動いていることをrostopicで確認します。</p>
+    <ul>
+      <pre>$ rostopic list
+/chatter
+/rosout
+/rosout_agg</pre>
+    </ul>
+    <p>
+      「/chatter」トピックが確認できます。
+      データを見るには、以下のコマンドを実行します。
+    </p>
+    <ul>
+      <pre>pi@htc02:~/catkin_ws/src/ros_start$ rostopic echo /chatter
+data: "hello world 1600828666.51"
+---
+data: "hello world 1600828666.61"
+---
+data: "hello world 1600828666.71"
+---
+data: "hello world 1600828666.81"
+---
+data: "hello world 1600828666.91"
+---
+data: "hello world 1600828667.01"
+---</pre>
+    </ul>
+    <p>rqt_graphでも確認しましょう。</p>
+    <ul>
+      <pre>$ rqt_graph</pre>
+    </ul>
+    <p>
+      talkerノードからlistenerノードへ
+      chatterというMessageが送信されているのが分かります。
+    </p>
+    <div style="text-align:center">
+      <img src="images/talker_listener_img_02.png">
+    </div>
+    <p>もともとのテキスト出力を見たい場合は、</p>
+    <ul>
+      <pre>$ roslaunch ros_start chat.launch --screen
+</pre>
+    </ul>
+    <p>とします。</p>
+    <ul>
+      <pre>[INFO] [1600828809.521178]: I heard hello world 1600828809.52
+[INFO] [1600828809.621170]: I heard hello world 1600828809.62
+[INFO] [1600828809.721110]: I heard hello world 1600828809.72
+[INFO] [1600828809.821179]: I heard hello world 1600828809.82
+[INFO] [1600828809.921120]: I heard hello world 1600828809.92</pre>
+    </ul>
+    <p>chat.launchを以下のように書き換えても出力することができます。</p>
+    <ul>
+      <pre>&ltlaunch&gt
+  &ltnode pkg="ros_start" name="talker" type="talker.py"/&gt
+  &ltnode pkg="ros_start" name="listener" type="listener.py" output="screen"/&gt
+&lt/launch&gt</pre>
+    </ul>
+  </body>
+</html>

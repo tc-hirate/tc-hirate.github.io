@@ -20,36 +20,41 @@
     <section>
 
     <h3 id="ジョイスティックを使う">ジョイスティックを使う</h3>
-    <p></p>
+    <p>
+      ジョイスティックを接続してください。
+      Raspberry Piがジョイスティックを認識しているかは、
+      次のコマンドを実行して調べられます。
+      「/dev/input/js0」のように表示されれば認識されています。
+    </p>
     <ul>
       <pre>$ ls -l /dev/input/js*
 crw-rw----+ 1 root input 13, 0  9月 29 10:00 /dev/input/js0</pre>
     </ul>
-    <p></p>
+    <p>ソフトウェア・パッケージの情報を最新のものにします。</p>
     <ul>
       <pre>$ sudo apt update</pre>
     </ul>
-    <p></p>
+    <p>次のように表示されたら、パスワードを入力します。</p>
     <ul>
       <pre>[sudo] password for pi:</pre>
     </ul>
-    <p></p>
+    <p>ros-melodic-joyをインストールします。</p>
     <ul>
       <pre>$ sudo apt install ros-melodic-joy</pre>
     </ul>
-    <p></p>
+    <p>次のように表示されたら、そのまま[Enter]を押します。</p>
     <ul>
       <pre>Do you want to continue? [Y/n]</pre>
     </ul>
-    <p></p>
+    <p>roscoreを実行します。</p>
     <ul>
       <pre>$ roscore</pre>
     </ul>
-    <p></p>
+    <p>joy_nodeを実行します。</p>
     <ul>
       <pre>$ rosrun joy joy_node</pre>
     </ul>
-    <p></p>
+    <p>Topicを確認します。</p>
     <ul>
       <pre>$ rostopic list
 /diagnostics
@@ -58,7 +63,7 @@ crw-rw----+ 1 root input 13, 0  9月 29 10:00 /dev/input/js0</pre>
 /rosout
 /rosout_agg</pre>
     </ul>
-    <p></p>
+    <p>「/joy」を表示します。</p>
     <ul>
       <pre>$ rostopic echo /joy
 header:
@@ -235,6 +240,7 @@ angular:
         ジョイスティックの方向キーでturtlesimの亀を操縦する
         プログラムを作ってください。
         ファイル名は「turtlesim_joy.py」とします。
+        仕様は「turtle_teleop_key」と同じになるようにすること。
       </li>
       <br>
       <li>
