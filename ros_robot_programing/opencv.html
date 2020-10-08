@@ -9,159 +9,351 @@
     <h1>OpenCVライブラリを使う</h1>
 
     <p>
-      ROSで「Hello World」という文字列を表示するプログラムを
-      作成し、実行します。
+      ROSでOpenCVライブラリを使う方法を説明します。
+      詳しくは、
+      <a href="https://docs.opencv.org/master/d6/d00/tutorial_py_root.html">
+        OpenCV-Python Tutorials</a>
+      などを参照してください。
     </p>
     <br>
 
     <ul>
-      <li><a href="#"></a></li>
-      <li><a href="#"></a></li>
-      <li><a href="#"></a></li>
-      <li><a href="#"></a></li>
-      <li><a href="#"></a></li>
-      <li><a href="#"></a></li>
-      <li><a href="#launchファイルを作る">launchファイルを作る</a></li>
+      <li><a href="#画像を準備する">画像を準備する</a></li>
+      <li><a href="#画像を表示する">画像を表示する</a></li>
+      <li><a href="#円を描く">円を描く</a></li>
+      <li><a href="#画像をグレースケールに変換する">画像をグレースケールに変換する</a></li>
+      <li><a href="#画像を2値化する">画像を2値化する</a></li>
+      <li><a href="#エッジ検出フィルタを使う">エッジ検出フィルタを使う</a></li>
+      <li><a href="#演習3「OpenCVライブラリを使った顔認識」">演習3「OpenCVライブラリを使った顔認識」</a></li>
     </ul>
     <section>
 
-    <h3 id="***">***</h3>
-    <p></p>
-    <br>
-
-    <h3 id="***">***</h3>
-    <p></p>
-    <br>
-
-    <h3 id="***">***</h3>
-    <p></p>
-    <br>
-
-    <h3 id="***">***</h3>
-    <p></p>
-    <br>
-
-
-    <h3 id="launchファイルを作る">launchファイルを作る</h3>
+    <h3 id="画像を準備する">画像を準備する</h3>
     <p>
-      roslaunchはroscoreを含む複数のプログラムを
-      一斉に立ち上げるツールです。
-    </p>
-    <p>ここでは、talker.pyとlistener.pyを立ち上げる設定をします。</p>
-    <p>
-      全てのTerminalを閉じてください。
-      新しいTerminalを立ち上げて、「launch」というディレクトリを
-      作ります。
+      「ros_start」ディレクトリに「img」ディレクトを作り、
+      画像データを保存してください。
     </p>
     <ul>
-      <pre>$ roscd ros_start/
-$ mkdir launch</pre>
+      <li>lena.png</li>
+      <li>sample01.png</li>
+      <li>sample11.png</li>
+      <li>sample12.png</li>
     </ul>
-    <p>ここで、「chat.launch」というファイルを作ります。</p>
+    <br>
+
+    <h3 id="画像を表示する">画像を表示する</h3>
+    <p>
+      rosでOpenCVライブラリを使い、画像を読み込み、表示する方法について
+      説明します。
+    </p>
+    <br>
+    <p>「ros_start」ディレクトリに移動します。</p>
     <ul>
-      <pre>$ pluma launch/chat.launch</pre>
-    </ul>
-    <p>内容は以下の通りです。</p>
-    <ul>
-      <pre>&ltlaunch&gt
-  &ltnode pkg="ros_start" name="talker" type="talker.py"/&gt
-  &ltnode pkg="ros_start" name="listener" type="listener.py"/&gt
-&lt/launch&gt</pre>
-    </ul>
-    <p>roslaunchコマンドを使って実行しましょう。</p>
-    <ul>
-      <pre>$ roslaunch ros_start chat.launch</pre>
+      <pre>$ roscd ros_start/</pre>
     </ul>
     <p>
-      実行した結果は以下のようになります。
-      ここでは何も表示されません。
+      ここで、エディタを使って「cv_sample1.py」というファイルを作ります。
     </p>
     <ul>
-      <pre>... logging to /home/pi/.ros/log/85101ca6-fd45-11ea-95eb-b827eb56a1bd/roslaunch-htc02-4730.log
-Checking log directory for disk usage. This may take a while.
-Press Ctrl-C to interrupt
-Done checking log file disk usage. Usage is &lt1GB.
-
-started roslaunch server http://htc02:33975/
-
-SUMMARY
-========
-
-PARAMETERS
- * /rosdistro: melodic
- * /rosversion: 1.14.9
-
-NODES
-  /
-    listener (ros_start/listener.py)
-    talker (ros_start/talker.py)
-
-auto-starting new master
-process[master]: started with pid [4743]
-ROS_MASTER_URI=http://localhost:11311
-
-setting /run_id to 85101ca6-fd45-11ea-95eb-b827eb56a1bd
-process[rosout-1]: started with pid [4754]
-started core service [/rosout]
-process[talker-2]: started with pid [4757]
-process[listener-3]: started with pid [4762]</pre>
+      <pre>$ pluma cv_sample1.py</pre>
     </ul>
-    <p>プログラムが動いていることをrostopicで確認します。</p>
+    <p>プログラムの内容は以下の通りです。</p>
     <ul>
-      <pre>$ rostopic list
-/chatter
+      <pre>#!/usr/bin/env python
+import rospy
+import cv2
+import numpy as np
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+
+rospy.init_node('cv_sample_node')
+pub = rospy.Publisher("image_data", Image, queue_size=1)
+
+cv_image = cv2.imread('./img/lena.png')
+
+bridge = CvBridge()
+ros_image = bridge.cv2_to_imgmsg(cv_image, "bgr8")
+
+rate = rospy.Rate(1)
+while not rospy.is_shutdown():
+    pub.publish(ros_image)
+    rate.sleep()</pre>
+    </ul>
+    <p>
+      プログラムを実行しましょう。最初にroscoreを実行します。</p>
+    <ul>
+      <pre>$ roscore</pre>
+    </ul>
+    <p>次にcv_sample1.pyを実行します。</p>
+    <ul>
+      <pre>$ rosrun ros_start cv_sample1.py</pre>
+    </ul>
+    <p>rostopicで「/image_data」が出力されているか確認しましょう。</p>
+    <ul>
+      <pre>pi@htc02:~/catkin_ws/src/ros_start/scripts$ rostopic list
+/image_data
 /rosout
 /rosout_agg</pre>
     </ul>
+    <p>画像を見るために「rqt_image_view」というツールを使います。</p>
+    <ul>
+      <pre>$rqt_image_view</pre>
+    </ul>
+    <p>画像が表示されました。</p>
+    <div style="text-align:center">
+      <img src="images/opencv_img_01.png">
+    </div>
+    <br>
+
+    <h3 id="円を描く">円を描く</h3>
+    <p>OpenCVライブラリを使って図形を描くこともできます。</p>
+    <br>
     <p>
-      「/chatter」トピックが確認できます。
-      データを見るには、以下のコマンドを実行します。
+      「cv_sample1.py」をコピーして「cv_sample2.py」というファイルを作ります。
     </p>
     <ul>
-      <pre>pi@htc02:~/catkin_ws/src/ros_start$ rostopic echo /chatter
-data: "hello world 1600828666.51"
----
-data: "hello world 1600828666.61"
----
-data: "hello world 1600828666.71"
----
-data: "hello world 1600828666.81"
----
-data: "hello world 1600828666.91"
----
-data: "hello world 1600828667.01"
----</pre>
-    </ul>
-    <p>rqt_graphでも確認しましょう。</p>
-    <ul>
-      <pre>$ rqt_graph</pre>
+      <pre>$ cp cv_sample1.py cv_sample2.py</pre>
     </ul>
     <p>
-      talkerノードからlistenerノードへ
-      chatterというMessageが送信されているのが分かります。
+      プログラムの内容は以下の通りです。
+      「cv_sample1.py」からの変更箇所は赤文字にしてあります。
+    </p>
+    <ul>
+      <pre>#!/usr/bin/env python
+import rospy
+import cv2
+import numpy as np
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+
+rospy.init_node('cv_sample_node')
+pub = rospy.Publisher("image_data", Image, queue_size=1)
+
+cv_image = cv2.imread('./img/<font color="#ff0000">sample01.png</font>')
+<font color="#ff0000">cv_image = cv2.circle(cv_image, (250, 250), 100, (0, 255, 0), 3)</font>
+
+bridge = CvBridge()
+ros_image = bridge.cv2_to_imgmsg(cv_image, "bgr8")
+
+rate = rospy.Rate(1)
+while not rospy.is_shutdown():
+    pub.publish(ros_image)
+    rate.sleep()</pre>
+    </ul>
+    <p>
+      500ピクセル×500ピクセルの黒色の画像に円を描いています。
+      円は、中心座標が(250,250)、半径が100、色が緑、線の太さが3です。
     </p>
     <div style="text-align:center">
-      <img src="images/talker_listener_img_02.png">
+      <img src="images/opencv_img_02.png">
     </div>
-    <p>もともとのテキスト出力を見たい場合は、</p>
+    <p>
+      OpenCVライブラリを使って線分（cv2.line()）、長方形（cv2.rectangle()）、
+      文字列（cv2.putText）なども描いてみましょう。
+    </p>
+    <br>
+
+    <h3 id="画像をグレースケールに変換する">画像をグレースケールに変換する</h3>
+    <p>OpenCVライブラリを使ってカラー画像をグレースケール画像に変換します。</p>
+    <br>
+    <p>
+      「cv_sample1.py」をコピーして「cv_sample3.py」というファイルを作ります。
+    </p>
     <ul>
-      <pre>$ roslaunch ros_start chat.launch --screen
-</pre>
+      <pre>$ cp cv_sample1.py cv_sample3.py</pre>
     </ul>
-    <p>とします。</p>
+    <p>
+      プログラムの内容は以下の通りです。
+      「cv_sample1.py」からの変更箇所は赤文字にしてあります。
+    </p>
     <ul>
-      <pre>[INFO] [1600828809.521178]: I heard hello world 1600828809.52
-[INFO] [1600828809.621170]: I heard hello world 1600828809.62
-[INFO] [1600828809.721110]: I heard hello world 1600828809.72
-[INFO] [1600828809.821179]: I heard hello world 1600828809.82
-[INFO] [1600828809.921120]: I heard hello world 1600828809.92</pre>
+      <pre>#!/usr/bin/env python
+import rospy
+import cv2
+import numpy as np
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+
+rospy.init_node('cv_sample_node')
+pub = rospy.Publisher("image_data", Image, queue_size=1)
+
+cv_image = cv2.imread('./img/lena.png')
+<font color="#ff0000">cv_gray_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)</font>
+
+bridge = CvBridge()
+ros_image = bridge.cv2_to_imgmsg(<font color="#ff0000">cv_gray_image, "mono8"</font>)
+
+rate = rospy.Rate(1)
+while not rospy.is_shutdown():
+    pub.publish(ros_image)
+    rate.sleep()</pre>
     </ul>
-    <p>chat.launchを以下のように書き換えても出力することができます。</p>
+    <p>グレースケール画像に変換されました。</p>
+    <div style="text-align:center">
+      <img src="images/opencv_img_03.png">
+    </div>
+    <br>
+
+    <h3 id="画像を2値化する">画像を2値化する</h3>
+    <p>OpenCVライブラリを使って画像を2値化します。</p>
+    <br>
+    <p>
+      「cv_sample3.py」をコピーして「cv_sample4.py」というファイルを作ります。
+    </p>
     <ul>
-      <pre>&ltlaunch&gt
-  &ltnode pkg="ros_start" name="talker" type="talker.py"/&gt
-  &ltnode pkg="ros_start" name="listener" type="listener.py" output="screen"/&gt
-&lt/launch&gt</pre>
+      <pre>$ cp cv_sample3.py cv_sample4.py</pre>
     </ul>
+    <p>
+      プログラムの内容は以下の通りです。
+      「cv_sample3.py」からの変更箇所は赤文字にしてあります。
+    </p>
+    <ul>
+      <pre>#!/usr/bin/env python
+import rospy
+import cv2
+import numpy as np
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+
+rospy.init_node('cv_sample_node')
+pub = rospy.Publisher("image_data", Image, queue_size=1)
+
+cv_image = cv2.imread('./img/lena.png')
+cv_gray_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
+<font color="#ff0000">ret, cv_binary_image = cv2.threshold(cv_gray_image, 127, 255, cv2.THRESH_BINARY)</font>
+
+bridge = CvBridge()
+ros_image = bridge.cv2_to_imgmsg(<font color="#ff0000">cv_binary_image</font>, "mono8")
+
+rate = rospy.Rate(1)
+while not rospy.is_shutdown():
+    pub.publish(ros_image)
+    rate.sleep()</pre>
+    </ul>
+    <p>2値化されました。</p>
+    <div style="text-align:center">
+      <img src="images/opencv_img_04.png">
+    </div>
+    <br>
+
+    <h3 id="エッジ検出フィルタを使う">エッジ検出フィルタを使う</h3>
+    <p>
+      OpenCVライブラリを使ってエッジの検出をします。
+      エッジ検出フィルタには、ラプラシアン、Sobel、Canny法などがあります。
+      ここでは、Canny法を使います。
+    </p>
+    <br>
+    <p>
+      「cv_sample4.py」をコピーして「cv_sample5.py」というファイルを作ります。
+    </p>
+    <ul>
+      <pre>$ cp cv_sample4.py cv_sample5.py</pre>
+    </ul>
+    <p>
+      プログラムの内容は以下の通りです。
+      「cv_sample4.py」からの変更箇所は赤文字にしてあります。
+    </p>
+    <ul>
+      <pre>#!/usr/bin/env python
+import rospy
+import cv2
+import numpy as np
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+
+rospy.init_node('cv_sample_node')
+pub = rospy.Publisher("image_data", Image, queue_size=1)
+
+cv_image = cv2.imread('./img/lena.png')
+cv_gray_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
+<font color="#ff0000">cv_canny_image = cv2.Canny(cv_gray_image, threshold1=100, threshold2=200)</font>
+
+bridge = CvBridge()
+ros_image = bridge.cv2_to_imgmsg(<font color="#ff0000">cv_canny_image</font>, "mono8")
+
+rate = rospy.Rate(1)
+while not rospy.is_shutdown():
+    pub.publish(ros_image)
+    rate.sleep()</pre>
+    </ul>
+    <p>エッジが検出されました。</p>
+    <div style="text-align:center">
+      <img src="images/opencv_img_05.png">
+    </div>
+    <br>
+    <p>
+      threshold1とthreshold2の値を変えるとどうなるか試してください。
+      （例）threshold1=50, threshold2=100</p>
+    <br>
+    <p>他のフィルタ（ラプラシアン、Sobelなど）も試してください。</p>
+    <br>
+
+    <h3 id="演習3「OpenCVライブラリを使った顔認識」">演習3「OpenCVライブラリを使った顔認識」</h3>
+    <p>
+      この演習では、「sample11.png」と「sample12.png」を使います。
+    </p>
+
+    <ol>
+      <li>
+        「sample11.png」を読み込んで、顔を認識するプログラムを作ってください。
+        ファイル名は「cv_face_detect.py」とします。
+        （正しく認識できませんでした）
+      </li>
+      <br>
+      <div style="text-align:center">
+        <img src="images/opencv_img_06.png">
+      </div>
+      <br>
+      <li>
+        「cv_face_detect.py」で読み込む画像を「sample12.png」に変更して、
+        顔を認識してください。
+        （正しく認識できました）
+      </li>
+      <br>
+      <div style="text-align:center">
+        <img src="images/opencv_img_07.png">
+      </div>
+      <br>
+      <li>
+        目を認識するプログラムを作ってください。
+        ファイル名は「cv_eye_detect.launch」とします。
+      </li>
+    </ol>
+
+<!--
+    <ul>
+      <pre>#!/usr/bin/env python
+import rospy
+import cv2
+import numpy as np
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+
+rospy.init_node('cv_sample_node')
+pub = rospy.Publisher("image_data", Image, queue_size=1)
+
+cv_image = cv2.imread('./img/sample11.png')
+
+filename = '/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml'
+cascade = cv2.CascadeClassifier(filename)
+face = cascade.detectMultiScale(cv_image)
+
+if len(face) > 0:
+    for r in face:
+        x, y = r[0:2]
+        width, height = r[0:2] + r[2:4]
+        cv2.rectangle(cv_image, (x, y), (width, height), (255, 255, 255), thickness=2)
+else:
+    rospy.loginfo("not detect face")
+
+bridge = CvBridge()
+ros_image = bridge.cv2_to_imgmsg(cv_image, "bgr8")
+
+rate = rospy.Rate(1)
+while not rospy.is_shutdown():
+    pub.publish(ros_image)
+    rate.sleep()</pre>
+    </ul>
+-->
   </body>
 </html>
