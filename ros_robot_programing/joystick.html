@@ -236,6 +236,14 @@ angular:
         ファイル名は「joy_twist.launch」とします。
       </li>
       <br>
+      <ul>
+        <pre>&ltlaunch&gt
+  &ltnode pkg="joy" name="joy_node" type="joy_node"/&gt
+  &ltnode pkg="ros_start" name="joy_twist" type="joy_twist.py"/&gt
+&lt/launch&gt</pre>
+      </ul>
+
+      <br>
       <li>
         ジョイスティックの方向キーでturtlesimの亀を操縦する
         プログラムを作ってください。
@@ -243,10 +251,23 @@ angular:
         仕様は「turtle_teleop_key」と同じになるようにすること。
       </li>
       <br>
+      <p>rqt_graphを実行すると次のようになります。</p>
+      <div style="text-align:center">
+        <img src="images/joystick_img_01.png">
+      </div>
+      <br>
       <li>
         「turtlesim_joy.py」を実行するlaunchファイルを作ってください。
         ファイル名は「turtlesim_joy.launch」とします。
       </li>
+      <br>
+      <ul>
+        <pre>&ltlaunch&gt
+  &ltnode pkg="joy" name="joy_node" type="joy_node"/&gt
+  &ltnode pkg="ros_start" name="turtlesim_joy" type="turtlesim_joy.py"/&gt
+  &ltnode pkg="turtlesim" name="turtlesim_node" type="turtlesim_node"/&gt
+&lt/launch&gt</pre>
+      </ul>
     </ol>
   </body>
 </html>
