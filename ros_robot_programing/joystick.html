@@ -251,6 +251,39 @@ angular:
         仕様は「turtle_teleop_key」と同じになるようにすること。
       </li>
       <br>
+      <p>解答例（方向キーを押し続けると止まってしまう．．．）</p>
+      <ul>
+        <pre>#!/usr/bin/env python
+import rospy
+from sensor_msgs.msg import Joy
+from geometry_msgs.msg import Twist
+
+class JoyTwist(object):
+    def __init__(self):
+        self._joy_sub = rospy.Subscriber('joy', Joy, self.joy_callback, queue_size=1)
+        self._twist_pub = rospy.Publisher('<font color="#ff0000">/turtle1/cmd_vel</font>', Twist, queue_size=1)
+
+    def joy_callback(self, joy_msg):
+        twist = Twist()
+        <font color="#ff0000">if joy_msg.axes[7] == 1:</font>
+            <font color="#ff0000">twist.linear.x = 2.0</font>
+        <font color="#ff0000">elif joy_msg.axes[7] == -1:</font>
+            <font color="#ff0000">twist.linear.x = -2.0</font>
+        <font color="#ff0000">elif joy_msg.axes[6] == 1:</font>
+            <font color="#ff0000">twist.angular.z = 2.0</font>
+        <font color="#ff0000">elif joy_msg.axes[6] == -1:</font>
+            <font color="#ff0000">twist.angular.z = -2.0</font>
+        <font color="#ff0000">else:</font>
+            <font color="#ff0000">twist.linear.x = 0.0</font>
+            <font color="#ff0000">twist.angular.z = 0.0</font>
+
+        self._twist_pub.publish(twist)
+
+if __name__ == '__main__':
+    rospy.init_node('joy_twist')
+    joy_twist = JoyTwist()
+    rospy.spin()</pre>
+      </ul>
       <p>rqt_graphを実行すると次のようになります。</p>
       <div style="text-align:center">
         <img src="images/joystick_img_01.png">
