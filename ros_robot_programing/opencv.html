@@ -24,7 +24,7 @@
       <li><a href="#画像をグレースケールに変換する">画像をグレースケールに変換する</a></li>
       <li><a href="#画像を2値化する">画像を2値化する</a></li>
       <li><a href="#エッジ検出フィルタを使う">エッジ検出フィルタを使う</a></li>
-      <li><a href="#演習3「OpenCVライブラリを使った顔認識」">演習3「OpenCVライブラリを使った顔認識」</a></li>
+      <li><a href="#演習3「OpenCVライブラリを使った顔検出」">演習3「OpenCVライブラリを使った顔検出」</a></li>
     </ul>
     <section>
 
@@ -57,6 +57,16 @@
     <ul>
       <pre>$ pluma cv_sample1.py</pre>
     </ul>
+    <p>
+      このプログラムでは、「cv_bridge」というライブラリをインポートしています。
+      「cv_bridge」は、OpenCVの標準データ形式である「CV::Mat」を
+      ROSのメッセージである「sensor_msgs/Image」に変換します。
+    </p>
+    <p>画像処理は次の手順で行っています。</p>
+    <ol>
+      <li>画像を取得する（cv_image）</li>
+      <li>ROSのImage型に変換する（ros_image）</li>
+    </ol>
     <p>プログラムの内容は以下の通りです。</p>
     <ul>
       <pre>#!/usr/bin/env python
@@ -90,7 +100,7 @@ while not rospy.is_shutdown():
     </ul>
     <p>rostopicで「/image_data」が出力されているか確認しましょう。</p>
     <ul>
-      <pre>pi@htc02:~/catkin_ws/src/ros_start/scripts$ rostopic list
+      <pre>$ rostopic list
 /image_data
 /rosout
 /rosout_agg</pre>
@@ -114,6 +124,12 @@ while not rospy.is_shutdown():
     <ul>
       <pre>$ cp cv_sample1.py cv_sample2.py</pre>
     </ul>
+    <p>画像処理は次の手順で行っています。</p>
+    <ol>
+      <li>画像を取得する（cv_image）</li>
+      <li>画像を処理する（cv_circle_image）</li>
+      <li>ROSのImage型に変換する（ros_image）</li>
+    </ol>
     <p>
       プログラムの内容は以下の通りです。
       「cv_sample1.py」からの変更箇所は赤文字にしてあります。
@@ -130,10 +146,10 @@ rospy.init_node('cv_sample_node')
 pub = rospy.Publisher("image_data", Image, queue_size=1)
 
 cv_image = cv2.imread('./img/<font color="#ff0000">sample01.png</font>')
-<font color="#ff0000">cv_image = cv2.circle(cv_image, (250, 250), 100, (0, 255, 0), 3)</font>
+<font color="#ff0000">cv_circle_image = cv2.circle(cv_image, (250, 250), 100, (0, 255, 0), 3)</font>
 
 bridge = CvBridge()
-ros_image = bridge.cv2_to_imgmsg(cv_image, "bgr8")
+ros_image = bridge.cv2_to_imgmsg(<font color="#ff0000">cv_circle_image</font>, "bgr8")
 
 rate = rospy.Rate(1)
 while not rospy.is_shutdown():
@@ -151,6 +167,15 @@ while not rospy.is_shutdown():
       OpenCVライブラリを使って線分（cv2.line()）、長方形（cv2.rectangle()）、
       文字列（cv2.putText）なども描いてみましょう。
     </p>
+    <ul>
+      <pre>cv_circle_image = cv2.line(cv_circle_image, (50, 50), (200, 100), (255, 0, 0), thickness=4)</pre>
+    </ul>
+    <ul>
+      <pre>cv_circle_image = cv2.rectangle(cv_circle_image, (300, 50), (450, 150), (0, 0, 255), thickness=4</pre>
+    </ul>
+    <ul>
+      <pre>cv_corcle_image = cv2.putText(cv_circle_image, 'Hirate', (100, 400), cv2.FONT_HERSHEY_COMPLEX, 1.0, (255, 255, 255), thickness=2)</pre>
+    </ul>
     <br>
 
     <h3 id="画像をグレースケールに変換する">画像をグレースケールに変換する</h3>
@@ -234,6 +259,15 @@ while not rospy.is_shutdown():
     <div style="text-align:center">
       <img src="images/opencv_img_04.png">
     </div>
+    <p>しきい値を変更するとどうなるか確認しましょう。</p>
+    <p>（例）80</p>
+    <ul>
+      <pre>ret, cv_binary_image = cv2.threshold(cv_gray_image, 80, 255, cv2.THRESH_BINARY)</pre>
+    </ul>
+    <p>（例）160</p>
+    <ul>
+      <pre>ret, cv_binary_image = cv2.threshold(cv_gray_image, 160, 255, cv2.THRESH_BINARY)</pre>
+    </ul>
     <br>
 
     <h3 id="エッジ検出フィルタを使う">エッジ検出フィルタを使う</h3>
@@ -283,46 +317,38 @@ while not rospy.is_shutdown():
     <br>
     <p>
       threshold1とthreshold2の値を変えるとどうなるか試してください。
-      （例）threshold1=50, threshold2=100</p>
+      （例）threshold1=50, threshold2=100
+    </p>
+    <ul>
+      <pre>cv_canny_image = cv2.Canny(cv_gray_image, threshold1=50, threshold2=100)</pre>
+    </ul>
     <br>
-    <p>他のフィルタ（ラプラシアン、Sobelなど）も試してください。</p>
+    <p>
+      他にもラプラシアン、Sobelなどのフィルターがあります。
+      （使い方がよく分かりませんでした）
+    </p>
     <br>
 
-    <h3 id="演習3「OpenCVライブラリを使った顔認識」">演習3「OpenCVライブラリを使った顔認識」</h3>
+    <h3 id="演習3「OpenCVライブラリを使った顔検出」">演習3「OpenCVライブラリを使った顔検出」</h3>
     <p>
       この演習では、「sample11.png」と「sample12.png」を使います。
     </p>
-
     <ol>
       <li>
-        「sample11.png」を読み込んで、顔を認識するプログラムを作ってください。
+        「sample11.png」を読み込んで、顔を検出するプログラムを作ってください。
         ファイル名は「cv_face_detect.py」とします。
-        （正しく認識できませんでした）
+        （正しく検出できませんでした）
       </li>
+      <p>
+        OpenCVでオブジェクトを検出するためには、CascadeClassifier関数で
+        特徴量を学習したXMLファイルを読み込みます。
+        そして、取得したCascadeClassifierオブジェクトのdetectMultiScale
+        関数を呼び出します。
+        顔を検出する場合は、「haarcascade_frontalface_default.xml」を使います。
+      </p>
       <br>
-      <div style="text-align:center">
-        <img src="images/opencv_img_06.png">
-      </div>
-      <br>
-      <li>
-        「cv_face_detect.py」で読み込む画像を「sample12.png」に変更して、
-        顔を認識してください。
-        （正しく認識できました）
-      </li>
-      <br>
-      <div style="text-align:center">
-        <img src="images/opencv_img_07.png">
-      </div>
-      <br>
-      <li>
-        目を認識するプログラムを作ってください。
-        ファイル名は「cv_eye_detect.launch」とします。
-      </li>
-    </ol>
-
-<!--
-    <ul>
-      <pre>#!/usr/bin/env python
+        <ul>
+          <pre>#!/usr/bin/env python
 import rospy
 import cv2
 import numpy as np
@@ -353,7 +379,42 @@ rate = rospy.Rate(1)
 while not rospy.is_shutdown():
     pub.publish(ros_image)
     rate.sleep()</pre>
-    </ul>
--->
+        </ul>
+      <br>
+      <div style="text-align:center">
+        <img src="images/opencv_img_06.png">
+      </div>
+      <br>
+      <li>
+        「cv_face_detect.py」で読み込む画像を「sample12.png」に変更して、
+        顔を検出してください。
+        （正しく検出できました）
+      </li>
+      <br>
+      </li>
+        <ul>
+          <pre>cv_image = cv2.imread('./img/sample12.png')</pre>
+        </ul>
+      <br>
+      <div style="text-align:center">
+        <img src="images/opencv_img_07.png">
+      </div>
+      <br>
+      <li>
+        目を検出するプログラムを作ってください。
+        ファイル名は「cv_eye_detect.launch」とします。
+      </li>
+      <p>XMLファイルは「haarcascade_eye.xml」を使います。</p>
+      <br>
+      <p>「sample11.png」は検出できました。</p>
+      <div style="text-align:center">
+        <img src="images/opencv_img_08.png">
+      </div>
+      <br>
+      <p>「sample12.png」は口も検出してしまいました。</p>
+      <div style="text-align:center">
+        <img src="images/opencv_img_09.png">
+      </div>
+    </ol>
   </body>
 </html>
