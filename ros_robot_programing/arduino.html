@@ -501,6 +501,106 @@ void loop() {
         スケッチの名前は「RosSerialJoy」とします。
       </li>
       <p>「turtlesim_joy.py」を変更しないで使ってください。</p>
+      <p>「RosSerialJoy.ino」の例です。</p>
+      <ul>
+        <pre>#include &ltros.h&gt
+#include &lstd_msgs/Bool.h&gt
+#include &lstd_msgs/String.h&gt
+#include &lgeometry_msgs/Twist.h&gt
+
+ros::NodeHandle node;
+std_msgs::String chat;
+ros::Publisher pub("arduino", &chat);
+
+const int DIRECTION_R = 7;
+const int DIRECTION_L = 8;
+const int PWM_R = 9;
+const int PWM_L = 10;
+
+const int LED = 13;
+const int BUTTON = 12;
+
+void motorCallback(const geometry_msgs::Twist &vel) {
+  if (vel.linear.x == 2.0) {
+    digitalWrite(DIRECTION_R, LOW);
+    digitalWrite(DIRECTION_L, LOW);
+    analogWrite(PWM_R, 40);
+    analogWrite(PWM_L, 40);
+
+    chat.data = "forward";
+  } else if (vel.linear.x == -2.0) {
+    digitalWrite(DIRECTION_R, HIGH);
+    digitalWrite(DIRECTION_L, HIGH);
+    analogWrite(PWM_R, 40);
+    analogWrite(PWM_L, 40);
+
+    //digitalWrite(LED, HIGH);
+
+    chat.data = "backward";
+  } else if (vel.angular.z == 2.0) {
+    digitalWrite(DIRECTION_R, LOW);
+    digitalWrite(DIRECTION_L, HIGH);
+    analogWrite(PWM_R, 60);
+    analogWrite(PWM_L, 60);
+
+    //digitalWrite(LED, HIGH);
+
+    chat.data = "left";
+  } else if (vel.angular.z == -2.0) {
+    digitalWrite(DIRECTION_R, HIGH);
+    digitalWrite(DIRECTION_L, LOW);
+    analogWrite(PWM_R, 60);
+    analogWrite(PWM_L, 60);
+
+    //digitalWrite(LED, HIGH);
+
+    chat.data = "right";
+  } else {
+    digitalWrite(DIRECTION_R, LOW);
+    digitalWrite(DIRECTION_L, LOW);
+    analogWrite(PWM_R, 0);
+    analogWrite(PWM_L, 0);
+
+    //digitalWrite(LED, LOW);
+
+    chat.data = "led off";
+  }
+  pub.publish(&chat);
+}
+
+ros::Subscriber<geometry_msgs::Twist> sub("/turtle1/cmd_vel", &motorCallback);
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(DIRECTION_R, OUTPUT);
+  pinMode(DIRECTION_L, OUTPUT);
+  pinMode(PWM_R, OUTPUT);
+  pinMode(PWM_L, OUTPUT);
+
+  pinMode(LED, OUTPUT);
+  pinMode(BUTTON, INPUT_PULLUP);
+
+  node.initNode();
+  node.subscribe(sub);
+  node.advertise(pub);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  node.spinOnce();
+  delay(1);
+}</pre>
+      </ul>
+      <p>「ros_serial_joy.launch」の例です。</p>
+      <ul>
+        <pre>&ltlaunch&gt
+  &ltnode pkg="rosserial_python" name="serial_node" type="serial_node.py" &gt
+    &ltparam name="port" value="/dev/ttyACM0" /&gt
+  &lt/node&gt
+  &ltnode pkg="joy" name="joy_node" type="joy_node"/&gt
+  &ltnode pkg="ros_start" name="turtlesim_joy" type="turtlesim_joy.py"/&gt
+&lt/launch&gt</pre>
+      </ul>
       <br>
       <li>
         ジョイスティックの左アナログスイッチでZumoを操縦する
