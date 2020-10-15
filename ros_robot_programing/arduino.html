@@ -479,7 +479,11 @@ void loop() {
     </ul>
     <p>launchファイル（RosSerialLed.launch）も作っておきましょう。</p>
     <ul>
-      <pre></pre>
+      <pre>&ltlaunch&gt
+  &ltnode pkg="rosserial_python" name="serial_node" type="serial_node.py" &gt
+    &ltparam name="port" value="/dev/ttyACM0" /&gt
+  &lt/node&gt
+&lt/launch&gt</pre>
     </ul>
     <br>
 
@@ -496,6 +500,7 @@ void loop() {
         プログラムを作ってください。
         スケッチの名前は「RosSerialJoy」とします。
       </li>
+      <p>「turtlesim_joy.py」を変更しないで使ってください。</p>
       <br>
       <li>
         ジョイスティックの左アナログスイッチでZumoを操縦する

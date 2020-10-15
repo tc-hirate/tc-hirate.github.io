@@ -49,7 +49,7 @@
     <br>
     <p>「ros_start」ディレクトリに移動します。</p>
     <ul>
-      <pre>$ roscd ros_start/</pre>
+      <pre>$ roscd ros_start/scripts</pre>
     </ul>
     <p>
       ここで、エディタを使って「cv_sample1.py」というファイルを作ります。
@@ -89,12 +89,16 @@ while not rospy.is_shutdown():
     pub.publish(ros_image)
     rate.sleep()</pre>
     </ul>
+    <p>プログラムを実行しましょう。最初に、プログラムを実行可能な状態にします。</p>
+    <ul>
+      <pre>$ chmod 755 cv_sample1.py</pre>
+    </ul>
     <p>
-      プログラムを実行しましょう。最初にroscoreを実行します。</p>
+      roscoreを実行します。</p>
     <ul>
       <pre>$ roscore</pre>
     </ul>
-    <p>次にcv_sample1.pyを実行します。</p>
+    <p>cv_sample1.pyを実行します。</p>
     <ul>
       <pre>$ rosrun ros_start cv_sample1.py</pre>
     </ul>
@@ -107,7 +111,7 @@ while not rospy.is_shutdown():
     </ul>
     <p>画像を見るために「rqt_image_view」というツールを使います。</p>
     <ul>
-      <pre>$rqt_image_view</pre>
+      <pre>$ rqt_image_view</pre>
     </ul>
     <p>画像が表示されました。</p>
     <div style="text-align:center">
@@ -402,7 +406,7 @@ while not rospy.is_shutdown():
       <br>
       <li>
         目を検出するプログラムを作ってください。
-        ファイル名は「cv_eye_detect.launch」とします。
+        ファイル名は「cv_eye_detect.py」とします。
       </li>
       <p>XMLファイルは「haarcascade_eye.xml」を使います。</p>
       <br>
