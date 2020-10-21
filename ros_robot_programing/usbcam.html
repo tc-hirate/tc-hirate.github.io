@@ -17,6 +17,7 @@
       <li><a href="#画像処理をするプログラムを作る">画像処理をするプログラムを作る</a></li>
       <li><a href="#画像処理をするプログラムを実行する">画像処理をするプログラムを実行する</a></li>
       <li><a href="#演習4「USBカメラで取得した画像から顔を検出する」">演習4「USBカメラで取得した画像から顔を検出する」</a></li>
+      <li><a href="#「image_view」の使い方について">「image_view」の使い方について</a></li>
     </ul>
     <section>
 
@@ -275,5 +276,23 @@ if __name__ == '__main__':
       </ul>
 -->
     </ol>
+    <br>
+
+    <h3 id="「image_view」の使い方について">「image_view」の使い方について</h3>
+    <p>
+      「image_view」をデフォルの設定のまま使うと、カメラ画像の一部分しか表示されないことが分かりました。
+      全体を表示するにはparameterの変更が必要です。
+    </p>
+    <ul>
+      <pre>&ltlaunch&gt
+  &ltnode pkg="usb_cam" name="usb_cam" type="usb_cam_node" output="screen" &gt
+    &ltparam name="pixel_format" value="yuyv" /&gt
+  &lt/node&gt
+  &ltnode pkg="image_view" name="image_view" type="image_view" respawn="false" output="screen"&gt
+    <font color="#ff0000">&ltparam name="autosize" value="true" /&gt</font>
+    &ltremap from="image" to="/usb_cam/image_raw"/&gt
+  &lt/node&gt
+&lt/launch&gt</pre>
+    </ul>
   </body>
 </html>

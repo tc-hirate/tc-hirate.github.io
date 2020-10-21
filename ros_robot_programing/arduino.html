@@ -347,7 +347,7 @@ analogWrite(PWM_L, 30);</pre>
     <h3 id=""></h3>
     <p>ソフトウェア・パッケージの情報を最新のものにします。</p>
     <ul>
-      <pre>pi@htc02:~$ sudo apt update</pre>
+      <pre>$ sudo apt update</pre>
     </ul>
     <p>次のように表示されたら、パスワードを入力します。</p>
     <ul>
@@ -607,6 +607,159 @@ void loop() {
         プログラムを作ってください。
         スケッチの名前は「RosSerialJoy2」とします。
       </li>
+      <p>
+        Twist型のメッセージは、<br>
+        ・linear.x = 0.1は0.1メートル/秒で前進<br>
+        ・angular.z = 0.5は半時計方向（ccw）に0.5ラジアン/秒で回転<br>
+        という意味になります。
+      </p>
+      <p>
+        ここでは簡単にするために、<br>
+        ・linear.x = 0.1〜1.0を前進のPWM 10〜100<br>
+        ・linear.x = -0.1〜-1.0を後進のPWM 10〜100<br>
+        ・linear.x = -0.1〜0.1のときは前後進しない<br>
+        ・angular.z = 0.1〜1.0のときPWM_Lを減らしてPWM_Rを増やす<br>
+        ・angular.z = -0.1〜-1.0のときPWM_Lを増やしてPWM_Rを減らす<br>
+        ・angular.z = -0.1〜0.1のときは回転しない<br>
+        という仕様にします。
+      </p>
+      <p>「turtlesim_joy.py」をコピーして「turtlesim_joy_analog.py」を作ります。</p>
+      <ul>
+        <pre>#!/usr/bin/env python
+import rospy
+from sensor_msgs.msg import Joy
+from geometry_msgs.msg import Twist
+
+class JoyTwist(object):
+    def __init__(self):
+        self._joy_sub = rospy.Subscriber('joy', Joy, self.joy_callback, queue_size=1)
+        self._twist_pub = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size=1)
+
+    def joy_callback(self, joy_msg):
+        twist = Twist()
+
+        if joy_msg.axes[1] > 0.1 or joy_msg.axes[1] < -0.1:
+            twist.linear.x = joy_msg.axes[1]
+        else:
+            twist.linear.x = 0.0
+
+        if joy_msg.axes[0] > 0.1 or joy_msg.axes[0] < -0.1:
+            twist.angular.z = joy_msg.axes[0]
+        else:
+            twist.angular.z = 0.0
+
+        self._twist_pub.publish(twist)
+
+if __name__ == '__main__':
+    rospy.init_node('joy_twist')
+    joy_twist = JoyTwist()
+    rospy.spin()</pre>
+      </ul>
+      <p>「RosSerialJoy.ino」をコピーして「RosSerialJoyAnalog.ino」を作ります。</p>
+      <ul>
+        <pre>#include &ltros.h&gt
+#include &ltstd_msgs/Bool.h&gt
+#include &ltstd_msgs/String.h&gt
+#include &ltgeometry_msgs/Twist.h&gt
+
+#include &ltstdlib.h&gt
+
+ros::NodeHandle node;
+std_msgs::String chat;
+ros::Publisher pub("arduino", &chat);
+
+const int DIRECTION_R = 7;
+const int DIRECTION_L = 8;
+const int PWM_R = 9;
+const int PWM_L = 10;
+
+const int LED = 13;
+const int BUTTON = 12;
+
+int motor_r;
+int motor_l;
+
+void motorCallback(const geometry_msgs::Twist &vel) {
+  if (vel.linear.x >= 0) {
+    motor_r = (int)((vel.linear.x + vel.angular.z) * 100);
+    motor_l = (int)((vel.linear.x - vel.angular.z) * 100);
+  } else {
+    motor_r = (int)((vel.linear.x - vel.angular.z) * 100);
+    motor_l = (int)((vel.linear.x + vel.angular.z) * 100);
+  }
+
+  if (motor_r > 100) {
+    motor_r = 100;
+  } else if (motor_r < -100) {
+    motor_r = -100;
+  }
+
+  if (motor_l > 100) {
+    motor_l = 100;
+  } else if (motor_l < -100) {
+    motor_l = -100;
+  }
+
+  if (motor_r >= 0) {
+    digitalWrite(DIRECTION_R, LOW);
+  } else if (motor_r < 0) {
+    digitalWrite(DIRECTION_R, HIGH);
+    motor_r = abs(motor_r);
+  } else {
+    digitalWrite(DIRECTION_R, LOW);
+    motor_r = 0;
+  }
+
+  if (motor_l >= 0) {
+    digitalWrite(DIRECTION_L, LOW);
+  } else if (motor_l < 0) {
+    digitalWrite(DIRECTION_L, HIGH);
+    motor_l = abs(motor_l);
+  } else {
+    digitalWrite(DIRECTION_L, LOW);
+    motor_l = 0;
+  }
+
+  analogWrite(PWM_R, motor_r);
+  analogWrite(PWM_L, motor_l);
+
+  chat.data = "stop";
+  pub.publish(&chat);
+}
+
+ros::Subscriber&ltgeometry_msgs::Twist&gt sub("/turtle1/cmd_vel", &motorCallback);
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(DIRECTION_R, OUTPUT);
+  pinMode(DIRECTION_L, OUTPUT);
+  pinMode(PWM_R, OUTPUT);
+  pinMode(PWM_L, OUTPUT);
+
+  pinMode(LED, OUTPUT);
+  pinMode(BUTTON, INPUT_PULLUP);
+
+  node.initNode();
+  node.subscribe(sub);
+  node.advertise(pub);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  node.spinOnce();
+  delay(1);
+}</pre>
+      </ul>
+      <p>「ros_serial_joy.launch」をコピーして「ros_serial_joy_analog.launch」を作ります。</p>
+      <ul>
+        <pre>&ltlaunch&gt
+  &ltnode pkg="rosserial_python" name="serial_node" type="serial_node.py" &gt
+    &ltparam name="port" value="/dev/ttyACM0" /&gt
+  &lt/node&gt
+  &ltnode pkg="joy" name="joy_node" type="joy_node"/&gt
+  &ltnode pkg="ros_start" name="turtlesim_joy" type="turtlesim_joy_analog.py"/&gt
+&lt/launch&gt</pre>
+      </ul>
     </ol>
   </body>
 </html>
