@@ -2,40 +2,20 @@
 <html lang="jp">
   <head>
     <meta charset="utf-8">
-    <title>演習</title>
+    <title>演習7</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <h1>演習</h1>
+    <h1>演習7</h1>
     <p>ROSとZumoを使って、何か「役に立つもの」を作りましょう。</p>
     <br>
 
     <ul>
-      <li><a href="#演習6「人の顔を検出し追いかける」">演習6「人の顔を検出し追いかける」</a></li>
       <li><a href="#演習7「白線を検出して自動走行する」">演習7「白線を検出して自動走行する」</a></li>
-      <li><a href="#演習8「前を走るZumoを追いかける」">演習8「前を走るZumoを追いかける」</a></li>
-      <li><a href="#検出した顔の位置">検出した顔の位置</a></li>
       <li><a href="#白線を検出する方法（cv2.moments）">白線を検出する方法（cv2.moments）</a></li>
       <li><a href="#白線を検出する方法（cv2.HoughLines）">白線を検出する方法（cv2.HoughLines）</a></li>
     </ul>
     <section>
-
-    <h3 id="演習6「人の顔を検出し追いかける」">演習6「人の顔を検出し追いかける」</h3>
-    <p>演習4「USBカメラで取得した画像から顔を検出する」の結果を使ってZumoを動かす。</p>
-    <ol>
-      <li>
-        顔を検出したら、顔がカメラ画像の真ん中にくるようにZumoを動かす
-      </li>
-      <br>
-      <li>
-        検出した顔が小さときは前進、大きいときは後進させる
-      </li>
-      <br>
-      <li>
-        顔を検出できないときは、Zumoを動かして顔を探す
-      </li>
-    </ol>
-    <br>
 
     <h3 id="演習7「白線を検出して自動走行する」">演習7「白線を検出して自動走行する」</h3>
     <p>カメラ画像から検出した白線に沿ってZumoを走行させる。</p>
@@ -48,38 +28,6 @@
         2本の線の間を走る。
       </li>
     </ol>
-    <br>
-
-    <h3 id="演習8「前を走るZumoを追いかける」">演習8「前を走るZumoを追いかける」</h3>
-    <p>日本では「かるがも走行」と呼ばれています。</p>
-    <ol>
-      <li>
-        カメラ画像からZumoを検出する。（見つけやすくするために何かマークをつけてもよい）
-      </li>
-      <br>
-      <li>
-        検出したZumoを追いかけるように走る
-      </li>
-    </ol>
-    <br>
-
-    <h3 id="検出した顔の位置">検出した顔の位置</h3>
-    <p>顔を検出したとき、</p>
-    <ul>
-      <pre>face = cascade.detectMultiScale(cv_image)</pre>
-    </ul>
-    <p>左上の座標は次のように求める。</p>
-    <ul>
-      <pre>x, y = face[0:2]</pre>
-    </ul>
-    <p>幅と高さは次のように求める。</p>
-    <ul>
-      <pre>with, height = face[0:2] + face[2:4]</pre>
-    </ul>
-    <p>顔の横方向の中心は次のように求める。</p>
-    <ul>
-      <pre>c = x + width * 0.5</pre>
-    </ul>
     <br>
 
     <h3 id="白線を検出する方法（cv2.moments）">白線を検出する方法（cv2.moments）</h3>

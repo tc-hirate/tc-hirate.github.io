@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <title>演習6</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>演習6</h1>
+    <p>ROSとZumoを使って、何か「役に立つもの」を作りましょう。</p>
+    <br>
+
+    <ul>
+      <li><a href="#演習6「人の顔を検出し追いかける」">演習6「人の顔を検出し追いかける」</a></li>
+      <li><a href="#検出した顔の位置">検出した顔の位置</a></li>
+      <li><a href="#「画像処理が遅い」に対する工夫">「画像処理が遅い」に対する工夫</a></li>
+    </ul>
+    <section>
+
+    <h3 id="演習6「人の顔を検出し追いかける」">演習6「人の顔を検出し追いかける」</h3>
+    <p>演習4「USBカメラで取得した画像から顔を検出する」の結果を使ってZumoを動かす。</p>
+    <ol>
+      <li>
+        顔を検出したら、顔がカメラ画像の真ん中にくるようにZumoを動かす
+      </li>
+      <br>
+      <li>
+        検出した顔が小さときは前進、大きいときは後進させる
+      </li>
+      <br>
+      <li>
+        顔を検出できないときは、Zumoを動かして顔を探す
+      </li>
+    </ol>
+    <br>
+
+    <h3 id="検出した顔の位置">検出した顔の位置</h3>
+    <p>顔を検出したとき、</p>
+    <ul>
+      <pre>face = cascade.detectMultiScale(cv_image)</pre>
+    </ul>
+    <p>左上の座標は次のように求める。</p>
+    <ul>
+      <pre>x, y = face[0:2]</pre>
+    </ul>
+    <p>幅と高さは次のように求める。</p>
+    <ul>
+      <pre>with, height = face[0:2] + face[2:4]</pre>
+    </ul>
+    <p>顔の横方向の中心は次のように求める。</p>
+    <ul>
+      <pre>c = x + width * 0.5</pre>
+    </ul>
+    <br>
+
+    <h3 id="「画像処理が遅い」に対する工夫">「画像処理が遅い」に対する工夫</h3>
+    <p>
+      ループの中で、顔認識&#8658;モータ制御&#8658;顔認識&#8658;・・・と処理を繰り返します。
+      しかし、Zumoは思った通りに動いてくれません。
+    </p>
+    <p>
+      右に動き出すと、止まって欲しい場所を通り過ぎて右に動き続けてしまいます。
+      しばらくすると、左に動き出しますが、止まって欲しい場所は通りすぎてしまいます。
+    </p>
+    <p>
+      そこで、この問題を解決する方法をいくつか考えてみました。
+    </p>
+    <ol>
+      <li>
+        繰り返し処理する必要のない命令は、ループの外に書く
+      </li>
+      <br>
+      <li>
+        モータ制御を工夫する
+      </li>
+      <br>
+      <li>
+        USBカメラから取得する画像のサイズを小さくする
+      </li>
+      <br>
+      <li>
+        分散処理をする
+      </li>
+    </ol>
+    <p>
+      (1)と(2)は実際にプログラムしました。
+      (3)、(4)の方が効果があると思いますが、時間がなくてプログラムできませんでした。
+    </p>
+    <br>
+    <dl>
+      <dt>繰り返し処理する必要のない命令は、ループの外に書く</dt>
+      <dd>
+        最初、cv2.CascadeClassifier(filename)をループの中に書いていました。
+        これらをループの外に書くことで顔認識が速くなりました。
+        （ファイルの読み書きは時間がかかります）
+      </dd>
+      <ul>
+        <pre>class FaceDetect():
+    def __init__(self):
+        sub = rospy.Subscriber("/usb_cam/image_raw", Image, self.get_image)
+        self.bridge = CvBridge()
+        self.cv_image = None
+        self.face_pub = rospy.Publisher("face", Image, queue_size=1)
+        self.twist_pub = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size=1)
+
+        <font color="#ff0000">filename = '/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml'</font>
+        <font color="#ff0000">self.cascade = cv2.CascadeClassifier(filename)</font>
+    ....</pre>
+      </ul>
+      <br>
+      <dt>モータ制御を工夫する</dt>
+      <dd>
+        cmd_velを受信してモータを動かしてから、次のcmd_velを受信するまでに時間がかかることが問題です。
+        この時間が長いため、止まりたい場所で止まれずに通り過ぎてしまいます。
+        そこで、次のcmd_velを受信するまで動き続けるのではなく、一定時間が経過したら止まるようにしました。
+        以下のプログラムは右方向に回転する場合です。
+      </dd>
+      <ul>
+        <pre>digitalWrite(DIRECTION_R, HIGH);
+digitalWrite(DIRECTION_L, LOW);
+analogWrite(PWM_R, 50);
+analogWrite(PWM_L, 50);
+<font color="#ff0000">delay(50);</font>
+analogWrite(PWM_R, 0);
+analogWrite(PWM_L, 0);</pre>
+      </ul>
+      <br>
+      <dt>USBカメラから取得する画像のサイズを小さくする</dt>
+      <dd>
+        画像のサイズは480×640です。
+        これを240×320にすれば、理論上は4倍速くなるはずです。
+      </dd>
+      <br>
+      <dt>分散処理をする</dt>
+      <dd>
+        計算に時間のかかる処理は、もっと性能のよいコンピュータに任せるべきです。
+        ROSをインストールしたPCを準備して分散処理するのが1番よいと思います。
+      </dd>
+    </dl>
+    <br>
+    <p>
+      以下にプログラム例を示します。（コメントがなくてすみません）
+      1秒間に10回、顔を検出するdetect_face()を実行しています。
+      顔検出の後monitor()で四角を描いています。
+      最後にrot_vel()でcmd_velをpublishしています。
+    </p>
+    <p>
+      他にもっといい方法があったら教えてください。
+    </p>
+    <br>
+    <p>usbcam_face_to_face.py</p>
+    <ul>
+      <pre>#!/usr/bin/env python
+import rospy
+import cv2
+import numpy as np
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge, CvBridgeError
+from sensor_msgs.msg import Joy
+from geometry_msgs.msg import Twist
+
+class FaceDetect():
+    def __init__(self):
+        sub = rospy.Subscriber("/usb_cam/image_raw", Image, self.get_image)
+        self.bridge = CvBridge()
+        self.cv_image = None
+        self.face_pub = rospy.Publisher("face", Image, queue_size=1)
+        self.twist_pub = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size=1)
+
+        filename = '/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml'
+        self.cascade = cv2.CascadeClassifier(filename)
+
+    def get_image(self, img):
+        try:
+            self.cv_image = self.bridge.imgmsg_to_cv2(img, "bgr8")
+        except CvBridgeError as e:
+            rospy.logerr(e)
+
+    def detect_face(self):
+        if self.cv_image is None:
+            pass
+        else:
+            cv_gray_image = cv2.cvtColor(self.cv_image, cv2.COLOR_BGR2GRAY)
+            face = self.cascade.detectMultiScale(cv_gray_image)
+
+            if len(face) == 0:
+                self.monitor(None)
+            else:
+                self.monitor(face)
+
+    def monitor(self, rect):
+        img = self.cv_image
+        if rect is None:
+            c = None
+        else:
+            for r in rect:
+                x, y = r[0: 2]
+                width, height = r[0: 2] + r[2: 4]
+                cv2.rectangle(img, (x, y), (width, height), (0, 255, 255), 4)
+                c = x + width * 0.5
+
+        self.face_pub.publish(self.bridge.cv2_to_imgmsg(img, "bgr8"))
+        self.rot_vel(c)
+        rospy.loginfo(c)
+
+    def rot_vel(self, c):
+        twist = Twist()
+        twist.linear.x = 0.0
+        if c == None:
+            twist.angular.z = 0.0
+        else:
+            if c <= 370:
+                twist.angular.z = 2.0
+            elif c > 430:
+                twist.angular.z = -2.0
+            else:
+                twist.angular.z = 0.0
+
+        self.twist_pub.publish(twist)
+
+if __name__ == "__main__":
+    rospy.init_node('face_detect')
+    fd = FaceDetect()
+
+    rate = rospy.Rate(10)
+    while not rospy.is_shutdown():
+        fd.detect_face()
+        rate.sleep()</pre>
+    </ul>
+    <br>
+    <p>RosSerialJoy2.ino</p>
+    <ul>
+      <pre>#include <ros.h>
+#include <std_msgs/Bool.h>
+#include <std_msgs/String.h>
+#include <geometry_msgs/Twist.h>
+
+ros::NodeHandle node;
+std_msgs::String chat;
+ros::Publisher pub("arduino", &chat);
+
+const int DIRECTION_R = 7;
+const int DIRECTION_L = 8;
+const int PWM_R = 9;
+const int PWM_L = 10;
+
+const int LED = 13;
+const int BUTTON = 12;
+
+void motorCallback(const geometry_msgs::Twist &vel) {
+  if (vel.linear.x == 2.0) {
+    digitalWrite(DIRECTION_R, LOW);
+    digitalWrite(DIRECTION_L, LOW);
+    analogWrite(PWM_R, 40);
+    analogWrite(PWM_L, 40);
+
+    //digitalWrite(LED, HIGH);
+
+    chat.data = "forward";
+  } else if (vel.linear.x == -2.0) {
+    digitalWrite(DIRECTION_R, HIGH);
+    digitalWrite(DIRECTION_L, HIGH);
+    analogWrite(PWM_R, 40);
+    analogWrite(PWM_L, 40);
+
+    //digitalWrite(LED, HIGH);
+
+    chat.data = "backward";
+  } else if (vel.angular.z == 2.0) {
+    digitalWrite(DIRECTION_R, LOW);
+    digitalWrite(DIRECTION_L, HIGH);
+    analogWrite(PWM_R, 50);
+    analogWrite(PWM_L, 50);
+    delay(50);
+    analogWrite(PWM_R, 0);
+    analogWrite(PWM_L, 0);
+
+    //digitalWrite(LED, HIGH);
+
+    chat.data = "left";
+  } else if (vel.angular.z == -2.0) {
+    digitalWrite(DIRECTION_R, HIGH);
+    digitalWrite(DIRECTION_L, LOW);
+    analogWrite(PWM_R, 50);
+    analogWrite(PWM_L, 50);
+    delay(50);
+    analogWrite(PWM_R, 0);
+    analogWrite(PWM_L, 0);
+
+    //digitalWrite(LED, HIGH);
+
+    chat.data = "right";
+  } else {
+    digitalWrite(DIRECTION_R, LOW);
+    digitalWrite(DIRECTION_L, LOW);
+    analogWrite(PWM_R, 0);
+    analogWrite(PWM_L, 0);
+
+    //digitalWrite(LED, LOW);
+
+    chat.data = "led off";
+  }
+  pub.publish(&chat);
+}
+
+ros::Subscriber<geometry_msgs::Twist> sub("/turtle1/cmd_vel", &motorCallback);
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(DIRECTION_R, OUTPUT);
+  pinMode(DIRECTION_L, OUTPUT);
+  pinMode(PWM_R, OUTPUT);
+  pinMode(PWM_L, OUTPUT);
+
+  pinMode(LED, OUTPUT);
+  pinMode(BUTTON, INPUT_PULLUP);
+
+  node.initNode();
+  node.subscribe(sub);
+  node.advertise(pub);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  node.spinOnce();
+  delay(1);
+}</pre>
+    </ul>
+  </body>
+</html>
