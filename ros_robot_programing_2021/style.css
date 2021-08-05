@@ -1,0 +1,161 @@
+body {
+  background-color: #fff;
+  padding: 50px;
+  font: 14px/1.5;
+  color: #727272;
+  font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #222;
+  margin: 0 0 20px
+}
+
+h1, h2, h3 {
+  line-height: 1.1;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  color: #393939;
+}
+
+h3, h4, h5, h6 {
+  color: #494949;
+}
+
+h2 {
+  display: block;
+  font-size: 1.5em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-left:inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+h3 {
+  display: block;
+  font-size: 1.17em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-left:inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+p, ul, ol, table, pre, dl {
+  margin: 0 0 20px;
+}
+
+p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-left:inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+/* リンクの出発点と到達点を指定する */
+a {
+    /*color: #267CB9;*/
+    color: #00519b;
+}
+
+/* カーソルが乗っている要素にスタイルを適用する */
+/*a:hover{color:#069;font-weight:bold}*/
+a:hover {
+  font-weight:bold
+}
+
+/* フォーカスされた要素にスタイルを適用する */
+/*a:focus{color:#069;font-weight:bold}*/
+a:focus {
+  font-weight:bold
+}
+
+table {
+  /*width: 100%;*/
+  display: table;
+  border-collapse: collapse;
+  box-sizing: border-box;
+  border-spacing: 2px;
+  border-color: gray;
+}
+
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+tr {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
+}
+
+td {
+  text-align: left;
+  padding: 5px 10px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+td {
+  display: table-cell;
+  vertical-align: inherit;
+}
+
+section {
+  width: 100%;
+  display: block;
+  border: 1px solid #e5e5e5;
+  border-width: 1px 0;
+  padding: 20px 0;
+  margin: 0 0 20px;
+}
+
+small {
+  font-size: 85%;
+}
+
+pre {
+  display: block;
+  border: 1pt solid #AEBDCC;
+  background-color: #F3F5F7;
+  padding: 5pt;
+  white-space: pre-wrap;
+  word-break: break-all;
+  border-radius: 4px;
+}
+
+dl {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+dt {
+  display: block;
+  color: #444;
+  font-weight: 700;
+}
+
+dd {
+  display: block;
+  margin-inline-start: 40px;
+}
+
+ol li {
+  list-style-type: none;
+  counter-increment: cnt;
+}
+
+ol li::before {
+  content: "(" counter(cnt) ")";
+}

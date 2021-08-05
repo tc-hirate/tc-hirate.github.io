@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <title>Linuxのインストール</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>Linuxのインストール</h1>
+
+    <p>
+      Linuxはオープンソースのオペレーティングシステム（OS）です。
+      今回は、Raspberry Piで使うことができるUbuntu MATE 18.04の
+      32bit版を使います。
+    </p>
+    <br>
+
+    <ul>
+      <li><a href="#Linuxのダウンロード">Linuxのダウンロード</a></li>
+      <li><a href="#SDカードのフォーマット">SDカードのフォーマット</a></li>
+      <li><a href="#ディスクイメージの書き込み">ディスクイメージの書き込み</a></li>
+      <li><a href="#Linuxの設定">Linuxの設定</a></li>
+    </ul>
+
+    <section>
+
+    <h3 id="Linuxのダウンロード">Linuxのダウンロード</h3>
+    <p>
+      Ubuntu MATE 18.04のディスクイメージを
+      <a href=https://ubuntu-mate.org/download/>公式HP</a>
+      からダウンロード。
+    </p>
+    <p>
+      「Or.... choose a hardware port:」の「Raspberry Pi 32-bit」
+      をクリック。
+    </p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_01.png">
+    </div>
+    <p>Downloadsディレクトリにファイルが保存される。</p>
+    <br>
+
+    <p>
+      7zipを起動し、Downloadフォルダに移動する。
+      ダウンロードしたファイルを選択して、「展開」ボタンを押す。
+    </p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_02.png">
+    </div>
+
+    <p>設定はデフォルトのままで、[OK]ボタンを押す。</p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_03.png">
+    </div>
+
+    <p>解凍されるまで、しばらく待つ。</p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_04.png">
+    </div>
+
+    <p>解凍された。</p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_05.png">
+    </div>
+
+    <p>エクスプローラでダウンロードフォルダを確認する。</p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_06.png">
+    </div>
+    <br>
+
+    <h3 id="SDカードのフォーマット">SDカードのフォーマット</h3>
+    <p>SDカードをSDカードリーダーなどに挿入します。</p>
+    <p>
+      SD Card Formatterを起動し、
+      「カードの選択」が挿入したSDカードになっているか確認してください。
+      「上書きフォーマット」を選択し、[フォーマット]ボタンをクリックする。
+    </p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_07.png">
+    </div>
+
+    <p>[はい]ボタンをクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_08.png">
+    </div>
+
+    <p>フォーマット中。</p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_09.png">
+    </div>
+
+    <p>[OK]ボタンをクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_10.png">
+    </div>
+    <br>
+
+    <h3 id="ディスクイメージの書き込み">ディスクイメージの書き込み</h3>
+    <p>Win32 Disk Imagerを起動する。</p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_11.png">
+    </div>
+
+    <p>ディスクイメージを選択する。</p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_12.png">
+    </div>
+
+    <p>
+      「Device」に挿入したSDカードを選択して、
+      [Write]ボタンをクリックする。
+    </p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_13.png">
+    </div>
+
+    <p>[Yes]ボタンをクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_14.png">
+    </div>
+
+    <p>インストール中。</p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_15.png">
+    </div>
+
+    <p>[OK]ボタンをクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/linux_install_img_16.png">
+    </div>
+    <br>
+
+    <h3 id="Linuxの設定">Linuxの設定</h3>
+    <p>
+      SDカードをRaspberry Piに挿入して電源を入れます。
+      ウィザードに従って設定してください。
+    </p>
+    <p>今回使用するRaspberry Piは次のように設定してあります。</p>
+    <ol>
+      <li>Language: English</li>
+      <br>
+      <li>Keyboard Layout: English(US)</li>
+      <br>
+      <li>Time Zone: Tokyo</li>
+    </ol>
+    <p>
+      Langageは変更しないでください。
+      Keyboard Layoutは使用するキーボードに合わせて変更してください。
+      Time Zoneはタイ時間に合わせてください。
+    </p>
+  </body>
+</html>

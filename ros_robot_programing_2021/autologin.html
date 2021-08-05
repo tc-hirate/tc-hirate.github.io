@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <title>自動ログインの設定</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>自動ログインの設定</h1>
+
+    <p>自動ログインの設定方法を説明する。</p>
+    <br>
+
+    <ul>
+      <li><a href="#自動ログインの設定">自動ログインの設定</a></li>
+    </ul>
+    <section>
+
+    <h3 id="自動ログインの設定">自動ログインの設定</h3>
+    <p>次のコマンドを実行して、設定ファイルを作成。</p>
+    <ul>
+      <pre>$ sudo pluma /usr/share/lightdm/lightdm.conf.d/60-lightdm-gtk-greeter.conf</pre>
+    </ul>
+    <p>次のように表示されたら、パスワードを入力。</p>
+    <ul>
+      <pre>[sudo] password for pi: </pre>
+    </ul>
+    <p>次の内容を入力して、保存。</p>
+    <ul>
+      <pre>[SeatDefaults]
+greeter-session=lightdm-gtk-greeter
+autologin-user=pi</pre>
+    </ul>
+    <p>再起動して、自動ログインできるか確認してください。</p>
+  </body>
+</html>

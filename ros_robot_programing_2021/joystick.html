@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <title>ジョイスティックを使う</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>ジョイスティックを使う</h1>
+
+    <p>ゲーム用ジョイスティックを使って、ロボットを動かせるようにしましょう。</p>
+    <br>
+
+    <ul>
+      <li><a href="#ジョイスティックを使う">ジョイスティックを使う</a></li>
+      <li><a href="#操縦プログラムを作る">操縦プログラムを作る</a></li>
+      <li><a href="#操縦プログラムを実行する">操縦プログラムを実行する</a></li>
+      <li><a href="#演習1「turtlesimをジョイスティックで動かす」">演習1「turtlesimをジョイスティックで動かす」</a></li>
+    </ul>
+    <section>
+
+    <h3 id="ジョイスティックを使う">ジョイスティックを使う</h3>
+    <p>
+      ジョイスティックを接続してください。
+      Raspberry Piがジョイスティックを認識しているかは、
+      次のコマンドを実行して調べられます。
+      「/dev/input/js0」のように表示されれば認識されています。
+    </p>
+    <ul>
+      <pre>$ ls -l /dev/input/js*
+crw-rw----+ 1 root input 13, 0  9月 29 10:00 /dev/input/js0</pre>
+    </ul>
+    <p>ソフトウェア・パッケージの情報を最新のものにします。</p>
+    <ul>
+      <pre>$ sudo apt update</pre>
+    </ul>
+    <p>次のように表示されたら、パスワードを入力します。</p>
+    <ul>
+      <pre>[sudo] password for pi:</pre>
+    </ul>
+    <p>ros-melodic-joyをインストールします。</p>
+    <ul>
+      <pre>$ sudo apt install ros-melodic-joy</pre>
+    </ul>
+    <p>次のように表示されたら、そのまま[Enter]を押します。</p>
+    <ul>
+      <pre>Do you want to continue? [Y/n]</pre>
+    </ul>
+    <p>roscoreを実行します。</p>
+    <ul>
+      <pre>$ roscore</pre>
+    </ul>
+    <p>joy_nodeを実行します。</p>
+    <ul>
+      <pre>$ rosrun joy joy_node</pre>
+    </ul>
+    <p>Topicを確認します。</p>
+    <ul>
+      <pre>$ rostopic list
+/diagnostics
+/joy
+/joy/set_feedback
+/rosout
+/rosout_agg</pre>
+    </ul>
+    <p>「/joy」を表示します。</p>
+    <ul>
+      <pre>$ rostopic echo /joy
+header:
+  seq: 1
+  stamp:
+    secs: 1601341739
+    nsecs: 466541438
+  frame_id: "/dev/input/js0"
+axes: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+buttons: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+---
+header:
+  seq: 2
+  stamp:
+    secs: 1601341739
+    nsecs: 630541170
+  frame_id: "/dev/input/js0"
+axes: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+buttons: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+---</pre>
+    </ul>
+    <br>
+
+    <h3 id="操縦プログラムを作る">操縦プログラムを作る</h3>
+    <p>「ros_start/scripts/」ディレクトリに移動します。</p>
+    <ul>
+      <pre>$ roscd ros_start/scripts/</pre>
+    </ul>
+    <p>「joy_twist.py」というファイルを作ります。</p>
+    <ul>
+      <pre>$ pluma joy_twist.py
+</pre>
+    </ul>
+    <p>プログラムの内容は以下の通りです。</p>
+    <ul>
+      <pre>#!/usr/bin/env python
+import rospy
+from sensor_msgs.msg import Joy
+from geometry_msgs.msg import Twist
+
+class JoyTwist(object):
+    def __init__(self):
+        self._joy_sub = rospy.Subscriber('joy', Joy, self.joy_callback, queue_size=1)
+        self._twist_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
+
+    def joy_callback(self, joy_msg):
+        if joy_msg.buttons[0] == 1:
+            vel = Twist()
+            vel.linear.x = joy_msg.axes[1] * 0.5
+            vel.angular.z = joy_msg.axes[0] * 1.0
+            self._twist_pub.publish(vel)
+
+if __name__ == '__main__':
+    rospy.init_node('joy_twist')
+    joy_twist = JoyTwist()
+    rospy.spin()</pre>
+    </ul>
+    <p>一行づつ解説します。</p>
+    <ul>
+      <pre>#!/usr/bin/env python</pre>
+    </ul>
+    <p>先頭行にこれを書くと実行ファイルとして扱うことができます。</p>
+    <ul>
+      <pre>import rospy</pre>
+    </ul>
+    <p>rospyをインポートします。</p>
+    <ul>
+      <pre>from sensor_msgs.msg import Joy</pre>
+    </ul>
+    <p>sensor_msgsというパッケージからJoyというMessage型をインポートします。</p>
+    <ul>
+      <pre>from geometry_msgs.msg import Twist</pre>
+    </ul>
+    <p>std_msgsというパッケージからStringというMessage型を インポートします。</p>
+    <ul>
+      <pre>class JoyTwist(object):</pre>
+    </ul>
+    <p>「JoyTwist」という名前でクラスを定義しています。</p>
+    <ul>
+      <pre>def __init__(self):</pre>
+    </ul>
+    <p>
+      「__init__」という名前で関数を定義しています。
+      この関数は「JoyTwist」クラスのインスタンスを作るときに
+      実行されます。
+    </p>
+    <ul>
+      <pre>self._joy_sub = rospy.Subscriber('joy', Joy, self.joy_callback, queue_size=1)</pre>
+    </ul>
+    <p>
+      「joy」という名前のTopicにSubscribeし、
+      受信したデータに対して「joy_callback」関数を実行する
+      Subscriberを作ります。
+    </p>
+    <ul>
+      <pre>self._twist_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)</pre>
+    </ul>
+    <p>
+      「cmd_vel」という名前で、Twist型のTopicにPublishする
+      Publisherを作ります。
+    </p>
+    <ul>
+      <pre>def joy_callback(self, joy_msg):</pre>
+    </ul>
+    <p>
+      「joy_callback」という名前で、「joy_msg」という引数を取る
+      関数を定義しています。
+    </p>
+    <ul>
+      <pre>if joy_msg.buttons[0] == 1:</pre>
+    </ul>
+    <p>Aボタンが押されているか判定しています。</p>
+    <ul>
+      <pre>vel = Twist()</pre>
+    </ul>
+    <p>Twistのメッセージをvelとして作っています。</p>
+    <ul>
+      <pre>vel.linear.x = joy_msg.axes[1] * 0.5</pre>
+    </ul>
+    <p>前進更新の値を代入します。</p>
+    <ul>
+      <pre>vel.angular.z = joy_msg.axes[0] * 1.0</pre>
+    </ul>
+    <p>回転の値を代入します。</p>
+    <ul>
+      <pre>self._twist_pub.publish(vel)</pre>
+    </ul>
+    <p>「pub」を使って「vel」をPublishします。</p>
+    <br>
+
+    <h3 id="操縦プログラムを実行する">操縦プログラムを実行する</h3>
+    <p>joy_twist.pyを実行可能な状態にします。</p>
+    <ul>
+      <pre>$ chmod 755 joy_twist.py</pre>
+    </ul>
+    <p>roscoreを実行します。</p>
+    <ul>
+      <pre>$ roscore</pre>
+    </ul>
+    <p>joy_nodeを実行します。</p>
+    <ul>
+      <pre>$ rosrun joy joy_node</pre>
+    </ul>
+    <p>
+      joy_twist.pyを実行します。
+      ウォーニングが出ますが、無視してください。
+    </p>
+    <ul>
+      <pre>$ rosrun ros_start joy_twist.py
+[WARN] [1601342753.146498]: Inbound TCP/IP connection failed: connection from sender terminated before handshake header received. 0 bytes were received. Please check sender for additional details.</pre>
+    </ul>
+    <p>rostopicで確認しましょう。</p>
+    <ul>
+      <pre>$ rostopic echo /cmd_vel
+linear:
+  x: 0.0485991202295
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: -0.0</pre>
+    </ul>
+    <br>
+
+    <h3 id="演習1「turtlesimをジョイスティックで動かす」">演習1「turtlesimをジョイスティックで動かす」</h3>
+    <ol>
+      <li>
+        「joy_twist.py」を実行するlaunchファイルを作ってください。
+        ファイル名は「joy_twist.launch」とします。
+      </li>
+      <br>
+      <ul>
+        <pre>&ltlaunch&gt
+  &ltnode pkg="joy" name="joy_node" type="joy_node"/&gt
+  &ltnode pkg="ros_start" name="joy_twist" type="joy_twist.py"/&gt
+&lt/launch&gt</pre>
+      </ul>
+
+      <br>
+      <li>
+        ジョイスティックの方向キーでturtlesimの亀を操縦する
+        プログラムを作ってください。
+        ファイル名は「turtlesim_joy.py」とします。
+        仕様は「turtle_teleop_key」と同じになるようにすること。
+      </li>
+      <br>
+      <p>解答例（方向キーを押し続けると止まってしまう．．．）</p>
+      <ul>
+        <pre>#!/usr/bin/env python
+import rospy
+from sensor_msgs.msg import Joy
+from geometry_msgs.msg import Twist
+
+class JoyTwist(object):
+    def __init__(self):
+        self._joy_sub = rospy.Subscriber('joy', Joy, self.joy_callback, queue_size=1)
+        self._twist_pub = rospy.Publisher('<font color="#ff0000">/turtle1/cmd_vel</font>', Twist, queue_size=1)
+
+    def joy_callback(self, joy_msg):
+        twist = Twist()
+        <font color="#ff0000">if joy_msg.axes[7] == 1:</font>
+            <font color="#ff0000">twist.linear.x = 2.0</font>
+        <font color="#ff0000">elif joy_msg.axes[7] == -1:</font>
+            <font color="#ff0000">twist.linear.x = -2.0</font>
+        <font color="#ff0000">elif joy_msg.axes[6] == 1:</font>
+            <font color="#ff0000">twist.angular.z = 2.0</font>
+        <font color="#ff0000">elif joy_msg.axes[6] == -1:</font>
+            <font color="#ff0000">twist.angular.z = -2.0</font>
+        <font color="#ff0000">else:</font>
+            <font color="#ff0000">twist.linear.x = 0.0</font>
+            <font color="#ff0000">twist.angular.z = 0.0</font>
+
+        self._twist_pub.publish(twist)
+
+if __name__ == '__main__':
+    rospy.init_node('joy_twist')
+    joy_twist = JoyTwist()
+    rospy.spin()</pre>
+      </ul>
+      <p>rqt_graphを実行すると次のようになります。</p>
+      <div style="text-align:center">
+        <img src="images/joystick_img_01.png">
+      </div>
+      <br>
+      <li>
+        「turtlesim_joy.py」を実行するlaunchファイルを作ってください。
+        ファイル名は「turtlesim_joy.launch」とします。
+      </li>
+      <br>
+      <ul>
+        <pre>&ltlaunch&gt
+  &ltnode pkg="joy" name="joy_node" type="joy_node"/&gt
+  &ltnode pkg="ros_start" name="turtlesim_joy" type="turtlesim_joy.py"/&gt
+  &ltnode pkg="turtlesim" name="turtlesim_node" type="turtlesim_node"/&gt
+&lt/launch&gt</pre>
+      </ul>
+    </ol>
+  </body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <title>ROSのインストール</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>ROSのインストール</h1>
+
+    <p>
+      Ubuntuではaptというコマンドを使ってソフトウェアをインストールします。
+      UbuntuのバージョンとROSのバージョンには1対1の対応関係があり、
+      Ubuntu 18.04の場合はMelodicになります。
+    </p>
+    <p>
+      APT（Advanced Package Tool）とは、
+      Linuxでソフトウェアのインストールや管理、削除に用いられる
+      パッケージ管理システムの一つです。
+      また、それを操作する「コマンド」のことをいいます。
+    </p>
+    <br>
+
+    <ul>
+      <li><a href="#sources.listの設定">sources.listの設定</a></li>
+      <li><a href="#鍵の設定">鍵の設定</a></li>
+      <li><a href="#ROSのインストール">ROSのインストール</a></li>
+      <li><a href="#ROSの環境設定">ROSの環境設定</a></li>
+      <li><a href="#rosinstallの準備">rosinstallの準備</a></li>
+      <li><a href="#rosdepの初期化">rosdepの初期化</a></li>
+      <li><a href="#動作確認">動作確認</a></li>
+    </ul>
+
+    <section>
+
+    <h3 id="sources.listの設定">sources.listの設定</h3>
+    <p>packages.ros.orgからのソフトウェアを受け入れるための設定。</p>
+    <ul>
+      <pre>$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'</pre>
+    </ul>
+    <p>次のように表示されたら、パスワードを入力。</p>
+    <ul>
+      <pre>[sudo] password for pi:</pre>
+    </ul>
+    <br>
+
+    <h3 id="鍵の設定">鍵の設定</h3>
+    <p>パッケージを認証する鍵の設定。</p>
+    <ul>
+      <pre>$ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654</pre>
+    </ul>
+    <br>
+
+    <h3 id="ROSのインストール">ROSのインストール</h3>
+    <p>最初にソフトウェア・パッケージの情報を最新のものにする。</p>
+    <ul>
+      <pre>$ sudo apt update</pre>
+    </ul>
+    <p>次にROSをインストール。</p>
+    <ul>
+      <pre>$ sudo apt install ros-melodic-desktop-full</pre>
+    </ul>
+    <p>次のように表示されたら、そのまま[Enter]を押す。</p>
+    <ul>
+      <pre>Do you want to continue? [Y/n]</pre>
+    </ul>
+    <br>
+
+    <h3 id="ROSの環境設定">ROSの環境設定</h3>
+    <p>
+      ROSのソフトウェアを使えるようにするには、
+      「ターミナル」を起動するたびに環境設定を行う必要がある。
+      次のコマンドを実行することで、「ターミナル」起動時に自動的に
+      環境設定が行われるようになる。
+    </p>
+    <ul>
+      <pre>$ echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc</pre>
+    </ul>
+    <ul>
+      <pre>$ source ~/.bashrc</pre>
+    </ul>
+    <br>
+
+    <h3 id="rosinstallの準備">rosinstallの準備</h3>
+    <p>rosinstallは複数のソース・ツリーを一括して扱うためのコマンド。</p>
+    <ul>
+      <pre>$ sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential</pre>
+    </ul>
+    <p>次のように表示されたら、パスワードを入力。</p>
+    <ul>
+      <pre>[sudo] password for pi:</pre>
+    </ul>
+    <p>次のように表示されたら、そのまま[Enter]を押す。</p>
+    <ul>
+      <pre>Do you want to continue? [Y/n]</pre>
+    </ul>
+    <br>
+
+    <h3 id="rosdepの初期化">rosdepの初期化</h3>
+    <p>rosdepは、自分でROSのパッケージをビルドするときに、依存するライブラリを自動でインストールしてくれるツール。</p>
+    <ul>
+      <pre>$ sudo apt install python-rosdep</pre>
+    </ul>
+    <p>rosdepを初期化。</p>
+    <ul>
+      <pre>$ sudo rosdep init</pre>
+    </ul>
+    <p>rosdepを更新。</p>
+    <ul>
+      <pre>$ rosdep update</pre>
+    </ul>
+    <br>
+
+    <h3 id="動作確認">動作確認</h3>
+    <p>インストールが終わったら、次のコマンドを実行。</p>
+    <ul>
+      <pre>$ roscore</pre>
+    </ul>
+    <p>次のような表示が出れば成功。</p>
+    <ul>
+      <pre>... logging to /home/pi/.ros/log/2219fcc6-f097-11ea-8eef-b827eb56a1bd/roslaunch-htc02-27106.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is &lt;1GB.
+
+started roslaunch server http://htc02:32817/
+ros_comm version 1.14.9
+
+
+SUMMARY
+========
+
+PARAMETERS
+* /rosdistro: melodic
+* /rosversion: 1.14.9
+
+NODES
+
+auto-starting new master
+process[master]: started with pid [27120]
+ROS_MASTER_URI=http://htc02:11311/
+
+setting /run_id to 2219fcc6-f097-11ea-8eef-b827eb56a1bd
+process[rosout-1]: started with pid [27131]
+started core service [/rosout]</pre>
+    </ul>
+
+    <p>
+      [Ctrl-c]（[Ctrl]キーを押しながら[c]キー）を押すと、プログラムが終了。
+    </p>
+
+    <ul>
+      <pre>^C[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+done</pre>
+    </ul>
+    <br>
+
+    <p>詳しいインストール方法は<a href="http://wiki.ros.org/melodic/Installation/Ubuntu">ROS Wiki</a>を見てください。
+  </body>
+</html>
