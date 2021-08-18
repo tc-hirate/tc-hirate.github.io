@@ -2,29 +2,31 @@
 <html lang="jp">
   <head>
     <meta charset="utf-8">
-    <title>Linuxのインストール</title>
+    <title>Linuxのインストール（Raspberry Pi）</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <h1>Linuxのインストール</h1>
+    <h1>Linuxのインストール（Raspberry Pi）</h1>
 
     <p>
       Linuxはオープンソースのオペレーティングシステム（OS）です。
-      今回は、Raspberry Piで使うことができるUbuntu MATE 18.04の
-      32bit版を使います。
+    </p>
+    <p>
+      Raspberry PiではUbuntu Server 20.04 LTSを使います。
     </p>
     <br>
 
     <ul>
-      <li><a href="#Linuxのダウンロード">Linuxのダウンロード</a></li>
-      <li><a href="#SDカードのフォーマット">SDカードのフォーマット</a></li>
+      <li><a href="#Raspberry Pi Imagerのインストール">Raspberry Pi Imagerのインストール</a></li>
       <li><a href="#ディスクイメージの書き込み">ディスクイメージの書き込み</a></li>
       <li><a href="#Linuxの設定">Linuxの設定</a></li>
+      <li><a href="#ネットワークの設定">ネットワークの設定</a></li>
+      <li><a href="#ssh接続">ssh接続</a></li>
     </ul>
 
     <section>
 
-    <h3 id="Linuxのダウンロード">Linuxのダウンロード</h3>
+    <h3 id="Raspberry Pi Imagerのインストール">Raspberry Pi Imagerのインストール</h3>
     <p>
       Ubuntu MATE 18.04のディスクイメージを
       <a href=https://ubuntu-mate.org/download/>公式HP</a>
@@ -66,33 +68,6 @@
     <p>エクスプローラでダウンロードフォルダを確認する。</p>
     <div style="text-align:center">
       <img src="images/linux_install_img_06.png">
-    </div>
-    <br>
-
-    <h3 id="SDカードのフォーマット">SDカードのフォーマット</h3>
-    <p>SDカードをSDカードリーダーなどに挿入します。</p>
-    <p>
-      SD Card Formatterを起動し、
-      「カードの選択」が挿入したSDカードになっているか確認してください。
-      「上書きフォーマット」を選択し、[フォーマット]ボタンをクリックする。
-    </p>
-    <div style="text-align:center">
-      <img src="images/linux_install_img_07.png">
-    </div>
-
-    <p>[はい]ボタンをクリックする。</p>
-    <div style="text-align:center">
-      <img src="images/linux_install_img_08.png">
-    </div>
-
-    <p>フォーマット中。</p>
-    <div style="text-align:center">
-      <img src="images/linux_install_img_09.png">
-    </div>
-
-    <p>[OK]ボタンをクリックする。</p>
-    <div style="text-align:center">
-      <img src="images/linux_install_img_10.png">
     </div>
     <br>
 
@@ -149,5 +124,46 @@
       Keyboard Layoutは使用するキーボードに合わせて変更してください。
       Time Zoneはタイ時間に合わせてください。
     </p>
+    <br>
+
+    <h3 id="ネットワークの設定">ネットワークの設定</h3>
+    <p>
+      SDカードをRaspberry Piに挿入して電源を入れます。
+      ウィザードに従って設定してください。
+    </p>
+    <p>今回使用するRaspberry Piは次のように設定してあります。</p>
+    <ol>
+      <li>Language: English</li>
+      <br>
+      <li>Keyboard Layout: English(US)</li>
+      <br>
+      <li>Time Zone: Tokyo</li>
+    </ol>
+    <p>
+      Langageは変更しないでください。
+      Keyboard Layoutは使用するキーボードに合わせて変更してください。
+      Time Zoneはタイ時間に合わせてください。
+    </p>
+    <br>
+
+    <h3 id="ssh接続">ssh接続</h3>
+    <p>
+      SDカードをRaspberry Piに挿入して電源を入れます。
+      ウィザードに従って設定してください。
+    </p>
+    <p>今回使用するRaspberry Piは次のように設定してあります。</p>
+    <ol>
+      <li>Language: English</li>
+      <br>
+      <li>Keyboard Layout: English(US)</li>
+      <br>
+      <li>Time Zone: Tokyo</li>
+    </ol>
+    <p>
+      Langageは変更しないでください。
+      Keyboard Layoutは使用するキーボードに合わせて変更してください。
+      Time Zoneはタイ時間に合わせてください。
+    </p>
+
   </body>
 </html>

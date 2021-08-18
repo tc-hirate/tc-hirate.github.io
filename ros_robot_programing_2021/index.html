@@ -10,10 +10,30 @@
     <p>2021年度インターンシップ</p>
     <section>
 
+    <h2>実習内容</h2>
+
+    <p>ROSロボットプログラミングに必要な開発環境の構築方法と
+      プログラミング技法について習得することを目指します。</p>
+    <p>ロボットは<a href="https://www.physical-computing.jp/product/1302">Zumo</a>を使います。</p>
+    <p>ZumoはRaspberry Pi、Arduino Uno、Zumo Shieldから
+      構成されます。</p>
+    <p>Zumo Shieldにはモータやセンサが搭載されていて、
+      これらを使ってロボットを制御できます。</p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/zumo.jpeg"
+           alt="Raspberry Pi on Zumoキット"
+           width="50%"
+           height="50%">
+      <figcaption>Raspberry Pi on Zumoキット</figcaption>
+    </div>
+    <br>
+
     <h2>使用する機器</h2>
 
     <ul>
-      <li>PC(Ubuntu 20.04 LTS)</li>
+      <li>PC</li>
       <li>ロボット
         <ul>
           <li>Raspberry Pi 3 Model B</li>
@@ -23,50 +43,21 @@
       </li>
       <li>ジョイスティック</li>
       <li>Webカメラ</li>
-      <li>USBケーブル ABタイプ</li>
-      <li>単三乾電池 4本</li>
-    </ul>
-
-    <p>ロボットは<a href="https://www.physical-computing.jp/product/1302">Zumo</a>を使います。
-      Zumoはコンパクトなロボット用プラットフォームキットで、
-      Raspberry PiとArduinoを使って制御します。</p>
-    <div style="text-align:center">
-      <img src="images/zumo.jpeg" alt="Zumo" width="50%" height="50%">
-    </div>
-
-    <h2>開発環境の構築</h2>
-    <ul>
-      <li>PC
-        <ul>
-          <li><a href="teraterm_install.html">Tera Termのインストール</a></li>
-          <li><a href="vncviewer_install.html">VNC Viewerのインストール</a></li>
-        </ul>
-      </li>
-      <li>Raspberry Pi
-        <ul>
-          <li><a href="linux_install.html">Linuxのインストール</a></li>
-          <li><a href="ros_install.html">ROSのインストール</a></li>
-          <li><a href="arduino_install.html">Arduino IDEのインストール</a></li>
-          <li><a href="ssh_install.html">SSHのインストール</a></li>
-          <li><a href="vncserver_install.html">VNC Serverのインストール</a></li>
-          <li><a href="autologin.html">自動ログインの設定</a></li>
-<!--
-          <li><a href="autologin.html">自動ログインの設定</a></li>
--->
-        </ul>
-      </li>
-      <!-- <li><a href="https://bnd-tc.github.io/ros_mobile_robot_rsj_tutorial/linux_basics.html">Linuxの基本操作</a></li> -->
     </ul>
     <br>
 
     <h2>スケジュール</h2>
 
-    <h3>2日目（8/31）</h3>
+    <h3>8月31日（火）</h3>
     <table>
       <tbody>
         <tr>
-          <td>9:00-12:00</td>
-          <td><a href="#">開発環境の構築（PC）</a></td>
+          <td>9:00-10:30</td>
+          <td><a href="linux_install_pc.html">Linuxのインストール（PC）</a></td>
+        </tr>
+        <tr>
+          <td>10:30-12:00</td>
+          <td><a href="linux_basics.html">Linux入門</a></td>
         </tr>
         <tr>
           <td>12:00-13:00</td>
@@ -74,22 +65,26 @@
         </tr>
         <tr>
           <td>13:00-14:30</td>
-          <td><a href="#">Linux入門</a></td>
+          <td><a href="ros2_install_pc.html">ROS2のインストール（PC）</a></td>
         </tr>
         <tr>
           <td>14:30-16:00</td>
-          <td><a href="#">Python入門</a></td>
+          <td><a href="python_basic.html">Python入門</a></td>
         </tr>
       </tbody>
     </table>
     <br>
 
-    <h3>3日目（9/1）</h3>
+    <h3>9月1日（水）</h3>
     <table>
       <tbody>
         <tr>
-          <td>9:00-12:00</td>
-          <td><a href="#">開発環境の構築（Raspberry Pi）</a></td>
+          <td>9:00-10:30</td>
+          <td><a href="linux_install_pi.html">Linuxのインストール（Raspberry Pi）</a></td>
+        </tr>
+        <tr>
+          <td>10:30-12:00</td>
+          <td><a href="ros2_install_pi.html">ROS2のインストール（Raspberry Pi）</a></td>
         </tr>
         <tr>
           <td>12:00-13:00</td>
@@ -97,18 +92,18 @@
         </tr>
         <tr>
           <td>13:00-16:00</td>
-          <td><a href="#">ROS2 Tutorial（Beginner: CLI Tool）</a></td>
+          <td><a href="https://docs.ros.org/en/galactic/Tutorials.html">ROS2 Tutorial（Beginner: CLI Tool）</a></td>
         </tr>
       </tbody>
     </table>
     <br>
 
-    <h3>4日目（9/2）</h3>
+    <h3>9月2日（木）</h3>
     <table>
       <tbody>
         <tr>
           <td>9:00-12:00</td>
-          <td><a href="#">ROS2 Tutorial（Beginner: Client Libraries）</a></td>
+          <td><a href="https://docs.ros.org/en/galactic/Tutorials.html">ROS2 Tutorial（Beginner: Client Libraries）</a></td>
         </tr>
         <tr>
           <td>12:00-13:00</td>
@@ -116,69 +111,77 @@
         </tr>
         <tr>
           <td>13:00-16:00</td>
-          <td><a href="#">ROS2 Tutorial（Intermediate）</a></td>
+          <td><a href="https://docs.ros.org/en/galactic/Tutorials.html">ROS2 Tutorial（Intermediate）</a></td>
         </tr>
       </tbody>
     </table>
     <br>
 
-    <h3>5日目（9/3）</h3>
+    <h3>9月3日（金）</h3>
     <table>
       <tbody>
         <tr>
-          <td>9:00-12:00</td>
-          <td><a href="#">「ジョイスティック」でロボット操縦</a></td>
+          <td>9:00-10:30</td>
+          <td><a href="joystick.html">ジョイスティックを使う</a></td>
+        </tr>
+        <tr>
+          <td>10:30-12:00</td>
+          <td><a href="arduino.html">Arduinoを使う</a></td>
         </tr>
         <tr>
           <td>12:00-13:00</td>
           <td>昼休み</td>
         </tr>
         <tr>
-          <td>13:00-16:00</td>
-          <td><a href="#">OpenCVで画像処理</a></td>
+          <td>13:00-14:30</td>
+          <td><a href="opencv.html">OpenCVを使う</a></td>
+        </tr>
+        <tr>
+          <td>14:30-16:00</td>
+          <td><a href="webcam.html">Webカメラを使う</a></td>
         </tr>
       </tbody>
     </table>
     <br>
 
-    <h3>7日目（9/7）</h3>
+    <h3>9月7日（火）</h3>
     <table>
       <tbody>
         <tr>
           <td>9:00-16:00</td>
-          <td><a href="#">課題1「人の顔を検出して追従する」</a></td>
+          <td><a href="kadai1.html">課題1「人の顔を検出して追従する」</a></td>
         </tr>
       </tbody>
     </table>
     <br>
 
-    <h3>8日目（9/8）</h3>
+    <h3>9月8日（水）</h3>
+    <table>
+      <tbody>
+        <tr>
+          <td>9:00-16:00</td>
+          <td><a href="kadai2.html">課題2「白線を検出して自動走行する」</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+
+    <h3>9月9日（木）</h3>
+    <table>
+      <tbody>
+        <tr>
+          <td>9:00-16:00</td>
+          <td><a href="kadai3.html">課題3「前を走るZumoを追従する」</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+
+    <h3>9月10日（金）</h3>
     <table>
       <tbody>
         <tr>
           <td>9:00-15:00</td>
-          <td><a href="#">課題2「白線を検出して自動走行する」</a></td>
-        </tr>
-      </tbody>
-    </table>
-    <br>
-
-    <h3>9日目（9/9）</h3>
-    <table>
-      <tbody>
-        <tr>
-          <td>10:00-15:00</td>
-          <td><a href="#">課題3「前を走るZumoを追従する」</a></td>
-        </tr>
-      </tbody>
-    </table>
-    <br>
-
-    <h3>10日目（9/10）</h3>
-    <table>
-      <tbody>
-        <tr>
-          <td>10:00-15:00</td>
           <td>まとめ</td>
         </tr>
         <tr>
