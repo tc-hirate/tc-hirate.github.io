@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+  <div class="main">
     <h1>Linuxのインストール（Raspberry Pi）</h1>
 
     <p>
@@ -27,17 +28,26 @@
     <section>
 
     <h3 id="Raspberry Pi Imagerのインストール">Raspberry Pi Imagerのインストール</h3>
-    <p>
-      Ubuntu MATE 18.04のディスクイメージを
-      <a href=https://ubuntu-mate.org/download/>公式HP</a>
-      からダウンロード。
+    <p>公式のイメージ書き込みツール「Raspberry Pi Imager」
+      を使ってSDカードにイメージを書き込みます。
     </p>
     <p>
-      「Or.... choose a hardware port:」の「Raspberry Pi 32-bit」
-      をクリック。
+      詳しくは
+      <a href=https://www.raspberrypi.org/software/>公式HP</a>
+      を参照してください。
     </p>
+    <p>
+      以下のコマンドを実行してRaspberry Pi Imagerを
+      インストールします。
+    </p>
+    <ul>
+      <pre>$ sudo apt install rpi-imager</pre>
+    </ul>
     <div style="text-align:center">
-      <img src="images/linux_install_img_01.png">
+      <img src="images/linux_install_img_01.png"
+           alt="Raspberry Pi Imager"
+           width="100%"
+           height="100%">
     </div>
     <p>Downloadsディレクトリにファイルが保存される。</p>
     <br>
@@ -165,5 +175,6 @@
       Time Zoneはタイ時間に合わせてください。
     </p>
 
+  </div>
   </body>
 </html>
