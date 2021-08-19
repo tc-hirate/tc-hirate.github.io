@@ -32,21 +32,44 @@
       インストールが正しく行われたか確認するために、
       サンプルプログラムを実行します。
     </p>
+    <p>講師のPCで次のコマンドを実行します。</p>
+    <ul>
+      <pre>$ source /opt/ros/galactic/setup.bash
+$ ros2 run demo_nodes_cpp talker
+[INFO] [1629349106.806390248] [talker]: Publishing: 'Hello World: 1'
+[INFO] [1629349107.806307343] [talker]: Publishing: 'Hello World: 2'
+[INFO] [1629349108.806380737] [talker]: Publishing: 'Hello World: 3'
+[INFO] [1629349109.806435457] [talker]: Publishing: 'Hello World: 4'
+[INFO] [1629349110.806408412] [talker]: Publishing: 'Hello World: 5'
+[INFO] [1629349111.806488216] [talker]: Publishing: 'Hello World: 6'
+[INFO] [1629349112.806511191] [talker]: Publishing: 'Hello World: 7'
+[INFO] [1629349113.806469018] [talker]: Publishing: 'Hello World: 8'
+[INFO] [1629349114.806562287] [talker]: Publishing: 'Hello World: 9'
+[INFO] [1629349115.806597414] [talker]: Publishing: 'Hello World: 10'
+・・・</pre>
+    </ul>
+    <p>受講生のPCで次のコマンドを実行してください。</p>
+    <ul>
+      <pre>$ source /opt/ros/galactic/setup.bash
+$ ros2 run demo_nodes_cpp listener
+[INFO] [1629349106.847446274] [listener]: I heard: [Hello World: 1]
+[INFO] [1629349107.809615503] [listener]: I heard: [Hello World: 2]
+[INFO] [1629349108.809555719] [listener]: I heard: [Hello World: 3]
+[INFO] [1629349109.809806205] [listener]: I heard: [Hello World: 4]
+[INFO] [1629349110.809834231] [listener]: I heard: [Hello World: 5]
+[INFO] [1629349111.809834698] [listener]: I heard: [Hello World: 6]
+[INFO] [1629349112.809833272] [listener]: I heard: [Hello World: 7]
+[INFO] [1629349113.809486227] [listener]: I heard: [Hello World: 8]
+[INFO] [1629349114.809884073] [listener]: I heard: [Hello World: 9]
+[INFO] [1629349115.809784248] [listener]: I heard: [Hello World: 10]
+・・・</pre>
+    </ul>
     <p>
-      はじめに、ROS2のsetup fileを実行するためのコマンドを
-      shellのsutartup scriptに書いておきます。
+      Terminalを起動するたびにsetup fileを実行するのは
+      面倒なので、shellのsutartup scriptに書いておきます。
     </p>
     <ul>
       <pre>$ echo "source /opt/ros/galactic/setup.bash" >> ~/.bashrc</pre>
-    </ul>
-    <p>講師のPCで次のコマンドを実行します。</p>
-    <ul>
-      <pre>$ ros2 run demo_nodes_cpp talker</pre>
-    </ul>
-
-    <p>受講生のPCで次のコマンドを実行してください。</p>
-    <ul>
-      <pre>$ ros2 run demo_nodes_cpp listener</pre>
     </ul>
     <br>
 
@@ -76,8 +99,8 @@
       <pre>$ export ROS_DOMAIN_ID=8</pre>
     </ul>
     <p>
-      Terminalを起動するたびに実行するのは面倒なので、
-      .bashrcに書いておきます。
+      Terminalを起動するたびにIDを設定するのは面倒なので、
+      shellのsutartup scriptに書いておきます。
     </p>
     <ul>
       <pre>$ echo "export ROS_DOMAIN_ID=8" >> ~/.bashrc</pre>

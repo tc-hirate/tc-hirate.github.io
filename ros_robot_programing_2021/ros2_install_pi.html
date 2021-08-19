@@ -38,15 +38,16 @@
       サンプルプログラムを実行します。
     </p>
     <p>
-      はじめに、ROS2のsetup fileを実行するためのコマンドを
+      はじめに、setup fileを実行するコマンドを
       shellのsutartup scriptに書いておきます。
     </p>
     <ul>
       <pre style="background-color: #FFFACD;">$ echo "source /opt/ros/galactic/setup.bash" >> ~/.bashrc</pre>
     </ul>
     <p>
-      ROS_DOMAIN_IDを設定します。
-      IDはZumoの番号と同じにします。
+      IDを設定するコマンドも
+      shellのsutartup scriptに書いておきます。
+      IDはZumoの番号と同じにし、
       Zumo-08を使っている場合は8となります。
     </p>
     <ul>
@@ -63,12 +64,6 @@
       <pre style="background-color: #FFFACD;">$ ros2 run demo_nodes_cpp listener</pre>
     </ul>
     <br>
-
-
-
-
-
-
 
   </div>
   </body>
