@@ -8,89 +8,137 @@
   <body>
     <h1>ジョイスティックを使う</h1>
 
-    <p>ジョイスティックを使ってturtlesimを動かす。</p>
+    <p>PCでジョイスティックが使えるように設定します。</p>
     <br>
 
     <ul>
-      <li><a href="#パッケージを作成する">パッケージを作成する</a></li>
-      <li><a href="#ジョイスティックを使う">ジョイスティックを使う</a></li>
+      <li><a href="#必要なパッケージをインストールする">必要なパッケージをインストールする</a></li>
+      <li><a href="#ジョイスティックの動作確認">ジョイスティックの動作確認</a></li>
       <li><a href="#操縦プログラムを作る">操縦プログラムを作る</a></li>
       <li><a href="#操縦プログラムを実行する">操縦プログラムを実行する</a></li>
       <li><a href="#演習1「ジョイスティックを使ってturtlesimを動かす」">演習1「ジョイスティックを使ってturtlesimを動かす」</a></li>
     </ul>
     <section>
 
-    <h3 id="パッケージを作成する">パッケージを作成する</h3>
+    <h3 id="必要なパッケージをインストールする">必要なパッケージをインストールする</h3>
     <p>
-      パッケージを作成する。
+      ジョイスティックを使うために必要なパッケージを
+      インストールする。
     </p>
+    <ul>
+      <pre>$ sudo apt install ros-galactic-teleop-tools</pre>
+    </ul>
+    <ul>
+      <pre>$ sudo apt install ros-galactic-joy</pre>
+    </ul>
     <br>
 
-    <h3 id="ジョイスティックを使う">ジョイスティックを使う</h3>
+    <h3 id="ジョイスティックの動作確認">ジョイスティックの動作確認</h3>
+    <p>PCにジョイスティックを接続してください。</p>
     <p>
-      ジョイスティックを接続してください。
-      Raspberry Piがジョイスティックを認識しているかは、
-      次のコマンドを実行して調べられます。
-      「/dev/input/js0」のように表示されれば認識されています。
+      PCにジョイスティックを接続し、
+      次のコマンドを実行してください。
+      接続したジョイスティックが確認できます。
     </p>
     <ul>
-      <pre>$ ls -l /dev/input/js*
-crw-rw----+ 1 root input 13, 0  9月 29 10:00 /dev/input/js0</pre>
+      <pre>pi@zumo08:~$ lsusb
+・・・
+Bus 001 Device 005: ID 046d:c21e Logitech, Inc. F510 Gamepad [XInput Mode]
+・・・</pre>
     </ul>
-    <p>ソフトウェア・パッケージの情報を最新のものにします。</p>
+    <br>
+
+    <p>
+      続いて、次のコマンドを実行してください。
+      js0があればジョイスティックは認識されています。
+    </p>
     <ul>
-      <pre>$ sudo apt update</pre>
+      <pre>pi@zumo08:~$ ls /dev/input/
+by-id  by-path  event0  event1  event2  event3  js0  mice</pre>
     </ul>
-    <p>次のように表示されたら、パスワードを入力します。</p>
+    <br>
+
+    <p>joyパッケージのjoy-nodeを実行します。</p>
     <ul>
-      <pre>[sudo] password for pi:</pre>
+      <pre>[pi@zumo08:~$ ros2 run joy joy_node 
+[INFO] [1626763924.068461936] [joy_node]: Opened joystick: Logitech Gamepad F510.  deadzone: 0.050000</pre>
     </ul>
-    <p>ros-melodic-joyをインストールします。</p>
-    <ul>
-      <pre>$ sudo apt install ros-melodic-joy</pre>
-    </ul>
-    <p>次のように表示されたら、そのまま[Enter]を押します。</p>
-    <ul>
-      <pre>Do you want to continue? [Y/n]</pre>
-    </ul>
-    <p>roscoreを実行します。</p>
-    <ul>
-      <pre>$ roscore</pre>
-    </ul>
-    <p>joy_nodeを実行します。</p>
-    <ul>
-      <pre>$ rosrun joy joy_node</pre>
-    </ul>
+    <br>
+
     <p>Topicを確認します。</p>
     <ul>
-      <pre>$ rostopic list
-/diagnostics
+      <pre>pi@zumo08:~$ ros2 topic list
 /joy
 /joy/set_feedback
-/rosout
-/rosout_agg</pre>
+/parameter_events
+/rosout</pre>
     </ul>
-    <p>「/joy」を表示します。</p>
+    <br>
+
+    <p>/joyを表示します。</p>
     <ul>
-      <pre>$ rostopic echo /joy
+      <pre>pi@zumo08:~$ ros2 topic echo /joy
 header:
-  seq: 1
   stamp:
-    secs: 1601341739
-    nsecs: 466541438
-  frame_id: "/dev/input/js0"
-axes: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-buttons: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
----
-header:
-  seq: 2
-  stamp:
-    secs: 1601341739
-    nsecs: 630541170
-  frame_id: "/dev/input/js0"
-axes: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-buttons: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    sec: 1626764330
+    nanosec: 578424184
+  frame_id: joy
+axes:
+- -0.0
+- -0.0
+- 1.0
+- -0.0
+- -0.0
+- 1.0
+- 0.0
+- 0.0
+buttons:
+- 0
+- 0
+- 0
+- 0
+- 0
+- 0
+- 0
+- 0
+- 0
+- 0
+- 0
 ---</pre>
+    </ul>
+    <br>
+
+    <p>teleop_twist_joyパッケージのteleop-nodeを実行します。</p>
+    <ul>
+      <pre>i@zumo08:~$ ros2 run teleop_twist_joy teleop_node
+[INFO] [1626764497.099847413] [TeleopTwistJoy]: Teleop enable button 5.
+[INFO] [1626764497.100258921] [TeleopTwistJoy]: Linear axis x on 5 at scale 0.500000.
+[INFO] [1626764497.100349753] [TeleopTwistJoy]: Angular axis yaw on 2 at scale 0.500000.</pre>
+    </ul>
+    <br>
+
+    <p>Topicを確認します。</p>
+    <ul>
+      <pre>pi@zumo08:~$ ros2 topic list
+/cmd_vel
+/joy
+/joy/set_feedback
+/parameter_events
+/rosout</pre>
+    </ul>
+    <br>
+
+    <p>/cmd_velを表示します。</p>
+    <ul>
+      <pre>pi@zumo08:~$ ros2 topic echo /cmd_vel
+linear:
+  x: 0.3637910783290863
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.351406991481781</pre>
     </ul>
     <br>
 

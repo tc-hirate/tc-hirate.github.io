@@ -23,8 +23,10 @@
       <li><a href="#Raspberry Piの設定">Raspberry Piの設定</a></li>
       <li><a href="#ホスト名の変更">ホスト名の変更</a></li>
       <li><a href="#ユーザーの追加">ユーザーの追加</a></li>
-      <li><a href="#ネットワークの設定">ネットワークの設定</a></li>
+      <li><a href="#有線LANの設定">有線LANの設定</a></li>
       <li><a href="#ssh接続">ssh接続</a></li>
+      <li><a href="#無線LANの設定">無線LANの設定</a></li>
+      <li><a href="#GUIが起動する場合">GUIが起動する場合</a></li>
     </ul>
 
     <section>
@@ -45,81 +47,108 @@
     <ul>
       <pre>$ snap install rpi-imager</pre>
     </ul>
-    <div style="text-align:center">
-      <img src="images/linux_install_img_01.png"
-           alt="Raspberry Pi Imager"
-           width="100%"
-           height="100%">
-    </div>
     <br>
 
     <h3 id="ディスクイメージの書き込み">ディスクイメージの書き込み</h3>
     <p>Raspberry Pi Imagerを起動する。</p>
     <div style="text-align:center">
       <img src="images/rpi_imager_img_01.png"
-           alt="Raspberry Pi Imager 1">
+           alt="Raspberry Pi Imager 1"
+           width="100%"
+           height="100%">
     </div>
+    <br>
 
     <p>［CHOOSE OS］ボタンをクリックする。</p>
     <div style="text-align:center">
       <img src="images/rpi_imager_img_02.png"
-           alt="Raspberry Pi Imager 2">
+           alt="Raspberry Pi Imager 2"
+           width="100%"
+           height="100%">
     </div>
+    <br>
 
     <p>［Other general purpose OS］を選択する。</p>
     <div style="text-align:center">
       <img src="images/rpi_imager_img_03.png"
-           alt="Raspberry Pi Imager 3">
+           alt="Raspberry Pi Imager 3"
+           width="100%"
+           height="100%">
     </div>
+    <br>
 
     <p>［Ubuntu］を選択する。</p>
     <div style="text-align:center">
       <img src="images/rpi_imager_img_04.png"
-           alt="Raspberry Pi Imager 4">
+           alt="Raspberry Pi Imager 4"
+           width="100%"
+           height="100%">
     </div>
+    <br>
 
     <p>［Ubuntu Server 20.04.2 LTS 64bit］を選択する。</p>
     <div style="text-align:center">
       <img src="images/rpi_imager_img_05.png"
-           alt="Raspberry Pi Imager 5">
+           alt="Raspberry Pi Imager 5"
+           width="100%"
+           height="100%">
     </div>
+    <br>
 
     <p>SDカードを挿入する。</p>
     <p>[CHOOSE STORAGE]ボタンをクリックする。</p>
     <div style="text-align:center">
       <img src="images/rpi_imager_img_06.png"
-           alt="Raspberry Pi Imager 6">
+           alt="Raspberry Pi Imager 6"
+           width="100%"
+           height="100%">
     </div>
+    <br>
 
     <p>挿入したSDカードを選択する。</p>
     <div style="text-align:center">
       <img src="images/rpi_imager_img_07.png"
-           alt="Raspberry Pi Imager 7">
+           alt="Raspberry Pi Imager 7"
+           width="100%"
+           height="100%">
     </div>
+    <br>
 
     <p>[WRITE]ボタンをクリックする。</p>
     <div style="text-align:center">
       <img src="images/rpi_imager_img_08.png"
-           alt="Raspberry Pi Imager 8">
+           alt="Raspberry Pi Imager 8"
+           width="100%"
+           height="100%">
     </div>
+    <br>
 
     <p>[YES]ボタンをクリックする。</p>
     <div style="text-align:center">
       <img src="images/rpi_imager_img_09.png"
-           alt="Raspberry Pi Imager 9">
+           alt="Raspberry Pi Imager 9"
+           width="100%"
+           height="100%">
     </div>
+    <br>
 
     <p>書き込み中。</p>
     <div style="text-align:center">
       <img src="images/rpi_imager_img_10.png"
-           alt="Raspberry Pi Imager 10">
+           alt="Raspberry Pi Imager 10"
+           width="100%"
+           height="100%">
     </div>
+    <br>
 
     <p>[CONTINUE]ボタンをクリックする。</p>
     <div style="text-align:center">
       <img src="images/rpi_imager_img_11.png"
-           alt="Raspberry Pi Imager 11">
+           alt="Raspberry Pi Imager 11"
+           width="100%"
+           height="100%">
     </div>
+    <br>
 
     <p>Raspberry Pi Imagerを閉じる。</p>
 
@@ -140,15 +169,15 @@
     </p>
     <p>※パスワードは表示されません</p>
     <ul>
-      <pre>Ubuntu 20.04.2 LTS ubuntu tty1
+      <pre style="background-color: #FFFACD;">Ubuntu 20.04.2 LTS ubuntu tty1
 
-ubuntu login: ubuntu
-Password: ubuntu
+ubuntu login: <font color="#ff0000">ubuntu</font>
+Password: <font color="#ff0000">ubuntu</font>
 You are required to change your password immediately (administrator enforced)
 Changing password for ubuntu.
-Current password: ubuntu
-New password: hirate2020
-Retype new password: hirate2020
+Current password: <font color="#ff0000">ubuntu</font>
+New password: <font color="#ff0000">hirate2020</font>
+Retype new password: <font color="#ff0000">hirate2020</font>
 Welcome to Ubuntu 20.04.2 LTS (GNU/Linux 5.4.0-1028-raspi aarch64)
 ・・・
 ubuntu@ubuntu:~$</pre>
@@ -158,7 +187,7 @@ ubuntu@ubuntu:~$</pre>
     <h3 id="ホスト名の変更">ホスト名の変更</h3>
     <p>現在の設定値を確認します。</p>
     <ul>
-      <pre>ubuntu@ubuntu:~$ hostnamectl
+      <pre style="background-color: #FFFACD;">ubuntu@ubuntu:~$ hostnamectl
    Static hostname: ubuntu
          Icon name: computer
         Machine ID: 43a374fd544d486c85b565c2a9c5a133
@@ -167,23 +196,25 @@ ubuntu@ubuntu:~$</pre>
             Kernel: Linux 5.4.0-1028-raspi
       Architecture: arm64</pre>
     </ul>
+    <br>
 
     <p>
       ホスト名をubuntuからzumo08に変更します。
       番号は、各自が使っているZumoの番号です。
     </p>
     <ul>
-      <pre>ubuntu@ubuntu:~$ hostnamectl set-hostname zumo08
+      <pre style="background-color: #FFFACD;">ubuntu@ubuntu:~$ hostnamectl set-hostname zumo08
 ==== AUTHENTICATING FOR org.freedesktop.hostname1.set-static-hostname ===
 Authentication is required to set the statically configured local host name, as well as the pretty host name.
 Authenticating as: Ubuntu (ubuntu)
 Password: 
 ==== AUTHENTICATION COMPLETE ===</pre>
     </ul>
+    <br>
 
     <p>ホスト名が変更できているか確認します。</p>
     <ul>
-      <pre>ubuntu@ubuntu:~$ hostnamectl
+      <pre style="background-color: #FFFACD;">ubuntu@ubuntu:~$ hostnamectl
    Static hostname: zumo08
          Icon name: computer
         Machine ID: 43a374fd544d486c85b565c2a9c5a133
@@ -192,71 +223,80 @@ Password:
             Kernel: Linux 5.4.0-1028-raspi
       Architecture: arm64</pre>
     </ul>
+    <br>
 
     <p>再起動します。</p>
     <ul>
-      <pre>ubuntu@ubuntu:~$ sudo shutdown -r now</pre>
+      <pre style="background-color: #FFFACD;">ubuntu@ubuntu:~$ sudo shutdown -r now</pre>
     </ul>
+    <br>
 
-    <p>ホスト名が変更していることを確認してください。</p>
+    <p>ホスト名が変更されていることを確認してください。</p>
     <ul>
-      <pre>ubuntu@zumo08:~$</pre>
+      <pre style="background-color: #FFFACD;">ubuntu@<font color="#ff0000">zumo08</font>:~$</pre>
     </ul>
     <br>
 
     <h3 id="ユーザーの追加">ユーザーの追加</h3>
     <p>piというユーザーを追加します。</p>
     <ul>
-      <pre>ubuntu@zumo08:~$ sudo adduser pi
+      <pre style="background-color: #FFFACD;">ubuntu@zumo08:~$ sudo adduser pi
 Adding user `pi' ...
 Adding new group `pi' (1001) ...
 Adding new user `pi' (1001) with group `pi' ...
 Creating home directory `/home/pi' ...
 Copying files from `/etc/skel' ...
-New password: hirate2020
-Retype new password: hirate2020
+New password: <font color="#ff0000">hirate2020</font>
+Retype new password: <font color="#ff0000">hirate2020</font>
 passwd: password updated successfully
 Changing the user information for pi
 Enter the new value, or press ENTER for the default
-	Full Name []: press [Enter]key
-	Room Number []: press [Enter]key
-	Work Phone []: press [Enter]key
-	Home Phone []: press [Enter]key
-	Other []: press [Enter]key
+	Full Name []: <font color="#ff0000">press [Enter]key</font>
+	Room Number []: <font color="#ff0000">press [Enter]key</font>
+	Work Phone []: <font color="#ff0000">press [Enter]key</font>
+	Home Phone []: <font color="#ff0000">press [Enter]key</font>
+	Other []: <font color="#ff0000">press [Enter]key</font>
 Is the information correct? [Y/n] y</pre>
     </ul>
+    <br>
 
     <p>piをsudoグループに追加します。</p>
     <ul>
-      <pre>ubuntu@zumo08:~$ sudo adduser pi sudo
+      <pre style="background-color: #FFFACD;">ubuntu@zumo08:~$ sudo adduser pi sudo
 Adding user `pi' to group `sudo' ...
 Adding user pi to group sudo
 Done.</pre>
     </ul>
+    <br>
 
     <p>ubuntuとrootをロックします。</p>
     <ul>
-      <pre>ubuntu@zumo08:~$ sudo passwd -d ubuntu
+      <pre style="background-color: #FFFACD;">ubuntu@zumo08:~$ sudo passwd -d ubuntu
+passwd: password expiry information changed.
 ubuntu@zumo08:~$ sudo passwd -l ubuntu
-ubuntu@zumo08:~$ sudo passwd -l root</pre>
+passwd: password expiry information changed.
+ubuntu@zumo08:~$ sudo passwd -l root
+passwd: password expiry information changed.</pre>
     </ul>
+    <br>
 
     <p>この段階で、ログインできるユーザーはpiのみとなります。</p>
     <p>一度ログアウトします。</p>
     <ul>
-      <pre>ubuntu@zumo08:~$ exit</pre>
-    </ul>
-
-    <p>piでログインしてください。</p>
-    <ul>
-      <pre>pi@zumo08:~$</pre>
+      <pre style="background-color: #FFFACD;">ubuntu@zumo08:~$ exit</pre>
     </ul>
     <br>
 
-    <h3 id="ネットワークの設定">ネットワークの設定</h3>
-    <p>現在の設定を確認する。</p>
+    <p>piでログインしてください。</p>
     <ul>
-      <pre>$ cat /etc/netplan/50-cloud-init.yaml 
+      <pre style="background-color: #FFFACD;"><font color="#ff0000">pi</font>@zumo08:~$</pre>
+    </ul>
+    <br>
+
+    <h3 id="有線LANの設定">有線LANの設定</h3>
+    <p>現在のネットワークの設定を確認する。</p>
+    <ul>
+      <pre style="background-color: #FFFACD;">$ cat /etc/netplan/50-cloud-init.yaml 
 # This file is generated from information provided by the datasource.  Changes
 # to it will not persist across an instance reboot.  To disable cloud-init's
 # network configuration capabilities, write a file
@@ -269,20 +309,154 @@ network:
             optional: true
     version: 2</pre>
     </ul>
+    <br>
 
     <p>設定ファイルをコピーする。</p>
     <p>※ _は［Shift］＋［-］で入力</p>
     <ul>
-      <pre>$ sudo cp /etc/netplan/50-cloud-init.yaml /etc/netplan/99_config.yaml</pre>
+      <pre style="background-color: #FFFACD;">$ sudo cp /etc/netplan/50-cloud-init.yaml /etc/netplan/99_config.yaml</pre>
     </ul>
+    <br>
 
     <p>コピーした設定ファイルを編集する。</p>
     <p>※ [は［@］、]は［[］、:は［Shift］＋［;］</p>
     <ul>
-      <pre>$ sudo nano /etc/netplan/99_config.yaml</pre>
+      <pre style="background-color: #FFFACD;">$ sudo nano /etc/netplan/99_config.yaml</pre>
     </ul>
     <ul>
-      <pre># This file is generated from information provided by the datasource.  Changes
+      <pre style="background-color: #FFFACD;"># This file is generated from information provided by the datasource.  Changes
+# to it will not persist across an instance reboot.  To disable cloud-init's
+# network configuration capabilities, write a file
+# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+# network: {config: disabled}
+network:
+    ethernets:
+        eth0:
+            dhcp4: <font color="#ff0000">false</font>
+            optional: true
+            <font color="#ff0000">addresses: [192.168.1.249/24]</font>
+            <font color="#ff0000">gateway4: 192.168.1.1</font>
+            <font color="#ff0000">nameservers:</font>
+                <font color="#ff0000">addresses: [192.168.1.1]</font>
+                <font color="#ff0000">search: []</font>
+    version: 2</pre>
+    </ul>
+    <br>
+
+    <p>設定を反映させる。</p>
+    <ul>
+      <pre style="background-color: #FFFACD;">$ sudo netplan apply</pre>
+    </ul>
+    <br>
+
+    <p>再起動する。</p>
+    <ul>
+      <pre style="background-color: #FFFACD;">$ sudo shutdown -r now</pre>
+    </ul>
+    <br>
+
+    <p>IPアドレスを確認する。</p>
+    <ul>
+      <pre style="background-color: #FFFACD;">$ ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether b8:27:eb:71:de:e3 brd ff:ff:ff:ff:ff:ff
+    inet <font color="#ff0000">192.168.1.249/24</font> brd 192.168.1.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::ba27:ebff:fe71:dee3/64 scope link 
+       valid_lft forever preferred_lft forever
+3: wlan0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether b8:27:eb:24:8b:b6 brd ff:ff:ff:ff:ff:ff
+</pre>
+    </ul>
+    <br>
+
+    <p>ネットワークに接続されているか確認する。</p>
+    <ul>
+      <pre style="background-color: #FFFACD;">$ ping youtube.com
+PING youtube.com (216.58.197.206) 56(84) bytes of data.
+64 bytes from nrt13s48-in-f206.1e100.net (216.58.197.206): icmp_seq=1 ttl=114 time=12.0 ms
+64 bytes from nrt13s48-in-f206.1e100.net (216.58.197.206): icmp_seq=2 ttl=114 time=12.1 ms
+64 bytes from nrt13s48-in-f206.1e100.net (216.58.197.206): icmp_seq=3 ttl=114 time=12.3 ms
+・・・</pre>
+    </ul>
+    <br>
+
+    <h3 id="ssh接続">ssh接続</h3>
+    <p>
+      PCからRaspberry Piを遠隔操作するために
+      ssh接続をします。
+    </p>
+    <p>
+      今回は、Ubuntuに標準でインストールされている
+      Remminaを使います。
+    </p>
+    <br>
+
+    <p>Remminaを起動する。</p>
+    <div style="text-align:center">
+      <img src="images/ssh_img_01.png"
+           alt="SSH Connection 1">
+    </div>
+    <br>
+
+    <p>[New connection profile]ボタンをクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/ssh_img_02.png"
+           alt="SSH Connection 2">
+    </div>
+    <br>
+
+    <p>Remote Desktop Preferenceウィンドウが立ち上がる。</p>
+    <div style="text-align:center">
+      <img src="images/ssh_img_03.png"
+           alt="SSH Connection 3">
+    </div>
+    <br>
+
+    <p>必要な情報を入力して、[Save]ボタンをクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/ssh_img_04.png"
+           alt="SSH Connection 4">
+    </div>
+    <br>
+
+    <p>zumo08という名前の接続が追加された。</p>
+    <div style="text-align:center">
+      <img src="images/ssh_img_05.png"
+           alt="SSH Connection 5">
+    </div>
+    <br>
+
+    <p>zumo08をダブルクリックする。</p>
+    <div style="text-align:center">
+      <img src="images/ssh_img_06.png"
+           alt="SSH Connection 6">
+    </div>
+    <br>
+
+    <p>zumo08と接続された。</p>
+    <div style="text-align:center">
+      <img src="images/ssh_img_07.png"
+           alt="SSH Connection 7">
+    </div>
+    <br>
+
+    <p>以降、Raspberry Piの操作はこの画面から行います。</p>
+    <br>
+
+    <h3 id="無線LANの設定">無線LANの設定</h3>
+    <p>設定ファイルを編集する。</p>
+    <ul>
+      <pre style="background-color: #FFFACD;">$ sudo nano /etc/netplan/99_config.yaml</pre>
+    </ul>
+    <ul>
+      <pre style="background-color: #FFFACD;"># This file is generated from information provided by the datasource.  Changes
 # to it will not persist across an instance reboot.  To disable cloud-init's
 # network configuration capabilities, write a file
 # /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
@@ -297,76 +471,80 @@ network:
             nameservers:
                 addresses: [192.168.1.1]
                 search: []
+    <font color="#ff0000">wifis:</font>
+        <font color="#ff0000">wlan0:</font>
+            <font color="#ff0000">dhcp4: false</font>
+            <font color="#ff0000">optional: true</font>
+            <font color="#ff0000">addresses: [192.168.1.250/24]</font>
+            <font color="#ff0000">gateway4: 192.168.1.1</font>
+            <font color="#ff0000">nameservers:</font>
+                <font color="#ff0000">addresses: [192.168.1.1]</font>
+                <font color="#ff0000">search: []</font>
+            <font color="#ff0000">access-points:</font>
+                <font color="#ff0000">htc-s-ap:</font>
+                    <font color="#ff0000">password: "m7E6toogS7"</font>
     version: 2</pre>
     </ul>
+    <br>
 
     <p>設定を反映させる。</p>
     <ul>
-      <pre>$ sudo netplan apply</pre>
+      <pre style="background-color: #FFFACD;">$ sudo netplan apply</pre>
     </ul>
+    <br>
+
+    <p>再起動する。</p>
+    <ul>
+      <pre style="background-color: #FFFACD;">$ sudo shutdown -r now</pre>
+    </ul>
+    <br>
 
     <p>IPアドレスを確認する。</p>
     <ul>
-      <pre>$ ip a
+      <pre style="background-color: #FFFACD;">$ ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
        valid_lft forever preferred_lft forever
     inet6 ::1/128 scope host 
        valid_lft forever preferred_lft forever
-2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
-    link/ether dc:a6:32:e4:e9:4b brd ff:ff:ff:ff:ff:ff
-    inet 192.168.1.241/24 brd 192.168.1.255 scope global eth0
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether b8:27:eb:71:de:e3 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.1.249/24 brd 192.168.1.255 scope global eth0
        valid_lft forever preferred_lft forever
-    inet6 fe80::dea6:32ff:fee4:e94b/64 scope link 
+    inet6 fe80::ba27:ebff:fe71:dee3/64 scope link 
        valid_lft forever preferred_lft forever
-3: wlan0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
-    link/ether dc:a6:32:e4:e9:4c brd ff:ff:ff:ff:ff:ff</pre>
-    </ul>
-
-    <p>ネットワークに接続されているか確認する。</p>
-    <ul>
-      <pre>$ ping 192.168.1.249
-PING 192.168.1.249 (192.168.1.249) 56(84) バイトのデータ
-64 バイト応答 送信元 192.168.1.249: icmp_seq=1 ttl=64 時間=1.14ミリ秒
-64 バイト応答 送信元 192.168.1.249: icmp_seq=2 ttl=64 時間=0.502ミリ秒
-64 バイト応答 送信元 192.168.1.249: icmp_seq=3 ttl=64 時間=0.502ミリ秒
-64 バイト応答 送信元 192.168.1.249: icmp_seq=4 ttl=64 時間=0.486ミリ秒
-64 バイト応答 送信元 192.168.1.249: icmp_seq=5 ttl=64 時間=0.442ミリ秒
-64 バイト応答 送信元 192.168.1.249: icmp_seq=6 ttl=64 時間=0.559ミリ秒
-64 バイト応答 送信元 192.168.1.249: icmp_seq=7 ttl=64 時間=0.560ミリ秒
-64 バイト応答 送信元 192.168.1.249: icmp_seq=8 ttl=64 時間=0.514ミリ秒
-64 バイト応答 送信元 192.168.1.249: icmp_seq=9 ttl=64 時間=0.528ミリ秒
-^C
---- 192.168.1.249 ping 統計 ---
-送信パケット数 9, 受信パケット数 9, パケット損失 0%, 時間 8160ミリ秒
-rtt 最小/平均/最大/mdev = 0.442/0.581/1.144/0.201ミリ秒
+3: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether b8:27:eb:24:8b:b6 brd ff:ff:ff:ff:ff:ff
+    inet <font color="#ff0000">192.168.1.250/24</font> brd 192.168.1.255 scope global wlan0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::ba27:ebff:fe24:8bb6/64 scope link 
+       valid_lft forever preferred_lft forever
 </pre>
     </ul>
-
     <br>
 
-
-
-
-    <h3 id="ssh接続">ssh接続</h3>
     <p>
-      SDカードをRaspberry Piに挿入して電源を入れます。
-      ウィザードに従って設定してください。
+      Remminaでwifi用の接続を作成する。
+      名前はzumo08-wifiとします。
     </p>
-    <p>今回使用するRaspberry Piは次のように設定してあります。</p>
-    <ol>
-      <li>Language: English</li>
-      <br>
-      <li>Keyboard Layout: English(US)</li>
-      <br>
-      <li>Time Zone: Tokyo</li>
-    </ol>
     <p>
-      Langageは変更しないでください。
-      Keyboard Layoutは使用するキーボードに合わせて変更してください。
-      Time Zoneはタイ時間に合わせてください。
+      LANケーブルを抜いて、
+      ネットワークに接続されているか確認する。
     </p>
+    <ul>
+      <pre style="background-color: #FFFACD;">$ ping youtube.com
+PING youtube.com (172.217.27.78) 56(84) bytes of data.
+64 bytes from nrt12s15-in-f14.1e100.net (172.217.27.78): icmp_seq=1 ttl=113 time=61.6 ms
+64 bytes from nrt12s15-in-f14.1e100.net (172.217.27.78): icmp_seq=2 ttl=113 time=20.7 ms
+64 bytes from nrt12s15-in-f14.1e100.net (172.217.27.78): icmp_seq=3 ttl=113 time=19.2 ms
+・・・</pre>
+    </ul>
+    <br>
+
+    <h3 id="GUIが起動する場合">GUIが起動する場合</h3>
+    <p>T.B.A.</p>
+    <br>
 
   </div>
   </body>
