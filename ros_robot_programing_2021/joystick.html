@@ -14,8 +14,7 @@
     <ul>
       <li><a href="#必要なパッケージをインストールする">必要なパッケージをインストールする</a></li>
       <li><a href="#ジョイスティックの動作確認">ジョイスティックの動作確認</a></li>
-      <li><a href="#操縦プログラムを作る">操縦プログラムを作る</a></li>
-      <li><a href="#操縦プログラムを実行する">操縦プログラムを実行する</a></li>
+      <li><a href="#パッケージを作る">パッケージを作る</a></li>
       <li><a href="#演習1「ジョイスティックを使ってturtlesimを動かす」">演習1「ジョイスティックを使ってturtlesimを動かす」</a></li>
     </ul>
     <section>
@@ -26,15 +25,14 @@
       インストールする。
     </p>
     <ul>
-      <pre>$ sudo apt install ros-galactic-teleop-tools</pre>
+      <pre>$ sudo apt install ros-galactic-joy</pre>
     </ul>
     <ul>
-      <pre>$ sudo apt install ros-galactic-joy</pre>
+      <pre>$ sudo apt install ros-galactic-teleop-tools</pre>
     </ul>
     <br>
 
     <h3 id="ジョイスティックの動作確認">ジョイスティックの動作確認</h3>
-    <p>PCにジョイスティックを接続してください。</p>
     <p>
       PCにジョイスティックを接続し、
       次のコマンドを実行してください。
@@ -43,7 +41,7 @@
     <ul>
       <pre>pi@zumo08:~$ lsusb
 ・・・
-Bus 001 Device 005: ID 046d:c21e Logitech, Inc. F510 Gamepad [XInput Mode]
+Bus 002 Device 005: ID 046d:c21d Logitech, Inc. F310 Gamepad [XInput Mode]
 ・・・</pre>
     </ul>
     <br>
@@ -53,21 +51,22 @@ Bus 001 Device 005: ID 046d:c21e Logitech, Inc. F510 Gamepad [XInput Mode]
       js0があればジョイスティックは認識されています。
     </p>
     <ul>
-      <pre>pi@zumo08:~$ ls /dev/input/
-by-id  by-path  event0  event1  event2  event3  js0  mice</pre>
+      <pre>$ ls /dev/input/
+by-id    event0  event10  event12  event2  event4  event6  event8  js0   mouse0
+by-path  event1  event11  event13  event3  event5  event7  event9  mice  mouse1</pre>
     </ul>
     <br>
 
     <p>joyパッケージのjoy-nodeを実行します。</p>
     <ul>
-      <pre>[pi@zumo08:~$ ros2 run joy joy_node 
-[INFO] [1626763924.068461936] [joy_node]: Opened joystick: Logitech Gamepad F510.  deadzone: 0.050000</pre>
+      <pre>$ ros2 run joy joy_node
+[INFO] [1629868060.164242832] [joy_node]: Opened joystick: Logitech Gamepad F310.  deadzone: 0.050000</pre>
     </ul>
     <br>
 
     <p>Topicを確認します。</p>
     <ul>
-      <pre>pi@zumo08:~$ ros2 topic list
+      <pre>$ ros2 topic list
 /joy
 /joy/set_feedback
 /parameter_events
@@ -77,11 +76,11 @@ by-id  by-path  event0  event1  event2  event3  js0  mice</pre>
 
     <p>/joyを表示します。</p>
     <ul>
-      <pre>pi@zumo08:~$ ros2 topic echo /joy
+      <pre>$ ros2 topic echo /joy
 header:
   stamp:
-    sec: 1626764330
-    nanosec: 578424184
+    sec: 1629868280
+    nanosec: 378502125
   frame_id: joy
 axes:
 - -0.0
@@ -110,16 +109,16 @@ buttons:
 
     <p>teleop_twist_joyパッケージのteleop-nodeを実行します。</p>
     <ul>
-      <pre>i@zumo08:~$ ros2 run teleop_twist_joy teleop_node
-[INFO] [1626764497.099847413] [TeleopTwistJoy]: Teleop enable button 5.
-[INFO] [1626764497.100258921] [TeleopTwistJoy]: Linear axis x on 5 at scale 0.500000.
-[INFO] [1626764497.100349753] [TeleopTwistJoy]: Angular axis yaw on 2 at scale 0.500000.</pre>
+      <pre>@mbc084:~$ ros2 run teleop_twist_joy teleop_node 
+[INFO] [1629868740.510404297] [TeleopTwistJoy]: Teleop enable button 5.
+[INFO] [1629868740.510494888] [TeleopTwistJoy]: Linear axis x on 5 at scale 0.500000.
+[INFO] [1629868740.510528504] [TeleopTwistJoy]: Angular axis yaw on 2 at scale 0.500000.</pre>
     </ul>
     <br>
 
     <p>Topicを確認します。</p>
     <ul>
-      <pre>pi@zumo08:~$ ros2 topic list
+      <pre>$ ros2 topic list
 /cmd_vel
 /joy
 /joy/set_feedback
@@ -130,182 +129,135 @@ buttons:
 
     <p>/cmd_velを表示します。</p>
     <ul>
-      <pre>pi@zumo08:~$ ros2 topic echo /cmd_vel
+      <pre>$ ros2 topic echo /cmd_vel 
 linear:
-  x: 0.3637910783290863
+  x: 0.5
   y: 0.0
   z: 0.0
 angular:
   x: 0.0
   y: 0.0
-  z: 0.351406991481781</pre>
+  z: 0.5
+---</pre>
     </ul>
     <br>
 
-    <h3 id="操縦プログラムを作る">操縦プログラムを作る</h3>
-    <p>「ros_start/scripts/」ディレクトリに移動します。</p>
+    <h3 id="パッケージを作る">パッケージを作る</h3>
+    <p>joy_testという名前のパッケージを作ります。</p>
     <ul>
-      <pre>$ roscd ros_start/scripts/</pre>
+      <pre>$ cd dev_ws/src/
+$ ros2 pkg create --build-type ament_python joy_test</pre>
     </ul>
-    <p>「joy_twist.py」というファイルを作ります。</p>
-    <ul>
-      <pre>$ pluma joy_twist.py
-</pre>
-    </ul>
-    <p>プログラムの内容は以下の通りです。</p>
-    <ul>
-      <pre>#!/usr/bin/env python
-import rospy
-from sensor_msgs.msg import Joy
-from geometry_msgs.msg import Twist
-
-class JoyTwist(object):
-    def __init__(self):
-        self._joy_sub = rospy.Subscriber('joy', Joy, self.joy_callback, queue_size=1)
-        self._twist_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
-
-    def joy_callback(self, joy_msg):
-        if joy_msg.buttons[0] == 1:
-            vel = Twist()
-            vel.linear.x = joy_msg.axes[1] * 0.5
-            vel.angular.z = joy_msg.axes[0] * 1.0
-            self._twist_pub.publish(vel)
-
-if __name__ == '__main__':
-    rospy.init_node('joy_twist')
-    joy_twist = JoyTwist()
-    rospy.spin()</pre>
-    </ul>
-    <p>一行づつ解説します。</p>
-    <ul>
-      <pre>#!/usr/bin/env python</pre>
-    </ul>
-    <p>先頭行にこれを書くと実行ファイルとして扱うことができます。</p>
-    <ul>
-      <pre>import rospy</pre>
-    </ul>
-    <p>rospyをインポートします。</p>
-    <ul>
-      <pre>from sensor_msgs.msg import Joy</pre>
-    </ul>
-    <p>sensor_msgsというパッケージからJoyというMessage型をインポートします。</p>
-    <ul>
-      <pre>from geometry_msgs.msg import Twist</pre>
-    </ul>
-    <p>std_msgsというパッケージからStringというMessage型を インポートします。</p>
-    <ul>
-      <pre>class JoyTwist(object):</pre>
-    </ul>
-    <p>「JoyTwist」という名前でクラスを定義しています。</p>
-    <ul>
-      <pre>def __init__(self):</pre>
-    </ul>
-    <p>
-      「__init__」という名前で関数を定義しています。
-      この関数は「JoyTwist」クラスのインスタンスを作るときに
-      実行されます。
-    </p>
-    <ul>
-      <pre>self._joy_sub = rospy.Subscriber('joy', Joy, self.joy_callback, queue_size=1)</pre>
-    </ul>
-    <p>
-      「joy」という名前のTopicにSubscribeし、
-      受信したデータに対して「joy_callback」関数を実行する
-      Subscriberを作ります。
-    </p>
-    <ul>
-      <pre>self._twist_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)</pre>
-    </ul>
-    <p>
-      「cmd_vel」という名前で、Twist型のTopicにPublishする
-      Publisherを作ります。
-    </p>
-    <ul>
-      <pre>def joy_callback(self, joy_msg):</pre>
-    </ul>
-    <p>
-      「joy_callback」という名前で、「joy_msg」という引数を取る
-      関数を定義しています。
-    </p>
-    <ul>
-      <pre>if joy_msg.buttons[0] == 1:</pre>
-    </ul>
-    <p>Aボタンが押されているか判定しています。</p>
-    <ul>
-      <pre>vel = Twist()</pre>
-    </ul>
-    <p>Twistのメッセージをvelとして作っています。</p>
-    <ul>
-      <pre>vel.linear.x = joy_msg.axes[1] * 0.5</pre>
-    </ul>
-    <p>前進更新の値を代入します。</p>
-    <ul>
-      <pre>vel.angular.z = joy_msg.axes[0] * 1.0</pre>
-    </ul>
-    <p>回転の値を代入します。</p>
-    <ul>
-      <pre>self._twist_pub.publish(vel)</pre>
-    </ul>
-    <p>「pub」を使って「vel」をPublishします。</p>
     <br>
-
-    <h3 id="操縦プログラムを実行する">操縦プログラムを実行する</h3>
-    <p>joy_twist.pyを実行可能な状態にします。</p>
+    <p>launchファイル用のディレクトリを作ります。</p>
     <ul>
-      <pre>$ chmod 755 joy_twist.py</pre>
-    </ul>
-    <p>roscoreを実行します。</p>
-    <ul>
-      <pre>$ roscore</pre>
-    </ul>
-    <p>joy_nodeを実行します。</p>
-    <ul>
-      <pre>$ rosrun joy joy_node</pre>
-    </ul>
-    <p>
-      joy_twist.pyを実行します。
-      ウォーニングが出ますが、無視してください。
-    </p>
-    <ul>
-      <pre>$ rosrun ros_start joy_twist.py
-[WARN] [1601342753.146498]: Inbound TCP/IP connection failed: connection from sender terminated before handshake header received. 0 bytes were received. Please check sender for additional details.</pre>
-    </ul>
-    <p>rostopicで確認しましょう。</p>
-    <ul>
-      <pre>$ rostopic echo /cmd_vel
-linear:
-  x: 0.0485991202295
-  y: 0.0
-  z: 0.0
-angular:
-  x: 0.0
-  y: 0.0
-  z: -0.0</pre>
+      <pre>$ cd joy_test/
+$ mkdir launch</pre>
     </ul>
     <br>
 
     <h3 id="演習1「ジョイスティックを使ってturtlesimを動かす」">演習1「ジョイスティックを使ってturtlesimを動かす」</h3>
     <ol>
       <li>
-        「joy_twist.py」を実行するlaunchファイルを作ってください。
-        ファイル名は「joy_twist.launch」とします。
+        joy-nodeとteleop-nodeを使ってturtlesimを
+        動かしてください。
       </li>
       <br>
       <ul>
-        <pre>&ltlaunch&gt
-  &ltnode pkg="joy" name="joy_node" type="joy_node"/&gt
-  &ltnode pkg="ros_start" name="joy_twist" type="joy_twist.py"/&gt
-&lt/launch&gt</pre>
+        <pre>$ ros2 run turtlesim turtlesim_node</pre>
       </ul>
-
+      <ul>
+        <pre>$ ros2 run joy joy_node</pre>
+      </ul>
+      <ul>
+        <pre>$ ros2 run teleop_twist_joy teleop_node --ros-args --remap /cmd_vel:=/turtle1/cmd_vel</pre>
+      </ul>
       <br>
+
       <li>
-        ジョイスティックの方向キーでturtlesimの亀を操縦する
-        プログラムを作ってください。
-        ファイル名は「turtlesim_joy.py」とします。
-        仕様は「turtle_teleop_key」と同じになるようにすること。
+        joy-nodeとteleop-nodeを使ってturtlesimを
+        動かすためのlaunchファイルを作ってください。
+        ファイル名は「turtle_teleop_joy_launch.py」とします。
       </li>
       <br>
+
+      <p>turtle_teleop_joy_launch.py</p>
+      <ul>
+        <pre>from launch import LaunchDescription
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    return LaunchDescription([
+        Node(
+            package='turtlesim',
+            executable='turtlesim_node',
+            name='sim'
+        ),
+        Node(
+            package='joy',
+            executable='joy_node',
+            name='joy'
+        ),
+        Node(
+            package='teleop_twist_joy',
+            executable='teleop_node',
+            name='teleop',
+            remappings=[
+                ('/cmd_vel', '/turtle1/cmd_vel'),
+            ]
+        ),
+    ])</pre>
+      </ul>
+      <br>
+
+      <p>setup.py</p>
+      <ul>
+        <pre>import os
+from glob import glob
+
+from setuptools import setup
+
+package_name = 'joy_test'
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=[package_name],
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+        (os.path.join('share', package_name), glob('launch/*_launch.py')),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='ubuntu',
+    maintainer_email='ubuntu@todo.todo',
+    description='TODO: Package description',
+    license='TODO: License declaration',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+        ],
+    },
+)</pre>
+      </ul>
+      <br>
+
+      <p>launchファイルの実行</p>
+      <ul>
+        <pre>$ ros2 launch joy_test turtle_teleop_joy_launch.py</pre>
+      </ul>
+      <br>
+
+      <li>
+        ジョイスティックの方向キーでturtlesimを動かす
+        プログラムを作ってください。
+        ファイル名は「turtle_joy.py」、
+        仕様はturtle_teleop_keyと同じとします。
+      </li>
+      <br>
+
       <p>解答例（方向キーを押し続けると止まってしまう．．．）</p>
       <ul>
         <pre>#!/usr/bin/env python
@@ -339,16 +291,14 @@ if __name__ == '__main__':
     joy_twist = JoyTwist()
     rospy.spin()</pre>
       </ul>
-      <p>rqt_graphを実行すると次のようになります。</p>
-      <div style="text-align:center">
-        <img src="images/joystick_img_01.png">
-      </div>
       <br>
+
       <li>
-        「turtlesim_joy.py」を実行するlaunchファイルを作ってください。
-        ファイル名は「turtlesim_joy.launch」とします。
+        「turtle_joy.py」を実行するlaunchファイルを作ってください。
+        ファイル名は「turtle_joy_launch.py」とします。
       </li>
       <br>
+
       <ul>
         <pre>&ltlaunch&gt
   &ltnode pkg="joy" name="joy_node" type="joy_node"/&gt
@@ -357,5 +307,7 @@ if __name__ == '__main__':
 &lt/launch&gt</pre>
       </ul>
     </ol>
+    <br>
+
   </body>
 </html>

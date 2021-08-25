@@ -542,8 +542,38 @@ PING youtube.com (172.217.27.78) 56(84) bytes of data.
     </ul>
     <br>
 
-    <h3 id="GUIが起動する場合">GUIが起動する場合</h3>
-    <p>T.B.A.</p>
+    <h3 id="GUIが起動する場合">起動時にGUI起動する場合</h3>
+    <p>
+     開発環境を構築している途中で、
+     GUI起動になってしまうことがありました。
+     （必ずなるのかは不明）
+    </p>
+    <p>以下にCUI起動に戻す方法を説明します。</p>
+    <br>
+
+    <p>
+     起動時の設定を確認する。
+     graphical.targetだとGUI、
+     multi-user.targetだとCUIで起動します。
+    </p>
+    <ul>
+      <pre style="background-color: #FFFACD;">$ sudo systemctl get-default</pre>
+    </ul>
+    <br>
+
+    <p>CUI起動に変更する。</p>
+    <ul>
+      <pre style="background-color: #FFFACD;">$ sudo systemctl set-default multi-user</pre>
+    </ul>
+    <br>
+
+    <p>再起動する。</p>
+    <ul>
+      <pre style="background-color: #FFFACD;">$ sudo shutdown -r now</pre>
+    </ul>
+    <br>
+
+    <p>再起動後に設定が有効になります。</p>
     <br>
 
   </div>
