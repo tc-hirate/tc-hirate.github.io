@@ -227,7 +227,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        (os.path.join('share', package_name), glob('launch/*_launch.py')),
+        <font color="#ff0000">(os.path.join('share', package_name), glob('launch/*_launch.py')),</font>
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -244,7 +244,7 @@ setup(
       </ul>
       <br>
 
-      <p>launchファイルの実行</p>
+      <p>launchファイルを実行する。</p>
       <ul>
         <pre>$ ros2 launch joy_test turtle_teleop_joy_launch.py</pre>
       </ul>
@@ -258,38 +258,133 @@ setup(
       </li>
       <br>
 
-      <p>解答例（方向キーを押し続けると止まってしまう．．．）</p>
+      <p>turtle_teleop_joy_launch.py</p>
       <ul>
-        <pre>#!/usr/bin/env python
-import rospy
-from sensor_msgs.msg import Joy
-from geometry_msgs.msg import Twist
+        <pre>import rclpy
+from rclpy.node import Node
 
-class JoyTwist(object):
+from std_msgs.msg import String
+from geometry_msgs.msg import Twist
+from sensor_msgs.msg import Joy
+
+class JoyTwist(Node):
+
     def __init__(self):
-        self._joy_sub = rospy.Subscriber('joy', Joy, self.joy_callback, queue_size=1)
-        self._twist_pub = rospy.Publisher('<font color="#ff0000">/turtle1/cmd_vel</font>', Twist, queue_size=1)
+        super().__init__('joy_twist')
+        self.publisher_ = self.create_publisher(Twist, '/turtle1/cmd_vel', 10)
+        self.subscription = self.create_subscription(
+            Joy,
+            'joy',
+            self.joy_callback,
+            10)
+        self.subscription
 
     def joy_callback(self, joy_msg):
-        twist = Twist()
-        <font color="#ff0000">if joy_msg.axes[7] == 1:</font>
-            <font color="#ff0000">twist.linear.x = 2.0</font>
-        <font color="#ff0000">elif joy_msg.axes[7] == -1:</font>
-            <font color="#ff0000">twist.linear.x = -2.0</font>
-        <font color="#ff0000">elif joy_msg.axes[6] == 1:</font>
-            <font color="#ff0000">twist.angular.z = 2.0</font>
-        <font color="#ff0000">elif joy_msg.axes[6] == -1:</font>
-            <font color="#ff0000">twist.angular.z = -2.0</font>
-        <font color="#ff0000">else:</font>
-            <font color="#ff0000">twist.linear.x = 0.0</font>
-            <font color="#ff0000">twist.angular.z = 0.0</font>
+       twist = Twist()
+        if joy_msg.axes[7] == 1:
+            twist.linear.x = 2.0
+        elif joy_msg.axes[7] == -1:
+            twist.linear.x = -2.0
+        elif joy_msg.axes[6] == 1:
+            twist.angular.z = 2.0
+        elif joy_msg.axes[6] == -1:
+            twist.angular.z = -2.0
+        else:
+            twist.linear.x = 0.0
+        self.publisher_.publish(twist)
 
-        self._twist_pub.publish(twist)
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    joy_twist = JoyTwist()
+
+    rclpy.spin(joy_twist)
+
+    # Destroy the node explicitly
+    # (optional - otherwise it will be done automatically
+    # when the garbage collector destroys the node object)
+    joy_twist.destroy_node()
+    rclpy.shutdown()
+
 
 if __name__ == '__main__':
-    rospy.init_node('joy_twist')
-    joy_twist = JoyTwist()
-    rospy.spin()</pre>
+    main()</pre>
+      </ul>
+      <br>
+
+      <p>package.xml</p>
+      <ul>
+        <pre>&lt?xml version="1.0"?&gt
+&lt?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematyp&gt
+&ltpackage format="3"&gt
+  &ltname&gtjoy_test&lt/name&gt
+  &ltversion&gt0.0.0&lt/version&gt
+  &ltdescription&gtTODO: Package description&lt/description&gt
+  &ltmaintainer email="ubuntu@todo.todo"&gtubuntu&lt/maintainer&gt
+  &ltlicense&gtTODO: License declaration&lt/license&gt
+
+  &ltexec_depend&gtrclpy&lt/exec_depend&gt
+  &ltexec_depend&gtstd_msgs&lt/exec_depend&gt
+  <font color="#ff0000">&ltexec_depend&gtgeometry_msgs&lt/exec_depend&gt</font>
+  <font color="#ff0000">&ltexec_depend&gtsensor_msgs&lt/exec_depend&gt</font>
+
+  &ltest_depend&gtament_copyright&l/test_depend&gt
+  &ltest_depend&gtament_flake8&l/test_depend&gt
+  &ltest_depend&gtament_pep257&l/test_depend&gt
+  &ltest_depend&gtpython3-pytest&l/test_depend&gt
+
+  &ltexport&gt
+    &ltbuild_type&gtament_python&lt/build_type&gt
+  &lt/export&gt
+&lt/package&gt</pre>
+      </ul>
+      <br>
+
+      <p>setup.py</p>
+      <ul>
+        <pre>import os
+from glob import glob
+
+from setuptools import setup
+
+package_name = 'joy_test'
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=[package_name],
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+        (os.path.join('share', package_name), glob('launch/*_launch.py')),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='ubuntu',
+    maintainer_email='ubuntu@todo.todo',
+    description='TODO: Package description',
+    license='TODO: License declaration',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            <font color="#ff0000">'joy_twist = joy_test.turtle_joy:main',</font>
+        ],
+    },
+)</pre>
+      </ul>
+      <br>
+
+      <p>joy_testパッケージのjoy_twistノードを実行する。</p>
+      <ul>
+        <pre>$ ros2 run turtlesim turtlesim_node</pre>
+      </ul>
+      <ul>
+        <pre>$ ros2 run joy joy_node</pre>
+      </ul>
+      <ul>
+        <pre>$ ros2 run joy_test joy_twist</pre>
       </ul>
       <br>
 
@@ -299,15 +394,38 @@ if __name__ == '__main__':
       </li>
       <br>
 
+      <p>turtle_joy_launch.py</p>
       <ul>
-        <pre>&ltlaunch&gt
-  &ltnode pkg="joy" name="joy_node" type="joy_node"/&gt
-  &ltnode pkg="ros_start" name="turtlesim_joy" type="turtlesim_joy.py"/&gt
-  &ltnode pkg="turtlesim" name="turtlesim_node" type="turtlesim_node"/&gt
-&lt/launch&gt</pre>
+        <pre>from launch import LaunchDescription
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    return LaunchDescription([
+        Node(
+            package='turtlesim',
+            executable='turtlesim_node',
+            name='sim'
+        ),
+        Node(
+            package='joy',
+            executable='joy_node',
+            name='joy'
+        ),
+        Node(
+            package='joy_test',
+            executable='joy_twist',
+            name='test'
+        ),
+    ])</pre>
       </ul>
     </ol>
     <br>
+
+      <p>launchファイルを実行する。</p>
+      <ul>
+        <pre>$ ros2 launch joy_test turtle_joy_launch.py</pre>
+      </ul>
+      <br>
 
   </body>
 </html>
