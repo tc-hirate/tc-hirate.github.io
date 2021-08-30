@@ -18,7 +18,7 @@
       <li><a href="#Webカメラの動作確認">Webカメラの動作確認</a></li>
       <li><a href="#画像処理をするプログラムを作る">画像処理をするプログラムを作る</a></li>
       <li><a href="#画像処理をするプログラムを実行する">画像処理をするプログラムを実行する</a></li>
-      <li><a href="#演習4「USBカメラで取得した画像から顔を検出する」">演習4「USBカメラで取得した画像から顔を検出する」</a></li>
+      <li><a href="#演習4「Webカメラで取得した画像から顔を検出する」">演習4「Webカメラで取得した画像から顔を検出する」</a></li>
       <li><a href="#「image_view」の使い方について">「image_view」の使い方について</a></li>
     </ul>
     <section>
@@ -29,296 +29,251 @@
       インストールします。
     </p>
     <ul>
-      <pre>$ sudo apt-get install ros-galactic-v4l2-camera</pre>
+      <pre style="background-color: #FFFACD;">$ sudo apt-get install ros-galactic-v4l2-camera</pre>
     </ul>
     <br>
 
     <h3 id="Webカメラの動作確認">Webカメラの動作確認</h3>
+
     <p>
       Raspberry PiにWebカメラを接続し、
       次のコマンドを実行してください。
-      接続したWebカメラが確認できます。
+      /dev/video0のように表示されれば認識されています。
     </p>
     <ul>
-      <pre>pi@zumo08:~$ lsusb
-・・・
-Bus 002 Device 005: ID 046d:c21d Logitech, Inc. F310 Gamepad [XInput Mode]
-・・・</pre>
+      <pre style="background-color: #FFFACD;">$ ls /dev/video*
+/dev/video0   /dev/video11  /dev/video14
+/dev/video1   /dev/video12  /dev/video15
+/dev/video10  /dev/video13  /dev/video16</pre>
     </ul>
     <br>
 
     <p>
-      USBカメラを接続してください。
-      Raspberry PiがUSBカメラを認識しているかは、
-      次のコマンドを実行して調べられます。
-      「/dev/video0」のように表示されれば認識されています。
-    </p>
+      ここで、v4l2-cameraを実行するとPermission denied
+      というエラーが出てしまいます。</p>
     <ul>
-      <pre>$ ls /dev/video*
-/dev/video0</pre>
+      <pre style="background-color: #FFFACD;">$ ros2 run v4l2_camera v4l2_camera_node
+1630045483.993585 [8] v4l2_camer: using network interface eth0 (udp/192.168.1.249) selected arbitrarily from: eth0, wlan0
+[ERROR] [1630045484.028457532] [v4l2_camera]: Failed opening device /dev/video0: Permission denied (13)</pre>
     </ul>
-    <p>ソフトウェア・パッケージの情報を最新のものにします。</p>
-    <ul>
-      <pre>$ sudo apt update</pre>
-    </ul>
-    <p>次のように表示されたら、パスワードを入力します。</p>
-    <ul>
-      <pre>[sudo] password for pi:</pre>
-    </ul>
-    <p>ros-melodic-usb-camをインストールします。</p>
-    <ul>
-      <pre>$ sudo apt install ros-melodic-usb-cam</pre>
-    </ul>
-    <p>次のように表示されたら、そのまま[Enter]を押します。</p>
-    <ul>
-      <pre>Do you want to continue? [Y/n]</pre>
-    </ul>
-    <p>roscoreを実行します。</p>
-    <ul>
-      <pre>$ roscore</pre>
-    </ul>
-    <p>パラメータを設定します。</p>
-    <ul>
-      <pre>$ rosparam set /usb_cam/pixel_format yuyv</pre>
-    </ul>
-    <p>usb_cam_nodeを実行します。</p>
-    <ul>
-      <pre>$ rosrun usb_cam usb_cam_node</pre>
-    </ul>
-    <p>Topicを確認します。</p>
-    <ul>
-      <pre>pi@htc02:~$ rostopic list
-/rosout
-/rosout_agg
-/usb_cam/camera_info
-/usb_cam/image_raw
-/usb_cam/image_raw/compressed
-/usb_cam/image_raw/compressed/parameter_descriptions
-/usb_cam/image_raw/compressed/parameter_updates
-/usb_cam/image_raw/compressedDepth
-/usb_cam/image_raw/compressedDepth/parameter_descriptions
-/usb_cam/image_raw/compressedDepth/parameter_updates
-/usb_cam/image_raw/theora
-/usb_cam/image_raw/theora/parameter_descriptions
-/usb_cam/image_raw/theora/parameter_updates</pre>
-    </ul>
-    <p>「image_view」というツールを使って画像を表示します。</p>
-    <ul>
-      <pre>$ rosrun image_view image_view image:=/usb_cam/image_raw</pre>
-    </ul>
+    <br>
+
     <p>
-      launchファイルを「usbcam.launch」というファイル名で作りましょう。
-      パラメータの変更はparamタグで、
-      Topicの名前の変更はremapタグで行います。
+      そこで、/dev/video0の権限を確認します。
     </p>
     <ul>
-      <pre>&ltlaunch&gt
-  &ltnode pkg="usb_cam" name="usb_cam" type="usb_cam_node" output="screen" &gt
-    &ltparam name="pixel_format" value="yuyv" /&gt
-  &lt/node&gt
-  &ltnode pkg="image_view" name="image_view" type="image_view" respawn="false" output="screen"&gt
-    &ltremap from="image" to="/usb_cam/image_raw"/&gt
-  &lt/node&gt
-&lt/launch&gt</pre>
+      <pre style="background-color: #FFFACD;">$ ls /dev/video0 -l
+crw-rw---- 1 root video 81, 7 Aug 27 06:21 /dev/video0</pre>
+    </ul>
+    <br>
+
+    <p>
+      /dev/video0の権限を変更します。
+    </p>
+    <ul>
+      <pre style="background-color: #FFFACD;">$ sudo chmod 777 /dev/video0
+pi@zumo08:~$ ls /dev/video0 -l
+crwxrwxrwx 1 root video 81, 7 Aug 27 06:21 /dev/video0</pre>
+    </ul>
+    <br>
+
+    <p>
+      もう一度、v4l2-cameraを実行します。
+      ERRORやWARNが出ますが、気にしないでください。
+    </p>
+    <ul>
+      <pre style="background-color: #FFFACD;">$ ros2 run v4l2_camera v4l2_camera_node
+1630045953.778812 [8] v4l2_camer: using network interface eth0 (udp/192.168.1.249) selected arbitrarily from: eth0, wlan0
+[INFO] [1630045953.890131495] [v4l2_camera]: Driver: uvcvideo
+[INFO] [1630045953.890893530] [v4l2_camera]: Version: 328832
+[INFO] [1630045953.891288480] [v4l2_camera]: Device: UVC Camera (046d:081b)
+[INFO] [1630045953.891562179] [v4l2_camera]: Location: usb-3f980000.usb-1.5
+[INFO] [1630045953.891735878] [v4l2_camera]: Capabilities:
+[INFO] [1630045953.891892232] [v4l2_camera]:   Read/write: NO
+[INFO] [1630045953.892084525] [v4l2_camera]:   Streaming: YES
+[INFO] [1630045953.892496558] [v4l2_camera]: Current pixel format: YUYV @ 640x480
+[INFO] [1630045953.897754291] [v4l2_camera]: Available pixel formats: 
+[INFO] [1630045953.897960906] [v4l2_camera]:   YUYV - YUYV 4:2:2
+[INFO] [1630045953.898092209] [v4l2_camera]:   MJPG - Motion-JPEG
+[INFO] [1630045953.898222262] [v4l2_camera]: Available controls: 
+[INFO] [1630045953.898397471] [v4l2_camera]:   Brightness (1) = 128
+[INFO] [1630045953.898558774] [v4l2_camera]:   Contrast (1) = 32
+[INFO] [1630045953.898712108] [v4l2_camera]:   Saturation (1) = 32
+[INFO] [1630045953.900686231] [v4l2_camera]:   White Balance Temperature, Auto (2) = 1
+[INFO] [1630045953.902889887] [v4l2_camera]:   Gain (1) = 192
+[INFO] [1630045953.903077180] [v4l2_camera]:   Power Line Frequency (3) = 2
+[INFO] [1630045953.905075991] [v4l2_camera]:   White Balance Temperature (1) = 3690
+[INFO] [1630045953.905255211] [v4l2_camera]:   Sharpness (1) = 24
+[INFO] [1630045953.905461462] [v4l2_camera]:   Backlight Compensation (1) = 0
+[INFO] [1630045953.907320377] [v4l2_camera]:   Exposure, Auto (3) = 3
+[INFO] [1630045953.909530960] [v4l2_camera]:   Exposure (Absolute) (1) = 87
+[INFO] [1630045953.909751586] [v4l2_camera]:   Exposure, Auto Priority (2) = 1
+[ERROR] [1630045953.950221773] [v4l2_camera]: Failed setting value for control White Balance Temperature to 3690: Invalid argument (22)
+[ERROR] [1630045953.975703297] [v4l2_camera]: Failed setting value for control Exposure (Absolute) to 87: Invalid argument (22)
+[INFO] [1630045953.977947839] [v4l2_camera]: Starting camera
+[INFO] [1630045955.741831840] [v4l2_camera]: using default calibration URL
+[INFO] [1630045955.742332467] [v4l2_camera]: camera calibration URL: file:///home/pi/.ros/camera_info/uvc_camera_(046d:081b).yaml
+[ERROR] [1630045955.742871324] [camera_calibration_parsers]: Unable to open camera calibration file [/home/pi/.ros/camera_info/uvc_camera_(046d:081b).yaml]
+[WARN] [1630045955.743012054] [v4l2_camera]: Camera calibration file /home/pi/.ros/camera_info/uvc_camera_(046d:081b).yaml not found</pre>
+    </ul>
+    <br>
+
+    <p>
+      トピックを確認します。
+      /image/rawがカメラからのデータです。
+    </p>
+    <ul>
+      <pre style="background-color: #FFFACD;">pi@zumo08:~$ ros2 topic list
+/camera_info
+/image_raw
+/parameter_events
+/rosout</pre>
+    </ul>
+    <br>
+
+    <p>
+      次に、PCからカメラのデータが受信できるか確認します。
+    </p>
+    <ul>
+      <pre>$ ros2 topic list
+/camera_info
+/image_raw
+/parameter_events
+/rosout</pre>
+    </ul>
+    <br>
+
+    <p>rqt_image_viewで表示する。</p>
+    <ul>
+      <pre>$ ros2 run rqt_image_view rqt_image_view</pre>
     </ul>
     <br>
 
     <h3 id="画像処理をするプログラムを作る">画像処理をするプログラムを作る</h3>
     <p>
-      USBカメラで取得した画像から青色を見つけて、青色の部分だけを表示する
-      プログラムを作ります。
+      Webカメラで取得した画像をグレースケールに変換して
+      表示してみましょう。
+      パケージはcv_test、
+      ファイル名はcam_gray.pyとします。
+      gray.pyからの変更箇所は赤文字にしてあります。 
     </p>
-    <p>「ros_start/scripts/」ディレクトリに移動します。</p>
-    <ul>
-      <pre>$ roscd ros_start/scripts/</pre>
-    </ul>
-    <p>「color_extract.py」というファイルを作ります。</p>
-    <ul>
-      <pre>$ pluma color_extract.py</pre>
-    </ul>
     <p>
       画像処理は次の手順で行っています。
-      USBカメラから取得した画像はROSのImage型であることに注意してください。
+      Webカメラから取得した画像はROSのImage型で
+      あることに注意してください。
     </p>
     <ol>
-      <li>USBカメラの画像を取得する（data）</li>
+      <li>Webカメラの画像を取得する（data）</li>
       <li>OpenCVの標準データ形式に変換する（cv_image）</li>
-      <li>画像処理をする（res）</li>
+      <li>画像処理をする（cv_gray_image）</li>
       <li>ROSのImage型に変換する（ros_image）</li>
     </ol>
-    <p>プログラムの内容は以下の通りです。</p>
+    <br>
+
+    <p>
+      cam_gray.py
+    </p>
     <ul>
-      <pre>#!/usr/bin/env python
-import rospy
-import cv2
-import numpy as np
+      <pre>import rclpy
+from rclpy.node import Node
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
+import cv2
 
-class ColorExtract(object):
+class ImagePublisher(Node):
+
     def __init__(self):
-        self._image_pub = rospy.Publisher("masked_image", Image, queue_size=1)
-        self._image_sub = rospy.Subscriber("/usb_cam/image_raw", Image, self.callback)
-        self._bridge = CvBridge()
+        super().__init__('image_publisher')
+        self.publisher_ = self.create_publisher(Image, <font color="#ff0000">'gray_image'</font>, 10)
+        <font color="#ff0000">self.subscription = self.create_subscription(</font>
+            <font color="#ff0000">Image,</font>
+            <font color="#ff0000">'image_raw',</font>
+            <font color="#ff0000">self.camera_callback,</font>
+            <font color="#ff0000">10)</font>
+        <font color="#ff0000">self.subscription</font>
+        self.bridge = CvBridge()
 
-    def callback(self, data):
-        cv_image = self._bridge.imgmsg_to_cv2(data, "bgr8")
-        hsv = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV)
-        lower_blue = np.array([110, 50, 50])
-        upper_blue = np.array([130, 255, 255])
+    <font color="#ff0000">def camera_callback(self, data):</font>
+        cv_image = self.bridge.imgmsg_to_cv2(data)
+        cv_gray_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
+        ros_image = self.bridge.cv2_to_imgmsg(cv_gray_image, 'mono8')
+        self.publisher_.publish(ros_image)
 
-        color_mask = cv2.inRange(hsv, lower_blue, upper_blue)
-        res = cv2.bitwise_and(cv_image, cv_image, mask=color_mask)
-        ros_image = self._bridge.cv2_to_imgmsg(res, "bgr8")
-        self._image_pub.publish(ros_image)
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    image_publisher = ImagePublisher()
+
+    rclpy.spin(image_publisher)
+
+    image_publisher.destroy_node()
+    rclpy.shutdown()
+
 
 if __name__ == '__main__':
-    rospy.init_node('color_extract')
-    color = ColorExtract()
-    try:
-        rospy.spin()
-    except KeyboardInterrupt:
-        pass</pre>
+    main()</pre>
     </ul>
     <br>
 
-    <h3 id="画像処理をするプログラムを実行する">画像処理をするプログラムを実行する</h3>
-    <p>「ros_start/launch/」ディレクトリに移動します。</p>
-    <ul>
-      <pre>$ roscd ros_start/launch/</pre>
-    </ul>
     <p>
-      「usbcam.launch」をコピーして新しいlaunchファイルを作ります。
-      ファイル名は「color_extract.launch」とします。
+      package.xml
     </p>
     <ul>
-      <pre>$ cp usbcam.launch color_extract.launch</pre>
-    </ul>
-    <p>
-      「image_view」を2回起動していることに注意してください。
-      USBカメラの画像を「image_view1」という名前に、
-      画像処理した画像を「image_view2」という名前にしています。
-    </p>
-    <ul>
-      <pre>&ltlaunch&gt
-  &ltnode pkg="usb_cam" name="usb_cam" type="usb_cam_node" output="screen" &gt
-    &ltparam name="pixel_format" value="yuyv" /&gt
-  &lt/node&gt
-  &ltnode pkg="ros_start" name="color_extract" type="color_extract.py"/&gt
-  &ltnode pkg="image_view" name="image_view1" type="image_view" respawn="false" output="screen"&gt
-    &ltremap from="image" to="/usb_cam/image_raw"/&gt
-  &lt/node&gt
-  &ltnode pkg="image_view" name="image_view2" type="image_view" respawn="false" output="screen"&gt
-    &ltremap from="image" to="masked_image"/&gt
-  &lt/node&gt
-&lt/launch&gt</pre>
+      <pre>from setuptools import setup
+
+package_name = 'cv_test'
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=[package_name],
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='ubuntu',
+    maintainer_email='ubuntu@todo.todo',
+    description='TODO: Package description',
+    license='TODO: License declaration',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            'img_publisher = cv_test.image_view:main',
+            'gray_publisher = cv_test.gray:main',
+            'circle_publisher = cv_test.circle:main',
+            'binary_publisher = cv_test.binary:main',
+            'edge_publisher = cv_test.edge:main',
+            'face_publisher = cv_test.face_detect:main',
+            'eye_publisher = cv_test.eye_detect:main',
+            <font color="#ff0000">'cam_publisher = cv_test.cam_gray:main',</font>
+        ],
+    },
+)</pre>
     </ul>
     <br>
 
-    <h3 id="演習4「USBカメラで取得した画像から顔を検出する」">演習4「USBカメラで取得した画像から顔を検出する」</h3>
+    <h3 id="演習4「Webカメラで取得した画像から顔を検出する」">演習4「Webカメラで取得した画像から顔を検出する」</h3>
     <ol>
       <li>
-        USBカメラの画像を使って、顔認識するプログラムを作ってください。
-        ファイル名は「usbcam_face_detect.py」とします。
+        Webカメラの画像を使って、
+        顔認識するプログラムを作ってください。
+        ファイル名は「cam_face_detect.py」とします。
       </li>
-<!--
       <br>
-      <p>解答例</p>
-      <ul>
-        <pre>#!/usr/bin/env python
-  import rospy
-  import cv2
-  import numpy as np
-  from sensor_msgs.msg import Image
-  from cv_bridge import CvBridge, CvBridgeError
 
-  class FaceToFace():
-      def __init__(self):
-          sub = rospy.Subscriber("/usb_cam/image_raw", Image, self.get_image)
-          self.bridge = CvBridge()
-          self.cv_image = None
-          self.pub = rospy.Publisher("face", Image, queue_size=1)
-
-      def get_image(self, img):
-          try:
-              self.cv_image = self.bridge.imgmsg_to_cv2(img, "bgr8")
-              except CvBridgeError as e:
-              rospy.logerr(e)
-
-      def detect_face(self):
-          if self.cv_image is None:
-              return None
-
-          org = self.cv_image
-          cv_gray_image = cv2.cvtColor(org, cv2.COLOR_BGR2GRAY)
-          filename = '/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml'
-          cascade = cv2.CascadeClassifier(filename)
-          face = cascade.detectMultiScale(cv_gray_image, 1.1, 1, cv2.CASCADE_FIND_BIGGEST_OBJECT)
-
-          if len(face) == 0:
-              return None
-
-          r = face[0]
-          cv2.rectangle(org, tuple(r[0:2]), tuple(r[0:2] + r[2:4]), (0, 255, 255), 4)
-          #cv2.imwrite("/tmp/image.jpg", org)
-
-          ros_image = self.bridge.cv2_to_imgmsg(org, "bgr8")
-          self.pub.publish(ros_image)
-
-          return "detected"
-
-  if __name__ == "__main__":
-      rospy.init_node('face_to_face')
-      fd = FaceToFace()
-
-      rate = rospy.Rate(10)
-      while not rospy.is_shutdown():
-          rospy.loginfo(fd.detect_face())
-          rate.sleep()</pre>
-      </ul>
--->
-      <br>
       <li>
-        「usbcam_face_detect.py」を実行するlaunchファイルを作ってください。
-        ファイル名は「usbcam_face_detect.launch」とします。
+        cam_face_detect.pyを実行するlaunchファイルを
+        作ってください。
+        ファイル名はcam_face_detect_launch_pyとします。
+        PCからRaspberry Piのカメラを起動できる？
       </li>
-<!--
-      <br>
-      <p>解答例</p>
-      <ul>
-        <pre>&ltlaunch&gt
-    &ltnode pkg="usb_cam" name="usb_cam" type="usb_cam_node" output="screen" &gt
-      &ltparam name="pixel_format" value="yuyv" /&gt
-    &lt/node&gt
-    &ltnode pkg="ros_start" name="usbcam_face_detect" type="usbcam_face_detect3.py"/&gt
-    &ltnode pkg="image_view" name="image_view1" type="image_view" respawn="false" output="screen"&gt
-      &ltremap from="image" to="/usb_cam/image_raw"/&gt
-    &lt/node&gt
-    &ltnode pkg="image_view" name="image_view2" type="image_view" respawn="false" output="screen"&gt
-      &ltremap from="image" to="/face"/&gt
-    &lt/node&gt
-  &lt/launch&gt</pre>
-      </ul>
--->
+
     </ol>
     <br>
-
-    <h3 id="「image_view」の使い方について">「image_view」の使い方について</h3>
-    <p>
-      「image_view」をデフォルの設定のまま使うと、カメラ画像の一部分しか表示されないことが分かりました。
-      全体を表示するにはparameterの変更が必要です。
-    </p>
-    <ul>
-      <pre>&ltlaunch&gt
-  &ltnode pkg="usb_cam" name="usb_cam" type="usb_cam_node" output="screen" &gt
-    &ltparam name="pixel_format" value="yuyv" /&gt
-  &lt/node&gt
-  &ltnode pkg="image_view" name="image_view" type="image_view" respawn="false" output="screen"&gt
-    <font color="#ff0000">&ltparam name="autosize" value="true" /&gt</font>
-    &ltremap from="image" to="/usb_cam/image_raw"/&gt
-  &lt/node&gt
-&lt/launch&gt</pre>
-    </ul>
 
   </div>
   </body>
