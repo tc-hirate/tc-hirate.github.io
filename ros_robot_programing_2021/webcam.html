@@ -2,18 +2,20 @@
 <html lang="jp">
   <head>
     <meta charset="utf-8">
-    <title>USBカメラを使う</title>
+    <title>Webカメラを使う</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <h1>USBカメラを使う</h1>
+  <div class="main">
+    <h1>Webカメラを使う</h1>
     <p>
-      USBカメラを使って、画像処理をします。
+      Webカメラを使って、画像処理をします。
     </p>
     <br>
 
     <ul>
-      <li><a href="#USBカメラを使う">USBカメラを使う</a></li>
+      <li><a href="#必要なパッケージをインストールする">必要なパッケージをインストールする</a></li>
+      <li><a href="#Webカメラの動作確認">Webカメラの動作確認</a></li>
       <li><a href="#画像処理をするプログラムを作る">画像処理をするプログラムを作る</a></li>
       <li><a href="#画像処理をするプログラムを実行する">画像処理をするプログラムを実行する</a></li>
       <li><a href="#演習4「USBカメラで取得した画像から顔を検出する」">演習4「USBカメラで取得した画像から顔を検出する」</a></li>
@@ -21,7 +23,30 @@
     </ul>
     <section>
 
-    <h3 id="USBカメラを使う">USBカメラを使う</h3>
+    <h3 id="必要なパッケージをインストールする">必要なパッケージをインストールする</h3>
+    <p>
+      Webカメラを使うために必要なパッケージを
+      インストールします。
+    </p>
+    <ul>
+      <pre>$ sudo apt-get install ros-galactic-v4l2-camera</pre>
+    </ul>
+    <br>
+
+    <h3 id="Webカメラの動作確認">Webカメラの動作確認</h3>
+    <p>
+      Raspberry PiにWebカメラを接続し、
+      次のコマンドを実行してください。
+      接続したWebカメラが確認できます。
+    </p>
+    <ul>
+      <pre>pi@zumo08:~$ lsusb
+・・・
+Bus 002 Device 005: ID 046d:c21d Logitech, Inc. F310 Gamepad [XInput Mode]
+・・・</pre>
+    </ul>
+    <br>
+
     <p>
       USBカメラを接続してください。
       Raspberry PiがUSBカメラを認識しているかは、
@@ -294,5 +319,7 @@ if __name__ == '__main__':
   &lt/node&gt
 &lt/launch&gt</pre>
     </ul>
+
+  </div>
   </body>
 </html>

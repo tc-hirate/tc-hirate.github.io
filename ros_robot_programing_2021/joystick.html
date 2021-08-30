@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+  <div class="main">
     <h1>ジョイスティックを使う</h1>
 
     <p>PCでジョイスティックが使えるように設定します。</p>
@@ -22,7 +23,7 @@
     <h3 id="必要なパッケージをインストールする">必要なパッケージをインストールする</h3>
     <p>
       ジョイスティックを使うために必要なパッケージを
-      インストールする。
+      インストールします。
     </p>
     <ul>
       <pre>$ sudo apt install ros-galactic-joy</pre>
@@ -258,7 +259,7 @@ setup(
       </li>
       <br>
 
-      <p>turtle_teleop_joy_launch.py</p>
+      <p>turtle_joy.py</p>
       <ul>
         <pre>import rclpy
 from rclpy.node import Node
@@ -427,5 +428,6 @@ def generate_launch_description():
       </ul>
       <br>
 
+  </div>
   </body>
 </html>
