@@ -33,7 +33,7 @@
     <h3 id="開発環境をインストールする">開発環境をインストールする</h3>
     <p>arduino-cliをインストールします。</p>
     <ul>
-      <pre>$ curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+      <pre style="background-color: #FFFACD;">$ curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
 Installing in /home/pi/bin
 ARCH=ARM64
 OS=Linux
@@ -47,7 +47,7 @@ arduino-cli alpha Version: 0.18.3 Commit: d710b642 Date: 2021-05-14T12:36:58Z in
 
     <p>arduino-cliのパスを通します。</p>
     <ul>
-      <pre>$ export PATH=$PATH:$HOME/bin</pre>
+      <pre style="background-color: #FFFACD;">$ export PATH=$PATH:$HOME/bin</pre>
     </ul>
     <br>
 
@@ -56,7 +56,7 @@ arduino-cli alpha Version: 0.18.3 Commit: d710b642 Date: 2021-05-14T12:36:58Z in
       （パスが通っていることを確認）
     </p>
     <ul>
-      <pre>$ arduino-cli help core
+      <pre style="background-color: #FFFACD;">$ arduino-cli help core
 Arduino core operations.
 
 Usage:
@@ -96,14 +96,14 @@ Use "arduino-cli core [command] --help" for more information about a command.
       shellのsutartup scriptに書いておきます。
     </p> 
     <ul>
-      <pre>$ echo "export PATH=$PATH:$HOME/bin" >> ~/.bashrc
+      <pre style="background-color: #FFFACD;">$ echo "export PATH=$PATH:$HOME/bin" >> ~/.bashrc
 </pre>
     </ul>
     <br>
 
     <p>configuration fileを作成します。</p> 
     <ul>
-      <pre>$ arduino-cli config init
+      <pre style="background-color: #FFFACD;">$ arduino-cli config init
 Config file written to: /home/pi/.arduino15/arduino-cli.yaml</pre>
     </ul>
     <br>
@@ -139,7 +139,7 @@ Config file written to: /home/pi/.arduino15/arduino-cli.yaml</pre>
       新しいスケッチを作成してください。
     </p> 
     <ul>
-      <pre>$ arduino-cli sketch new Arduino/Led
+      <pre style="background-color: #FFFACD;">$ arduino-cli sketch new Arduino/Led
 Sketch created in: /home/pi/Arduino/Led
 </pre>
     </ul>
@@ -147,7 +147,7 @@ Sketch created in: /home/pi/Arduino/Led
 
     <p>ソースファイルを開いてください。</p> 
     <ul>
-      <pre>$ nano Arduino/Led/Led.ino 
+      <pre style="background-color: #FFFACD;">$ nano Arduino/Led/Led.ino 
 
 void setup() {
 }
@@ -163,7 +163,7 @@ void loop() {
       ピン13を出力に設定します。
     </p>
     <ul>
-      <pre>void setup() {
+      <pre style="background-color: #FFFACD;">void setup() {
   pinMode(13, OUTPUT);
 }</pre>
     </ul>
@@ -181,7 +181,7 @@ void loop() {
       何もしないという命令です。
     </p>
     <ul>
-      <pre>void loop() {
+      <pre style="background-color: #FFFACD;">void loop() {
   digitalWrite(13, HIGH);
   delay(1000);
   digitalWrite(13, LOW);
@@ -192,7 +192,7 @@ void loop() {
 
     <p>利用できるプラットフォームとライブラリを更新します。</p>
     <ul>
-      <pre>$ arduino-cli core update-index
+      <pre style="background-color: #FFFACD;">$ arduino-cli core update-index
 Downloading missing tool builtin:ctags@5.8-arduino11...
 builtin:ctags@5.8-arduino11 downloaded                    
 Installing builtin:ctags@5.8-arduino11...
@@ -215,7 +215,7 @@ Updating index: package_index.json.sig downloaded</pre>
       正しく認識されているか確認します。
     </p>
     <ul>
-      <pre>$ arduino-cli board list
+      <pre style="background-color: #FFFACD;">$ arduino-cli board list
 Port         Type              Board Name  FQBN            Core       
 /dev/ttyACM0 Serial Port (USB) Arduino Uno arduino:avr:uno arduino:avr
 /dev/ttyAMA0 Serial Port       Unknown                                
@@ -225,7 +225,7 @@ Port         Type              Board Name  FQBN            Core
 
     <p>arduino:avrのplatform coreをインストールします。</p>
     <ul>
-      <pre>$ arduino-cli core install arduino:avr
+      <pre style="background-color: #FFFACD;">$ arduino-cli core install arduino:avr
 Downloading packages...
 arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 0 B / 36.28 MiB arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 929.95 KiB / 36.arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 1.89 MiB / 36.28arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 2.87 MiB / 36.28arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 4.08 MiB / 36.28arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 4.08 MiB / 36.28arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 5.29 MiB / 36.28arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 6.39 MiB / 36.28arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 7.46 MiB / 36.28arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 8.43 MiB / 36.28arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 8.43 MiB / 36.28arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 9.34 MiB / 36.28arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 10.22 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 10.87 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 11.86 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 11.86 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 12.44 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 13.37 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 14.34 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 15.30 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 15.30 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 16.39 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 17.33 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 18.22 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 19.15 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 19.15 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 20.07 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 21.20 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 21.86 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 22.87 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 22.87 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 23.71 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 24.51 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 25.23 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 26.28 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 26.28 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 27.39 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 28.36 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 29.42 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 30.51 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 30.51 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 31.60 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 32.67 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 33.75 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 34.81 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 34.81 MiB / 36.2arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7 downloaded      
 arduino:avrdude@6.3.0-arduino17 downloaded                
@@ -246,7 +246,7 @@ arduino:avr@1.8.3 installed
 
     <p>正しくインストールされたか確認します。</p> 
     <ul>
-      <pre>pi@zumo08:~$ arduino-cli core list
+      <pre style="background-color: #FFFACD;">$ arduino-cli core list
 ID          Installed Latest Name              
 arduino:avr 1.8.3     1.8.3  Arduino AVR Boards</pre>
     </ul>
@@ -254,7 +254,7 @@ arduino:avr 1.8.3     1.8.3  Arduino AVR Boards</pre>
 
     <p>スケッチをコンパイルします。</p> 
     <ul>
-      <pre>$ arduino-cli compile --fqbn arduino:avr:uno Arduino/Led
+      <pre style="background-color: #FFFACD;">$ arduino-cli compile --fqbn arduino:avr:uno Arduino/Led
 Sketch uses 444 bytes (1%) of program storage space. Maximum is 32256 bytes.
 Global variables use 9 bytes (0%) of dynamic memory, leaving 2039 bytes for local variables. Maximum is 2048 bytes.</pre>
     </ul>
@@ -262,7 +262,7 @@ Global variables use 9 bytes (0%) of dynamic memory, leaving 2039 bytes for loca
 
     <p>アップロードします。</p> 
     <ul>
-      <pre>$ arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno Arduino/Led
+      <pre style="background-color: #FFFACD;">$ arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno Arduino/Led
 avrdude: ser_open(): can't open device "/dev/ttyACM0": Permission denied
 Error during Upload: uploading error: uploading error: exit status 1</pre>
     </ul>
@@ -274,20 +274,20 @@ Error during Upload: uploading error: uploading error: exit status 1</pre>
       piをdialoutグループに追加します。
     </p> 
     <ul>
-      <pre>$ sudo usermod -a -G dialout pi
+      <pre style="background-color: #FFFACD;">$ sudo usermod -a -G dialout pi
 [sudo] password for pi:</pre>
     </ul>
     <br>
 
     <p>ここで、再起動してください。</p> 
     <ul>
-      <pre>$ sudo shutdown -r now</pre>
+      <pre style="background-color: #FFFACD;">$ sudo shutdown -r now</pre>
     </ul>
     <br>
 
     <p>改めて、アップロードします。</p> 
     <ul>
-      <pre>$ arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno Arduino/Led
+      <pre style="background-color: #FFFACD;">$ arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno Arduino/Led
 avrdude: ser_open(): can't open device "/dev/ttyACM0": Permission denied
 Error during Upload: uploading error: uploading error: exit status 1</pre>
     </ul>
@@ -326,7 +326,7 @@ Error during Upload: uploading error: uploading error: exit status 1</pre>
       スケッチの名前は「Button」とします。
     </p>
     <ul>
-      <pre>int val = 0;
+      <pre style="background-color: #FFFACD;">int val = 0;
 
 void setup() {
   pinMode(13, OUTPUT);
@@ -346,18 +346,18 @@ void loop() {
     <p>pushbuttonが押されているかどうかを
       記憶しておくための変数を定義しています。</p>
     <ul>
-      <pre>int val = 0;</pre>
+      <pre style="background-color: #FFFACD;">int val = 0;</pre>
     </ul>
     <p>
       pushbuttonがデジタルピン12に接続されているので、
       ピン12を入力、プルアップ抵抗を有効に設定しています。
     </p>
     <ul>
-      <pre>pinMode(12, INPUT_PULLUP);</pre>
+      <pre style="background-color: #FFFACD;">pinMode(12, INPUT_PULLUP);</pre>
     </ul>
     <p>pushbuttonが押されているかどうかを読み込んでいます。</p>
     <ul>
-      <pre>val = digitalRead(12);</pre>
+      <pre style="background-color: #FFFACD;">val = digitalRead(12);</pre>
     </ul>
     <p>プログラムができたら、実行してみてください。</p>
     <br>
@@ -404,7 +404,7 @@ void loop() {
       スケッチの名前は「Motor」とします。
     </p>
     <ul>
-      <pre>const int DIRECTION_R = 7;
+      <pre style="background-color: #FFFACD;">const int DIRECTION_R = 7;
 const int DIRECTION_L = 8;
 const int PWM_R = 9;
 const int PWM_L = 10;
@@ -448,7 +448,7 @@ void loop() {
       それぞれのピンに名前をつけます。
     </p>
     <ul>
-      <pre>const int DIRECTION_R = 7;
+      <pre style="background-color: #FFFACD;">const int DIRECTION_R = 7;
 const int DIRECTION_L = 8;
 const int PWM_R = 9;
 const int PWM_L = 10;
@@ -460,7 +460,7 @@ const int BUTTON = 12;</pre>
       ピンの名前を使って、ピンの設定をしています。
     </p>
     <ul>
-      <pre>pinMode(DIRECTION_R, OUTPUT);
+      <pre style="background-color: #FFFACD;">pinMode(DIRECTION_R, OUTPUT);
 pinMode(DIRECTION_L, OUTPUT);
 pinMode(PWM_R, OUTPUT);
 pinMode(PWM_L, OUTPUT);
@@ -472,7 +472,7 @@ pinMode(BUTTON, INPUT_PULLUP);</pre>
       前進するときは各モータの方向制御にLOWを入力します。
     </p>
     <ul>
-      <pre>digitalWrite(DIRECTION_R, LOW);
+      <pre style="background-color: #FFFACD;">digitalWrite(DIRECTION_R, LOW);
 digitalWrite(DIRECTION_L, LOW);</pre>
     </ul>
     <p>
@@ -480,7 +480,7 @@ digitalWrite(DIRECTION_L, LOW);</pre>
       PWM値には0〜100を設定します。
     </p>
     <ul>
-      <pre>analogWrite(PWM_R, 30);
+      <pre style="background-color: #FFFACD;">analogWrite(PWM_R, 30);
 analogWrite(PWM_L, 30);</pre>
     </ul>
     <p>プログラムができたら、実行してみてください。</p>
@@ -505,10 +505,10 @@ analogWrite(PWM_L, 30);</pre>
       pipはPythonのパッケージを管理するためのツールです。
     </p>
     <ul>
-      <pre>$ sudo apt install python3-pip</pre>
+      <pre style="background-color: #FFFACD;">$ sudo apt install python3-pip</pre>
     </ul>
     <ul>
-      <pre>$ python3 -m pip install pyserial</pre>
+      <pre style="background-color: #FFFACD;">$ python3 -m pip install pyserial</pre>
     </ul>
     <br>
 
@@ -522,7 +522,7 @@ analogWrite(PWM_L, 30);</pre>
       ホームディレクトリにPythonという名前の
       ディレクトリを作ります。</p>
     <ul>
-      <pre>$ mkdir Python</pre>
+      <pre style="background-color: #FFFACD;">$ mkdir Python</pre>
     </ul>
     <br>
 
@@ -530,13 +530,13 @@ analogWrite(PWM_L, 30);</pre>
       ここにserial_test.pyという名前で
       ファイルを作ります。</p>
     <ul>
-      <pre>nano Python/serial_test.py</pre>
+      <pre style="background-color: #FFFACD;">nano Python/serial_test.py</pre>
     </ul>
     <br>
 
     <p>serial_test.py</p>
     <ul>
-      <pre>import serial
+      <pre style="background-color: #FFFACD;">import serial
 
 def main():
     print("Open Port")
@@ -566,7 +566,7 @@ if __name__ == '__main__':
 
     <p>試しに実行してみましょう。</p>
     <ul>
-      <pre>$ python3 Python/serial_test.py
+      <pre style="background-color: #FFFACD;">$ python3 Python/serial_test.py
 Open Port
 type 0 or 1: 1
 type 0 or 1: 0
@@ -576,13 +576,13 @@ type 0 or 1: ^CClose Port</pre>
 
     <p>次にArduinoのプログラムを作ります。</p>
     <ul>
-      <pre>$ arduino-cli sketch new Arduino/SerialTest
+      <pre style="background-color: #FFFACD;">$ arduino-cli sketch new Arduino/SerialTest
 Sketch created in: /home/pi/Arduino/SerialTest</pre>
     </ul>
 
     <p>SerialTest.ino</p>
     <ul>
-      <pre>void setup() {
+      <pre style="background-color: #FFFACD;">void setup() {
     Serial.begin(9600);
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, LOW);
@@ -635,7 +635,7 @@ void loop() {
 
       <p>「RosSerialJoy.ino」の例です。</p>
       <ul>
-        <pre>#include &ltros.h&gt
+        <pre style="background-color: #FFFACD;">#include &ltros.h&gt
 #include &lstd_msgs/Bool.h&gt
 #include &lstd_msgs/String.h&gt
 #include &lgeometry_msgs/Twist.h&gt
