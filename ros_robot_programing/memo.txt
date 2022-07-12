@@ -1,2 +1,0 @@
-第1章：自動運転車、Road_Udacityプロジェクトで車線を見つける[Python Tutoriel]
-https://ichi.pro/dai-1-sho-jido-untensha-road-udacity-purojyekuto-de-shasen-o-mitsukeru-python-tutoriel-82556111232263
