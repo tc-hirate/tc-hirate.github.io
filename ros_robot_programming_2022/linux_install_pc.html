@@ -10,9 +10,7 @@
     <h1>Linuxのインストール（PC）</h1>
 
     <p>
-      Linuxはオープンソースのオペレーティングシステム（OS）です。
-    </p>
-    <p>
+      Linuxはオープンソースのオペレーティングシステム（OS）です。<br>
       PCではUbuntu Desktop 20.04 LTSを使います。
     </p>
     <br>
@@ -22,6 +20,7 @@
       <li><a href="#Live DVDの作成">Live DVDの作成</a></li>
       <li><a href="#Linuxのインストール">Linuxのインストール</a></li>
       <li><a href="#Linuxへのログイン">Linuxへのログイン</a></li>
+      <li><a href="#Linuxの日本語化">Linuxの日本語化</a></li>
     </ul>
 
     <section>
@@ -29,13 +28,13 @@
     <h3 id="Linuxのダウンロード">Linuxのダウンロード</h3>
     <p>
       Ubuntu Desktop 20.04 LTSのディスクイメージを
-      <a href=https://ubuntu.com/download/desktop>公式HP</a>
+      <a href=https://releases.ubuntu.com/20.04/>公式HP</a>
       からダウンロードします。
     </p>
 
     <br>
     <div style="text-align:center">
-      <img src="images/linux_download_img_01.PNG"
+      <img src="images/linux_download_img_01.png"
            alt="Linux Download"
            width="100%"
            height="100%">
@@ -43,8 +42,9 @@
     <br>
 
     <h3 id="Live DVDの作成">Live DVDの作成</h3>
-    <p>エクスプローラーで「ダウンロード」フォルダを開きます。</p>
     <p>
+      エクスプローラーで「ダウンロード」フォルダを開く。<br>
+      PCのDVDドライブに空のDVDを入れる。<br>
       ダウンロードしたディスクイメージを右クリックし、
       ［ディスクイメージの書き込み］をクリックする。
     </p>
@@ -87,8 +87,12 @@
     <br>
 
     <h3 id="Linuxのインストール">Linuxのインストール</h3>
-    <p>PCの電源ボタンを押したら、［F12］キーを連打する。</p>
-    <p>Boot Optionsの画面が表示される。</p>
+    <p><font color="red">■Vostro3550の場合</font></p>
+    <p>
+      一旦、PCのシャットダウンする。<br>
+      PCの電源ボタンを押したら、［F12］キーを連打する。<br>
+      Boot Optionsの画面が表示される。<br>
+    </p>
 
     <br>
     <div style="text-align:center">
@@ -99,8 +103,8 @@
     </div>
     <br>
 
-    <p>Live DVDをDVDドライブに入れる。</p>
     <p>
+      Live DVDをDVDドライブに入れる。<br>
       ［↑］と［↓］を使ってCD/DVD/CD-RW Deviceを選び、
       ［Enter］を押す。
     </p>
@@ -114,6 +118,77 @@
     </div>
     <br>
 
+    <p><font color="red">■Vostro3590の場合</font></p>
+    <p>
+      PCの電源ボタンを押したら、［F2］キーを連打する。<br>
+      BIOS Setupの画面が表示される。<br>
+      ［System Configuration］をクリックする。<br>
+      ［SATA Operation］の［AHCI］をチェックする。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_install2_img_01.png"
+           alt="Linux Install 1"
+           width="100%"
+           height="100%">
+    </div>
+    <br>
+
+    <p>確認画面が出てきたら、［Yes］をクリックする。</p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_install2_img_02.png"
+           alt="Linux Install 1"
+           width="100%"
+           height="100%">
+    </div>
+    <br>
+
+    <p>
+      設定が変更された。<br>
+      ［EXIT］をクリックする。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_install2_img_03.png"
+           alt="Linux Install 1"
+           width="100%"
+           height="100%">
+    </div>
+    <br>
+
+    <p>［EXIT］をクリックする。</p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_install2_img_04.png"
+           alt="Linux Install 1"
+           width="100%"
+           height="100%">
+    </div>
+    <br>
+
+    <p>
+      シャットダウンする前にLive DVDをDVDドライブに入れる。<br>
+      一旦、PCのシャットダウンする。<br>
+      PCの電源ボタンを押したら、［F12］キーを連打する。<br>
+      Boot Optionsの画面が表示される。<br>
+      ［UEFI PLDS DVD+/-RW DU-8A5LH］をクリックする。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_install2_img_05.png"
+           alt="Linux Install 1"
+           width="100%"
+           height="100%">
+    </div>
+    <br>
+
+    <p><font color="red">■ここから共通</font></p>
     <p>しばらくすると、ディスクチェックが始まる。</p>
 
     <br>
@@ -125,8 +200,8 @@
     </div>
     <br>
 
-    <p>ディスクチェックが終わると、Installウィンドウが表示される。</p>
     <p>
+      ディスクチェックが終わると、Installウィンドウが表示される。<br>
       Welcomeは、「English」が選択されいることを確認したら
       ［Install Ubuntu］ボタンをクリックする。
     </p>
@@ -156,7 +231,8 @@
 
     <p>
       Updates and other softwareは、デフォルトのまま
-      ［Continue］ボタンをクリックする。
+      ［Continue］ボタンをクリックする。<br>
+      ※有線LANを接続していないと、Wirelessの設定画面が出てくる。
     </p>
 
     <br>
@@ -171,7 +247,9 @@
     <p>
       Installation typeは、
       ［Erase Ubuntu 20.04.2 LTS and reinstall］を選択し
-      ［Install Now］ボタンをクリックする。
+      ［Install Now］ボタンをクリックする。<br>
+      ※違う画面が出てくるかもしれない。
+      →［Erase disk and install Ubuntu］を選択
     </p>
 
     <br>
@@ -213,12 +291,12 @@
 
     <p>Who are you?は、次の通り入力する。</p>
     <p>
-      Your name
-      Your computer's name
-      Pick a username
-      Choose a password
-      Confirm your password
-      Require my password to login
+      Your name: ubuntu<br>
+      Your computer's name: mbc***<br>
+      Pick a username: ubuntu<br>
+      Choose a password: hirate2020<br>
+      Confirm your password: hirate2020<br>
+      Require my password to login: Require my password to log in にチェック<br>
     </p>
     <p>入力できたら［Continue］ボタンをクリックする。</p>
 
@@ -289,9 +367,7 @@
 
     <p>
       はじめに、各種設定の画面が表示されるが、
-      全てデフォルトのままとする。
-    </p>
-    <p>
+      全てデフォルトのままとする。<br>
       Connect Your Online Accountsは、
       ［Skip］ボタンをクリック。
     </p>
@@ -409,6 +485,196 @@
            height="100%">
     </div>
     <br>
+
+    <h3 id="Linuxの日本語化">Linuxの日本語化</h3>
+    <p>
+      左下のワッフルメニューをクリックして、アプリケーションを表示する。<br>
+      [Settings]をクリックする。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_japanese_img_01.png"
+           alt="Linux Japanese 1"
+           width="100%"
+           height="100%">
+    </div>
+    <br>
+
+    <p>
+      [Settings]が起動する。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_japanese_img_02.png"
+           alt="Linux Japanese 2"
+           width="100%"
+           height="100%">
+    </div>
+    <br>
+
+    <p>
+      [Region & Language]を選択し、[Manage Installed Languages]をクリックする。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_japanese_img_03.png"
+           alt="Linux Japanese 3"
+           width="100%"
+           height="100%">
+    </div>
+    <br>
+
+    <p>
+      [Install]をクリックする。<br>
+      ここでパスワードの入力を求められるので、パスワードを入力する。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_japanese_img_04.png"
+           alt="Linux Japanese 4">
+    </div>
+    <br>
+
+<!--
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_japanese_img_05.png"
+           alt="Linux Japanese 5">
+    </div>
+    <br>
+-->
+
+    <p>
+      変更の適用中。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_japanese_img_06.png"
+           alt="Linux Japanese 6">
+    </div>
+    <br>
+
+    <p>
+      [Language]に日本語（まだグレー）があることを確認したら、[Close]をクリックする。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_japanese_img_07.png"
+           alt="Linux Japanese 7">
+    </div>
+    <br>
+
+    <p>
+      [Language]をクリックする。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_japanese_img_08.png"
+           alt="Linux Japanese 8"
+           width="100%"
+           height="100%">
+    </div>
+    <br>
+
+    <p>
+      [日本語]を選択して、[Select]をクリックする。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_japanese_img_09.png"
+           alt="Linux Japanese 9">
+    </div>
+    <br>
+
+    <p>
+      [Restart]をクリックして、再起動する。<br>
+      実際はログアウトするだけなので、再度ログインする。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_japanese_img_10.png"
+           alt="Linux Japanese 10"
+           width="100%"
+           height="100%">
+    </div>
+    <br>
+
+    <p>
+      再起動すると次のウィンドウが出てくるので、<br>
+      [次回から表示しない]にチェックをして、<br>
+      [古い名前のままにする]をクリックする。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_japanese_img_11.png"
+           alt="Linux Japanese 11">
+    </div>
+    <br>
+
+    <p>
+      表示が日本語化された。<br>
+      再度Settingsを起動して、[地域と言語]をクリックする。<br>
+      [入力ソース]の下の[+]をクリックする。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_japanese_img_12.png"
+           alt="Linux Japanese 12"
+           width="100%"
+           height="100%">
+    </div>
+    <br>
+
+    <p>
+      [日本語]をクリックする。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_japanese_img_13.png"
+           alt="Linux Japanese 13">
+    </div>
+    <br>
+
+    <p>
+      [日本語(Mozc)]を選択して、[追加]をクリックする。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_japanese_img_14.png"
+           alt="Linux Japanese 14">
+    </div>
+    <br>
+
+    <p>
+      [入力ソース]に[日本語(Mozc)]が追加された。
+    </p>
+
+    <br>
+    <div style="text-align:center">
+      <img src="images/linux_japanese_img_15.png"
+           alt="Linux Japanese 15"
+           width="100%"
+           height="100%">
+    </div>
+    <br>
+
+    <p>
+      これで日本語を入力することができるようになりました。<br>
+      日本語と英語の切り替えは、[Windows] + [Space] で行います。
+    </p>
 
   </div>
   </body>
