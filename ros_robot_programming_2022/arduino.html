@@ -8,12 +8,17 @@
   <body>
   <div class="main">
     <h1>Arduinoを使う</h1>
-    <p>Raspberry PiでArduinoを使えるように設定します。</p>
+
+    <p>
+      Raspberry PiでArduinoを使えるように設定します。
+    </p>
+
     <p>
       Arduinoを使って、
       LEDを点灯させたり、モーターを動かしたりします。
       また、ROSと通信をする方法について説明します。
     </p>
+    
     <p>
       Arduinoのプログラムはスケッチと呼ばれ、C/C++がベースとなっています。
       Pythonとは異なるので注意してください。
@@ -31,7 +36,11 @@
     <section>
 
     <h3 id="開発環境をインストールする">開発環境をインストールする</h3>
-    <p>arduino-cliをインストールします。</p>
+    
+    <p>
+      arduino-cliをインストールします。
+    </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
 Installing in /home/pi/bin
@@ -45,7 +54,10 @@ arduino-cli alpha Version: 0.18.3 Commit: d710b642 Date: 2021-05-14T12:36:58Z in
     </ul>
     <br>
 
-    <p>arduino-cliのパスを通します。</p>
+    <p>
+      arduino-cliのパスを通します。
+    </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ export PATH=$PATH:$HOME/bin</pre>
     </ul>
@@ -55,6 +67,7 @@ arduino-cli alpha Version: 0.18.3 Commit: d710b642 Date: 2021-05-14T12:36:58Z in
       arduino-cliのヘルプを表示します。
       （パスが通っていることを確認）
     </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ arduino-cli help core
 Arduino core operations.
@@ -95,13 +108,17 @@ Use "arduino-cli core [command] --help" for more information about a command.
       パスを通すためのコマンドを
       shellのsutartup scriptに書いておきます。
     </p> 
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ echo "export PATH=$PATH:$HOME/bin" >> ~/.bashrc
 </pre>
     </ul>
     <br>
 
-    <p>configuration fileを作成します。</p> 
+    <p>
+      configuration fileを作成します。
+    </p> 
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ arduino-cli config init
 Config file written to: /home/pi/.arduino15/arduino-cli.yaml</pre>
@@ -109,10 +126,12 @@ Config file written to: /home/pi/.arduino15/arduino-cli.yaml</pre>
     <br>
 
     <h3 id="LEDを点滅させる">LEDを点滅させる</h3>
+    
     <p>
       Zumo Shieldには「user LED」があります。
       Arduinoとは次のように接続されています。
     </p>
+    
     <ul>
       <table>
         <tr>
@@ -134,10 +153,12 @@ Config file written to: /home/pi/.arduino15/arduino-cli.yaml</pre>
       この「user LED」を点滅させるスケッチを作ります。
       スケッチの名前は「Led」とします。 
     </p>
+    
     <p>
       次のコマンドを実行して、
       新しいスケッチを作成してください。
     </p> 
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ arduino-cli sketch new Arduino/Led
 Sketch created in: /home/pi/Arduino/Led
@@ -145,7 +166,10 @@ Sketch created in: /home/pi/Arduino/Led
     </ul>
     <br>
 
-    <p>ソースファイルを開いてください。</p> 
+    <p>
+      ソースファイルを開いてください。
+    </p> 
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ nano Arduino/Led/Led.ino 
 
@@ -162,6 +186,7 @@ void loop() {
       LEDがデジタルピン13に接続されているので、
       ピン13を出力に設定します。
     </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">void setup() {
   pinMode(13, OUTPUT);
@@ -174,12 +199,14 @@ void loop() {
       Arduinoの電源が切られるまで、
       loop()は何度も繰り返し実行されます。
     </p>
+    
     <p>
       ピン13をHIGHにするとLEDは点灯し、
       LOWにすると消灯します。
       delay(1000)は、1秒間（1000ms）
       何もしないという命令です。
     </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">void loop() {
   digitalWrite(13, HIGH);
@@ -190,7 +217,10 @@ void loop() {
     </ul>
     <br>
 
-    <p>利用できるプラットフォームとライブラリを更新します。</p>
+    <p>
+      利用できるプラットフォームとライブラリを更新します。
+    </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ arduino-cli core update-index
 Downloading missing tool builtin:ctags@5.8-arduino11...
@@ -209,11 +239,15 @@ Updating index: package_index.json.sig downloaded</pre>
     </ul>
     <br>
 
-    <p>ArduinoとRaspberry Piを接続してください。</p>
+    <p>
+      ArduinoとRaspberry Piを接続してください。
+    </p>
+    
     <p>
       接続したら、次のコマンドを実行して、
       正しく認識されているか確認します。
     </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ arduino-cli board list
 Port         Type              Board Name  FQBN            Core       
@@ -223,7 +257,10 @@ Port         Type              Board Name  FQBN            Core
     </ul>
     <br>
 
-    <p>arduino:avrのplatform coreをインストールします。</p>
+    <p>
+      arduino:avrのplatform coreをインストールします。
+    </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ arduino-cli core install arduino:avr
 Downloading packages...
@@ -244,7 +281,10 @@ arduino:avr@1.8.3 installed
     </ul>
     <br>
 
-    <p>正しくインストールされたか確認します。</p> 
+    <p>
+      正しくインストールされたか確認します。
+    </p> 
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ arduino-cli core list
 ID          Installed Latest Name              
@@ -252,7 +292,10 @@ arduino:avr 1.8.3     1.8.3  Arduino AVR Boards</pre>
     </ul>
     <br>
 
-    <p>スケッチをコンパイルします。</p> 
+    <p>
+      スケッチをコンパイルします。
+    </p> 
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ arduino-cli compile --fqbn arduino:avr:uno Arduino/Led
 Sketch uses 444 bytes (1%) of program storage space. Maximum is 32256 bytes.
@@ -260,7 +303,10 @@ Global variables use 9 bytes (0%) of dynamic memory, leaving 2039 bytes for loca
     </ul>
     <br>
 
-    <p>アップロードします。</p> 
+    <p>
+      アップロードします。
+    </p> 
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno Arduino/Led
 avrdude: ser_open(): can't open device "/dev/ttyACM0": Permission denied
@@ -268,24 +314,34 @@ Error during Upload: uploading error: uploading error: exit status 1</pre>
     </ul>
     <br>
 
-    <p>/dev/ttyACM0の権限でエラーが出ました。</p> 
+    <p>
+      /dev/ttyACM0の権限でエラーが出ました。
+    </p> 
+    
     <p>
       次のコマンドを実行して、
       piをdialoutグループに追加します。
     </p> 
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ sudo usermod -a -G dialout pi
 [sudo] password for pi:</pre>
     </ul>
     <br>
 
-    <p>ここで、再起動してください。</p> 
+    <p>
+      ここで、再起動してください。
+    </p> 
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ sudo shutdown -r now</pre>
     </ul>
     <br>
 
-    <p>改めて、アップロードします。</p> 
+    <p>
+      改めて、アップロードします。
+    </p> 
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno Arduino/Led
 avrdude: ser_open(): can't open device "/dev/ttyACM0": Permission denied
@@ -300,10 +356,12 @@ Error during Upload: uploading error: uploading error: exit status 1</pre>
     <br>
 
     <h3 id="押しボタンスイッチを使ってLEDを点灯させる">押しボタンスイッチを使ってLEDを点灯させる</h3>
+    
     <p>
       Zumo Shieldには「user pushbutton」があります。
       Arduinoとは次のように接続されています。
     </p>
+    
     <ul>
       <table>
         <tr>
@@ -319,12 +377,17 @@ Error during Upload: uploading error: uploading error: exit status 1</pre>
         </tr>
       </table>
     </ul>
-    <p>詳しくは「User's Guide」を確認してください。</p>
+    
+    <p>
+      詳しくは「User's Guide」を確認してください。
+    </p>
+    
     <p>
       この「user pushbutton」が押されているときに「user LED」を点灯し、
       押されていないときに消灯するスケッチを作ります。
       スケッチの名前は「Button」とします。
     </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">int val = 0;
 
@@ -343,30 +406,45 @@ void loop() {
   }
 }</pre>
     </ul>
-    <p>pushbuttonが押されているかどうかを
-      記憶しておくための変数を定義しています。</p>
+    
+    <p>
+      pushbuttonが押されているかどうかを
+      記憶しておくための変数を定義しています。
+    </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">int val = 0;</pre>
     </ul>
+    
     <p>
       pushbuttonがデジタルピン12に接続されているので、
       ピン12を入力、プルアップ抵抗を有効に設定しています。
     </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">pinMode(12, INPUT_PULLUP);</pre>
     </ul>
-    <p>pushbuttonが押されているかどうかを読み込んでいます。</p>
+    
+    <p>
+      pushbuttonが押されているかどうかを読み込んでいます。
+    </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">val = digitalRead(12);</pre>
     </ul>
-    <p>プログラムができたら、実行してみてください。</p>
+    
+    <p>
+      プログラムができたら、実行してみてください。
+    </p>
     <br>
 
     <h3 id="モータを動かす">モータを動かす</h3>
+    
     <p>
       Zumo Shieldには2つのモータがあります。
       Arduinoとは次のように接続されています。
     </p>
+    
     <ul>
       <table>
         <tr>
@@ -397,12 +475,17 @@ void loop() {
         </tr>
       </table>
     </ul>
-    <p>詳しくは「User's Guide」を確認してください。</p>
+    
+    <p>
+      詳しくは「User's Guide」を確認してください。
+    </p>
+    
     <p>
       「user pushbutton」が押されているときに前進し、
       押されていないときに停止するスケッチを作ります。
       スケッチの名前は「Motor」とします。
     </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">const int DIRECTION_R = 7;
 const int DIRECTION_L = 8;
@@ -443,10 +526,12 @@ void loop() {
   }
 }</pre>
     </ul>
+    
     <p>
       ピン番号を数字で入力していると間違えることがあるので、
       それぞれのピンに名前をつけます。
     </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">const int DIRECTION_R = 7;
 const int DIRECTION_L = 8;
@@ -456,9 +541,11 @@ const int PWM_L = 10;
 const int LED = 13;
 const int BUTTON = 12;</pre>
     </ul>
+    
     <p>
       ピンの名前を使って、ピンの設定をしています。
     </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">pinMode(DIRECTION_R, OUTPUT);
 pinMode(DIRECTION_L, OUTPUT);
@@ -468,32 +555,43 @@ pinMode(PWM_L, OUTPUT);
 pinMode(LED, OUTPUT);
 pinMode(BUTTON, INPUT_PULLUP);</pre>
     </ul>
+    
     <p>
       前進するときは各モータの方向制御にLOWを入力します。
     </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">digitalWrite(DIRECTION_R, LOW);
 digitalWrite(DIRECTION_L, LOW);</pre>
     </ul>
+    
     <p>
       PWM出力するときはanalogWrite(ピン番号, PWM値)を使います。
       PWM値には0〜100を設定します。
     </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">analogWrite(PWM_R, 30);
 analogWrite(PWM_L, 30);</pre>
     </ul>
-    <p>プログラムができたら、実行してみてください。</p>
+    
+    <p>
+      プログラムができたら、実行してみてください。
+    </p>
     <br>
 
     <h3 id="Arduinoと通信する">Arduinoと通信する</h3>
+    
     <p>
       ROS1では、rosserialというツールを使って
-      topicを送受信することができました。</p>
+      topicを送受信することができました。
+    </p>
+    
     <p>
       ROS2にもros2arduinoというツールがあるのですが、
       Auduino UNOには対応していないようです。
     </p>
+    
     <p>
       ここでは、Pythonでシリアル通信をするための
       モジュールpyserialを使います。
@@ -504,9 +602,11 @@ analogWrite(PWM_L, 30);</pre>
       pyserialはpipを使ってインストールします。
       pipはPythonのパッケージを管理するためのツールです。
     </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ sudo apt install python3-pip</pre>
     </ul>
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ python3 -m pip install pyserial</pre>
     </ul>
@@ -517,10 +617,13 @@ analogWrite(PWM_L, 30);</pre>
       0ならばLEDを消灯、1ならばLEDを点灯する
       プログラムを作ります。
     </p>
+    
     <p>
       Pythonのプログラムを保存するために、
       ホームディレクトリにPythonという名前の
-      ディレクトリを作ります。</p>
+      ディレクトリを作ります。
+    </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ mkdir Python</pre>
     </ul>
@@ -528,13 +631,18 @@ analogWrite(PWM_L, 30);</pre>
 
     <p>
       ここにserial_test.pyという名前で
-      ファイルを作ります。</p>
+      ファイルを作ります。
+    </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">nano Python/serial_test.py</pre>
     </ul>
     <br>
 
-    <p>serial_test.py</p>
+    <p>
+      serial_test.py
+    </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">import serial
 
@@ -564,7 +672,10 @@ if __name__ == '__main__':
     </ul>
     <br>
 
-    <p>試しに実行してみましょう。</p>
+    <p>
+      試しに実行してみましょう。
+    </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ python3 Python/serial_test.py
 Open Port
@@ -574,13 +685,19 @@ type 0 or 1: ^CClose Port</pre>
     </ul>
     <br>
 
-    <p>次にArduinoのプログラムを作ります。</p>
+    <p>
+      次にArduinoのプログラムを作ります。
+    </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">$ arduino-cli sketch new Arduino/SerialTest
 Sketch created in: /home/pi/Arduino/SerialTest</pre>
     </ul>
 
-    <p>SerialTest.ino</p>
+    <p>
+      SerialTest.ino
+    </p>
+    
     <ul>
       <pre style="background-color: #FFFACD;">void setup() {
     Serial.begin(9600);
@@ -614,6 +731,7 @@ void loop() {
     <br>
 
     <h3 id="演習2「ジョイスティックを使ってZumoを動かす」">演習2「ジョイスティックを使ってZumoを動かす」</h3>
+    
     <ol>
       <li>
         ジョイスティックのAボタンを押すと
@@ -633,7 +751,9 @@ void loop() {
       </li>
       <br>
 
+<!--
       <p>「RosSerialJoy.ino」の例です。</p>
+      
       <ul>
         <pre style="background-color: #FFFACD;">#include &ltros.h&gt
 #include &lstd_msgs/Bool.h&gt
@@ -724,6 +844,7 @@ void loop() {
 }</pre>
       </ul>
       <br>
+-->
 
       <li>
         ［Option］ジョイスティックの左アナログスイッチでZumoを操縦する

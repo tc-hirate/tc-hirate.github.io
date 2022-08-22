@@ -9,7 +9,9 @@
   <div class="main">
     <h1>ジョイスティックを使う</h1>
 
-    <p>PCでジョイスティックが使えるように設定します。</p>
+    <p>
+      PCでジョイスティックが使えるように設定します。
+    </p>
     <br>
 
     <ul>
@@ -21,26 +23,30 @@
     <section>
 
     <h3 id="必要なパッケージをインストールする">必要なパッケージをインストールする</h3>
+
     <p>
       ジョイスティックを使うために必要なパッケージを
       インストールします。
     </p>
+
     <ul>
       <pre>$ sudo apt install ros-galactic-joy</pre>
     </ul>
     <ul>
       <pre>$ sudo apt install ros-galactic-teleop-tools</pre>
     </ul>
-    <br>
 
+    <br>
     <h3 id="ジョイスティックの動作確認">ジョイスティックの動作確認</h3>
+
     <p>
       PCにジョイスティックを接続し、
       次のコマンドを実行してください。
       接続したジョイスティックが確認できます。
     </p>
+
     <ul>
-      <pre>pi@zumo08:~$ lsusb
+      <pre>$ lsusb
 ・・・
 Bus 002 Device 005: ID 046d:c21d Logitech, Inc. F310 Gamepad [XInput Mode]
 ・・・</pre>
@@ -51,6 +57,7 @@ Bus 002 Device 005: ID 046d:c21d Logitech, Inc. F310 Gamepad [XInput Mode]
       続いて、次のコマンドを実行してください。
       js0があればジョイスティックは認識されています。
     </p>
+
     <ul>
       <pre>$ ls /dev/input/
 by-id    event0  event10  event12  event2  event4  event6  event8  js0   mouse0
@@ -58,14 +65,20 @@ by-path  event1  event11  event13  event3  event5  event7  event9  mice  mouse1<
     </ul>
     <br>
 
-    <p>joyパッケージのjoy-nodeを実行します。</p>
+    <p>
+      joyパッケージのjoy-nodeを実行します。
+    </p>
+
     <ul>
       <pre>$ ros2 run joy joy_node
 [INFO] [1629868060.164242832] [joy_node]: Opened joystick: Logitech Gamepad F310.  deadzone: 0.050000</pre>
     </ul>
     <br>
 
-    <p>Topicを確認します。</p>
+    <p>
+      Topicを確認します。
+    </p>
+
     <ul>
       <pre>$ ros2 topic list
 /joy
@@ -75,7 +88,10 @@ by-path  event1  event11  event13  event3  event5  event7  event9  mice  mouse1<
     </ul>
     <br>
 
-    <p>/joyを表示します。</p>
+    <p>
+      /joyを表示します。
+    </p>
+
     <ul>
       <pre>$ ros2 topic echo /joy
 header:
@@ -108,16 +124,22 @@ buttons:
     </ul>
     <br>
 
-    <p>teleop_twist_joyパッケージのteleop-nodeを実行します。</p>
+    <p>
+      teleop_twist_joyパッケージのteleop-nodeを実行します。
+    </p>
+
     <ul>
-      <pre>@mbc084:~$ ros2 run teleop_twist_joy teleop_node 
+      <pre>$ ros2 run teleop_twist_joy teleop_node 
 [INFO] [1629868740.510404297] [TeleopTwistJoy]: Teleop enable button 5.
 [INFO] [1629868740.510494888] [TeleopTwistJoy]: Linear axis x on 5 at scale 0.500000.
 [INFO] [1629868740.510528504] [TeleopTwistJoy]: Angular axis yaw on 2 at scale 0.500000.</pre>
     </ul>
     <br>
 
-    <p>Topicを確認します。</p>
+    <p>
+      Topicを確認します。
+    </p>
+
     <ul>
       <pre>$ ros2 topic list
 /cmd_vel
@@ -128,7 +150,12 @@ buttons:
     </ul>
     <br>
 
-    <p>/cmd_velを表示します。</p>
+    <p>
+      /cmd_velを表示します。<br>
+      RBを押しながらRTを操作するとxの値が-0.5〜0.5で変化し、
+      LTを操作するとzの値が-0.5〜0.5で変化します。
+    </p>
+
     <ul>
       <pre>$ ros2 topic echo /cmd_vel 
 linear:
@@ -144,7 +171,9 @@ angular:
     <br>
 
     <h3 id="パッケージを作る">パッケージを作る</h3>
+
     <p>joy_testという名前のパッケージを作ります。</p>
+
     <ul>
       <pre>$ cd dev_ws/src/
 $ ros2 pkg create --build-type ament_python joy_test</pre>
@@ -158,18 +187,22 @@ $ mkdir launch</pre>
     <br>
 
     <h3 id="演習1「ジョイスティックを使ってturtlesimを動かす」">演習1「ジョイスティックを使ってturtlesimを動かす」</h3>
+
     <ol>
       <li>
         joy-nodeとteleop-nodeを使ってturtlesimを
         動かしてください。
       </li>
       <br>
+
       <ul>
         <pre>$ ros2 run turtlesim turtlesim_node</pre>
       </ul>
+
       <ul>
         <pre>$ ros2 run joy joy_node</pre>
       </ul>
+
       <ul>
         <pre>$ ros2 run teleop_twist_joy teleop_node --ros-args --remap /cmd_vel:=/turtle1/cmd_vel</pre>
       </ul>
@@ -182,7 +215,16 @@ $ mkdir launch</pre>
       </li>
       <br>
 
-      <p>turtle_teleop_joy_launch.py</p>
+      <p>
+        turtle_teleop_joy_launch.py
+      </p>
+
+      <ul>
+        <pre></pre>
+      </ul>
+      <br>
+
+<!--
       <ul>
         <pre>from launch import LaunchDescription
 from launch_ros.actions import Node
@@ -210,11 +252,21 @@ def generate_launch_description():
     ])</pre>
       </ul>
       <br>
+-->
 
-      <p>setup.py</p>
+      <p>
+        setup.py
+      </p>
+
       <ul>
-        <pre>import os
-from glob import glob
+        <pre></pre>
+      </ul>
+      <br>
+
+<!--
+      <ul>
+        <pre><font color="#ff0000">import os</font>
+<font color="#ff0000">from glob import glob</font>
 
 from setuptools import setup
 
@@ -244,8 +296,12 @@ setup(
 )</pre>
       </ul>
       <br>
+-->
 
-      <p>launchファイルを実行する。</p>
+      <p>
+        launchファイルを実行する。
+      </p>
+
       <ul>
         <pre>$ ros2 launch joy_test turtle_teleop_joy_launch.py</pre>
       </ul>
@@ -259,7 +315,16 @@ setup(
       </li>
       <br>
 
-      <p>turtle_joy.py</p>
+      <p>
+        turtle_joy.py
+      </p>
+
+      <ul>
+        <pre></pre>
+      </ul>
+      <br>
+
+<!--
       <ul>
         <pre>import rclpy
 from rclpy.node import Node
@@ -281,7 +346,7 @@ class JoyTwist(Node):
         self.subscription
 
     def joy_callback(self, joy_msg):
-       twist = Twist()
+        twist = Twist()
         if joy_msg.axes[7] == 1:
             twist.linear.x = 2.0
         elif joy_msg.axes[7] == -1:
@@ -293,7 +358,6 @@ class JoyTwist(Node):
         else:
             twist.linear.x = 0.0
         self.publisher_.publish(twist)
-
 
 def main(args=None):
     rclpy.init(args=args)
@@ -313,8 +377,18 @@ if __name__ == '__main__':
     main()</pre>
       </ul>
       <br>
+-->
 
-      <p>package.xml</p>
+      <p>
+        package.xml
+      </p>
+
+      <ul>
+        <pre></pre>
+      </ul>
+      <br>
+
+<!--
       <ul>
         <pre>&lt?xml version="1.0"?&gt
 &lt?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematyp&gt
@@ -330,10 +404,10 @@ if __name__ == '__main__':
   <font color="#ff0000">&ltexec_depend&gtgeometry_msgs&lt/exec_depend&gt</font>
   <font color="#ff0000">&ltexec_depend&gtsensor_msgs&lt/exec_depend&gt</font>
 
-  &ltest_depend&gtament_copyright&l/test_depend&gt
-  &ltest_depend&gtament_flake8&l/test_depend&gt
-  &ltest_depend&gtament_pep257&l/test_depend&gt
-  &ltest_depend&gtpython3-pytest&l/test_depend&gt
+  &lttest_depend&gtament_copyright&lt/test_depend&gt
+  &lttest_depend&gtament_flake8&lt/test_depend&gt
+  &lttest_depend&gtament_pep257&lt/test_depend&gt
+  &lttest_depend&gtpython3-pytest&lt/test_depend&gt
 
   &ltexport&gt
     &ltbuild_type&gtament_python&lt/build_type&gt
@@ -341,8 +415,18 @@ if __name__ == '__main__':
 &lt/package&gt</pre>
       </ul>
       <br>
+-->
 
-      <p>setup.py</p>
+      <p>
+        setup.py
+      </p>
+
+      <ul>
+        <pre></pre>
+      </ul>
+      <br>
+
+<!--
       <ul>
         <pre>import os
 from glob import glob
@@ -377,13 +461,20 @@ setup(
       </ul>
       <br>
 
-      <p>joy_testパッケージのjoy_twistノードを実行する。</p>
+-->
+
+      <p>
+        joy_testパッケージのjoy_twistノードを実行する。
+      </p>
+
       <ul>
         <pre>$ ros2 run turtlesim turtlesim_node</pre>
       </ul>
+
       <ul>
         <pre>$ ros2 run joy joy_node</pre>
       </ul>
+
       <ul>
         <pre>$ ros2 run joy_test joy_twist</pre>
       </ul>
@@ -395,7 +486,16 @@ setup(
       </li>
       <br>
 
-      <p>turtle_joy_launch.py</p>
+      <p>
+        turtle_joy_launch.py
+      </p>
+
+      <ul>
+        <pre></pre>
+      </ul>
+      <br>
+
+<!--
       <ul>
         <pre>from launch import LaunchDescription
 from launch_ros.actions import Node
@@ -421,8 +521,12 @@ def generate_launch_description():
       </ul>
     </ol>
     <br>
+-->
 
-      <p>launchファイルを実行する。</p>
+      <p>
+        launchファイルを実行する。
+      </p>
+
       <ul>
         <pre>$ ros2 launch joy_test turtle_joy_launch.py</pre>
       </ul>
