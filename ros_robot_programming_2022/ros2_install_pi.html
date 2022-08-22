@@ -19,25 +19,25 @@
     <section>
 
     <h3 id="ROS2のインストール">ROS2のインストール</h3>
+    
     <p>
       <a href=https://docs.ros.org/en/galactic/Installation.html>公式HP</a>
-      の手順に従ってインストールします。
+      の手順に従ってインストールします。<br>
+      Binary packagesのDebian packagesを選択してください。
     </p>
-    <p>Binary packagesのDebian packagesを選択してください。</p>
+    
     <p>
-      手順はPCと同じです。
-      Raspberry PiではGUI toolは使いませんが、
-      サンプルプログラムをすぐに実行したいため
-      desktop版をインストールします。
+      手順はPCと同じです。<br>
+      Raspberry PiではGUI toolを使わないので、
+      desktop版ではなくbase版をインストールします。
     </p>
-    <br>
 
+    <br>
     <h3 id="サンプルプログラムの実行">サンプルプログラムの実行</h3>
+    
     <p>
       インストールが正しく行われたか確認するために、
-      サンプルプログラムを実行します。
-    </p>
-    <p>
+      サンプルプログラムを実行します。<br>
       はじめに、setup fileを実行するコマンドを
       shellのsutartup scriptに書いておきます。
     </p>
@@ -61,7 +61,19 @@
 
     <p>受講生のRaspberry Piで次のコマンドを実行してください。</p>
     <ul>
-      <pre style="background-color: #FFFACD;">$ ros2 run demo_nodes_cpp listener</pre>
+      <pre style="background-color: #FFFACD;">$ ros2 topic list
+/chatter
+/parameter_events
+/rosout
+$ ros2 topic echo /chatter
+data: 'Hello World: 39'
+---
+data: 'Hello World: 40'
+---
+data: 'Hello World: 41'
+---
+data: 'Hello World: 42'
+---</pre>
     </ul>
     <br>
 
