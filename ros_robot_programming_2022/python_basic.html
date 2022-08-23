@@ -35,8 +35,12 @@
       <li><a href="#戻り値">戻り値</a></li>
       <li><a href="#モジュール">モジュール</a></li>
       <li><a href="#クラスの定義">クラスの定義</a></li>
+      <li><a href="#メソッド">メソッド</a></li>
+      <li><a href="#__init__メソッド">__init__メソッド</a></li>
+<!--
       <li><a href="#継承">継承</a></li>
       <li><a href="#オーバーライド">オーバーライド</a></li>
+-->
     </ul>
     <section>
 
@@ -133,32 +137,34 @@ SyntaxError: invalid syntax</pre>
     <ul>
       <pre>>>> print(3)
 3
->>> print(3 + 7)    # 足し算
-10
->>> print(7 - 3)    # 引き算
-4
->>> print(3 * 7)    # 掛け算
-21
->>> print(3 / 2)    # 割り算
-1.5
->>> print(7 % 3)    # 割り算の余り
-1</pre>
+>>> print(5 + 9)    # 足し算
+14
+>>> print(100 - 7)    # 引き算
+93
+>>> print(6 * 7)    # 掛け算
+42
+>>> print(9 / 5)    # 割り算
+1.8
+>>> print(9 // 5)    # 割り算の商
+1
+>>> print(9 % 5)    # 割り算の余り
+4</pre>
     </ul>
 
     <br>
     <h3 id="文字列と数値の違い">文字列と数値の違い</h3>
 
     <p>
-      「3 + 5」は計算結果である「8」が出力されます。<br>
-      「'3 + 5'」のようにクォーテーションで囲むと、
-      そのまま「'3 + 5'」が出力されます。
+      「9 + 5」は計算結果である「8」が出力されます。<br>
+      「'9 + 5'」のようにクォーテーションで囲むと、
+      そのまま「'9 + 5'」が出力されます。
     </p>
 
     <ul>
-      <pre>>>> print(3 + 5)
-8
->>> print('3 + 5')
-3 + 5</pre>
+      <pre>>>> print(9 + 5)
+14
+>>> print('9 + 5')
+9 + 5</pre>
     </ul>
 
     <br>
@@ -741,7 +747,7 @@ NameError: name 'name' is not defined</pre>
     </p>
 
     <ul>
-      <pre></pre>
+      <pre>>>> class MenuItem:</pre>
     </ul>
 
     <p>
@@ -752,7 +758,8 @@ NameError: name 'name' is not defined</pre>
     </p>
     
     <ul>
-      <pre></pre>
+      <pre>>>> class MenuItem:
+...     pass</pre>
     </ul>
 
     <p>
@@ -763,7 +770,7 @@ NameError: name 'name' is not defined</pre>
     </p>
     
     <ul>
-      <pre></pre>
+      <pre>>>> menu_item1 = MenuItem()</pre>
     </ul>
 
     <p>
@@ -774,7 +781,7 @@ NameError: name 'name' is not defined</pre>
     </p>
     
     <ul>
-      <pre></pre>
+      <pre>>>> menu_item1.name = "Hamburger"</pre>
     </ul>
 
     <p>
@@ -783,9 +790,68 @@ NameError: name 'name' is not defined</pre>
     </p>
     
     <ul>
-      <pre></pre>
+      <pre>>>> print(menu_item1.name)
+Hamburger</pre>
     </ul>
 
+    <br>
+    <h3 id="メソッド">メソッド</h3>
+
+    <p>
+      クラスの中に関数を定義することができます。
+      クラスの中で定義した関数のことをメソッドと呼びます。<br>
+      メソッドの定義の方法は通常の関数と同じですが、
+      第1引数にselfを追加する必要があります。
+    </p>
+
+    <p>
+      第1引数に指定したselfには、
+      そのメソッドを呼び出したインスタンス自身が代入されます。
+    </p>
+
+    <ul>
+      <pre>>>> class MenuItem:
+...     def info(self):
+...         print(self.name)
+... 
+>>> menu_item1 = MenuItem()
+>>> menu_item1.name = "Hamburger"
+>>> menu_item1.info()
+Hamburger</pre>
+    </ul>
+
+    <br>
+    <h3 id="__init__メソッド">__init__メソッド</h3>
+    
+    <p>
+      __init__メソッドは「クラス名()」でインスタンスが生成した直後に
+      自動で呼ばれます。
+    </p>
+
+    <ul>
+      <pre>>>> class MenuItem:
+...     def __init__(self):
+...         print("メニューが作られました")
+... 
+>>> menu_item1 = MenuItem()
+メニューが作られました</pre>
+    </ul>
+
+    <p>
+      __init__メソッドは引数を受け取ることもできます。
+    </p>
+
+    <ul>
+      <pre>>>> class MenuItem:
+...     def __init__(self, name):
+...         self.name = name
+... 
+>>> menu_item1 = MenuItem('Hamburger')
+>>> print(menu_item1.name)
+Hamburger</pre>
+    </ul>
+
+<!--
     <br>
     <h3 id="継承">継承</h3>
 
@@ -856,6 +922,7 @@ NameError: name 'name' is not defined</pre>
     <ul>
       <pre></pre>
     </ul>
+-->
 
 <br>
 <p>
