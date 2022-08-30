@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <title>VSCodeの使い方</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+  <div class="main">
+    <h1>VSCodeの使い方</h1>
+
+    <p>便利なエディタとしてVSCodeを紹介します。</p>
+    <br>
+
+    <ul>
+      <li><a href="#VSCodeのインストール">VSCodeのインストール</a></li>
+      <li><a href="#拡張機能のインストール">拡張機能のインストール</a></li>
+      <li><a href="#SSH接続">SSH接続</a></li>
+    </ul>
+    <section>
+
+    <h3 id="VSCodeのインストール">VSCodeのインストール</h3>
+    
+    <p>
+      <a href=https://code.visualstudio.com/>公式HP</a>
+      の手順に従ってインストールします。
+    </p>
+
+    <p>
+      [.deb Debian, Ubuntu...]と書かれたリンクをクリックしてください。
+    </p>
+
+    <div style="text-align:center">
+      <img src="images/vscode_install_img_01.png"
+           alt="VSCode Install 1"
+           width="100%"
+           height="100%">
+    </div>
+
+    <p>
+      Downloadsディレクトリに移動し、VSCodeをインストールします。
+    </p>
+
+    <ul>
+      <pre>$ cd Downloads/
+$ sudo apt install ./code_1.70.2-1660629410_amd64.deb</pre>
+    </ul>
+
+    <p>インストールが終了したら、VSCodeを起動しましょう。</p>
+
+    <br>
+    <h3 id="拡張機能のインストール">拡張機能のインストール</h3>
+
+    <p>
+      おすすめの拡張機能です。（必要に応じてインストールしてください）
+    </p>
+
+    <ul>
+      <li>Japanese Language Pack for Visual Studio Code（日本語化）</li>
+      <li>Python</li>
+      <li>Python Indent（Python用にきれいにインデントを挿入）</li>
+      <li>autoDocstring（Python用のドックストリングを自動生成）</li>
+      <li>IntelliCode（コード入力をサポートしてくれる）</li>
+      <li>Remote Development（ssh接続）</li>
+    </ul>
+
+    <p>
+      Remote Developmentを例に拡張機能のインストール方法を説明します。<br>
+      左側のタブから拡張機能を選択し、remoteで検索します。
+    </p>
+
+    <div style="text-align:center">
+      <img src="images/vscode_install_img_04.png"
+           alt="VSCode Install 4"
+           width="100%"
+           height="100%">
+    </div>
+
+    <p>
+      Remote Developmentをクリックすると次の画面になるので、
+      [インストール]をクリックしてインストールしてください。
+    </p>
+    。
+    <div style="text-align:center">
+      <img src="images/vscode_install_img_05.png"
+           alt="VSCode Install 5"
+           width="100%"
+           height="100%">
+    </div>
+
+    <br>
+    <h3 id="SSH接続">SSH接続</h3>
+
+    <p>
+      はじめに、公開鍵と秘密鍵のペアを作ります。
+    </p>
+
+    <ul>
+      <pre>$ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/ubuntu/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/ubuntu/.ssh/id_rsa
+Your public key has been saved in /home/ubuntu/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:LxxdDUnJ+cX0Y8fkDcWJlKtePuXhEh/1vEyLyr3f36o ubuntu@mbc080
+The key's randomart image is:
++---[RSA 3072]----+
+|           o+=+==|
+|            == **|
+|            ..o+*|
+|         . . .o +|
+|        S . .  .o|
+|       . o . o =o|
+|        o o o X =|
+|         ....= Bo|
+|           oE+*o=|
++----[SHA256]-----+</pre>
+    </ul>
+
+    <p>
+      id_rsaとid_rsa.pub（鍵のペア）が作成されました。<br>
+      このうちid_rsa.pubをRaspberry Piにコピーします。
+    </p>
+
+    <ul>
+      <pre>$ ls .ssh
+id_rsa  id_rsa.pub
+$ scp .ssh/id_rsa.pub pi@192.168.1.80:</pre>
+    </ul>
+
+    <p>
+      コピーしたid_rsa.pubはRaspberry Piのホームディレクトリにあります。<br>
+      これを「.ssh」ディレクトリの中に「authrized_keys」という名前で保存します。
+    </p>
+
+    <ul>
+      <pre style="background-color: #FFFACD;">$ ls
+id_rsa.pub
+$ mkdir .ssh
+$ cat id_rsa.pub >> .ssh/authorized_keys
+$ chmod 700 .ssh
+$ chmod 600 .ssh/authorized_keys 
+$ rm id_rsa.pub</pre>
+    </ul>
+
+    <p>
+      次にSSHサーバの設定をします。<br>
+      #（コメント）を外して次のように設定してください。
+      (  )は行数を表します。<br>
+      変更を保存したら、SSHサーバを再起動します。
+    </p>
+
+    <ul>
+      <pre style="background-color: #FFFACD;">$ sudo nano /etc/ssh/sshd_config
+(15) Port 22
+(34) PermitRootLogin no
+(38) RSAAuthentication yes
+(39) PubkeyAuthentication yes
+(42) AuthorizedKeysFile .ssh/authorized_keys
+(58) PasswordAuthentication no
+$ sudo /etc/init.d/ssh restart
+Restarting ssh (via systemctl): ssh.service.</pre>
+    </ul>
+
+    <p>
+      これで、パスワード認証は無効、鍵ファイルで接続できるようになりました。<br>
+      鍵ファイルで接続できるかテストしてみます。<br>
+      PCの端末から次のコマンドを実行してください。
+    </p>
+
+    <ul>
+      <pre>$ ssh -i .ssh/id_rsa -p 22 pi@192.168.1.80</pre>
+    </ul>
+
+    <br>
+    <p>
+      次にVSCodeから接続できるように設定を行います。<br>
+      左側のタブからリモートエクスプローラを選択します。
+    </p>
+
+    <div style="text-align:center">
+      <img src="images/vscode_ssh_img_01.png"
+           alt="VSCode SSH 1"
+           width="100%"
+           height="100%">
+    </div>
+
+    <p>
+      [Containers]から[SSH ターゲット]を選択します。
+    </p>
+
+    <div style="text-align:center">
+      <img src="images/vscode_ssh_img_02.png"
+           alt="VSCode SSH 2"
+           width="100%"
+           height="100%">
+    </div>
+
+    <p>
+      歯車マーク（構成する）をクリックして、
+      「更新するSSH構成ファイルを選択する」から
+      「/home/ubuntu/.ssh/config」を選択します。
+    </p>
+
+    <div style="text-align:center">
+      <img src="images/vscode_ssh_img_03.png"
+           alt="VSCode SSH 3"
+           width="100%"
+           height="100%">
+    </div>
+
+    <p>
+      ここで、configファイルを次のように編集してください。
+    </p>
+
+    <ul>
+      <pre>Host Zumo
+HostName 192.168.1.250
+User pi
+Port 22
+IdentityFile ~/.ssh/id_rsa</pre>
+    </ul>
+
+    <p>
+      リモートエクスプローラのSSHターゲットの下にZumoが作られました。
+      これを右クリックして、「現用ウィンドウでホストに接続する」
+      または「新規ウィンドウでホストに接続する」ことができます。
+    </p>
+
+    <div style="text-align:center">
+      <img src="images/vscode_ssh_img_04.png"
+           alt="VSCode SSH 4"
+           width="100%"
+           height="100%">
+    </div>
+
+    <p>
+      左側のタブからエクスプローラをクリックし、
+      「フォルダを開く」でリモート先のディレクトリを選択します。
+    </p>
+
+  </div>
+  </body>
+</html>
