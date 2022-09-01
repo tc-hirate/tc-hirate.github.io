@@ -60,8 +60,17 @@ $ ros2 pkg create --build-type ament_python cv_test</pre>
     <h3 id="画像を準備する">画像を準備する</h3>
     
     <p>
-      dev_ws/src/cv_test/cv_testディレクトリに
-      画像データを保存してください。
+      画像データをGitHubからダウンロードします。
+    </p>
+
+    <ul>
+      <pre>$ sudo apt install git
+$ git clone https://github.com/tc-hirate/zumo_ros.git</pre>
+    </ul>
+
+    <p>
+      ダウンロードした画像データ（/zumo_ros/imgの下にあります）を
+      dev_ws/src/cv_test/cv_testディレクトリに移動してください。
     </p>
     
     <ul>
@@ -70,6 +79,7 @@ $ ros2 pkg create --build-type ament_python cv_test</pre>
       <li>gradient.png</li>
       <li>img1.png</li>
       <li>img2.png</li>
+      <li>sagaairport.png</li>
     </ul>
     <br>
 
