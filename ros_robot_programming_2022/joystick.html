@@ -320,7 +320,59 @@ setup(
       </p>
 
       <ul>
-        <pre></pre>
+        <pre>import rclpy
+from rclpy.node import Node
+          
+from std_msgs.msg import String
+from geometry_msgs.msg import Twist
+from sensor_msgs.msg import Joy
+          
+class JoyTwist(Node):
+          
+    def __init__(self):
+        super().__init__('joy_twist')
+        self.publisher_ = self.create_publisher(Twist, '/turtle1/cmd_vel', 10)
+        self.subscription = self.create_subscription(
+            Joy,
+            'joy',
+            self.joy_callback,
+            10)
+        self.subscription
+          
+    def joy_callback(self, joy_msg):
+        twist = Twist()
+        if joy_msg.axes[7] == 1:
+            self.get_logger().info('Up')
+            # twistのlinear.xに2.0を代入する
+        elif joy_msg.axes[7] == -1:
+            self.get_logger().info('Down')
+            # twistのlinear.xに-2.0を代入する
+        elif joy_msg.axes[6] == 1:
+            self.get_logger().info('Left')
+            # twistのangular.zに2.0を代入する
+        elif joy_msg.axes[6] == -1:
+            self.get_logger().info('Right')
+            # twistのangular.zに-2.0を代入する
+        else:
+            pass
+        # twistをパブリッシュする
+          
+def main(args=None):
+    rclpy.init(args=args)
+          
+    joy_twist = JoyTwist()
+          
+    rclpy.spin(joy_twist)
+          
+    # Destroy the node explicitly
+    # (optional - otherwise it will be done automatically
+    # when the garbage collector destroys the node object)
+    joy_twist.destroy_node()
+    rclpy.shutdown()
+          
+          
+if __name__ == '__main__':
+    main()</pre>
       </ul>
       <br>
 
@@ -383,12 +435,13 @@ if __name__ == '__main__':
         package.xml
       </p>
 
+<!--
       <ul>
         <pre></pre>
       </ul>
       <br>
+-->
 
-<!--
       <ul>
         <pre>&lt?xml version="1.0"?&gt
 &lt?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematyp&gt
@@ -415,18 +468,18 @@ if __name__ == '__main__':
 &lt/package&gt</pre>
       </ul>
       <br>
--->
 
       <p>
         setup.py
       </p>
 
+<!--
       <ul>
         <pre></pre>
       </ul>
       <br>
+-->
 
-<!--
       <ul>
         <pre>import os
 from glob import glob
@@ -460,8 +513,6 @@ setup(
 )</pre>
       </ul>
       <br>
-
--->
 
       <p>
         joy_testパッケージのjoy_twistノードを実行する。
