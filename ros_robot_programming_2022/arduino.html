@@ -106,7 +106,7 @@ Use "arduino-cli core [command] --help" for more information about a command.
 
     <p>
       パスを通すためのコマンドを
-      shellのsutartup scriptに書いておきます。
+      shellのstartup scriptに書いておきます。
     </p> 
     
     <ul>
@@ -470,7 +470,7 @@ void loop() {
           <td>右モータのPWM（0〜100）</td>
         </tr>
         <tr>
-          <td>8</td>
+          <td>10</td>
           <td>左モータのPWM（0〜100）</td>
         </tr>
       </table>
@@ -736,16 +736,141 @@ void loop() {
       <li>
         ジョイスティックのAボタンを押すと
         LEDが点灯するプログラムを作ってください。
-        Pythonのプログラムは、joy_testパッケージの
+        Pythonのプログラムは、zm_testパッケージの
         「serial_led.py」とします。
         また、スケッチの名前は「SerialLed」とします。
       </li>
       <br>
 
+      <p>serial_led.py</p>
+
+      <ul>
+        <pre style="background-color: #FFFACD;">import rclpy
+from rclpy.node import Node
+          
+from std_msgs.msg import String
+from geometry_msgs.msg import Twist
+from sensor_msgs.msg import Joy
+          
+import serial
+          
+class JoyLed(Node):
+          
+    def __init__(self):
+        super().__init__('joy_led')
+        self.publisher_ = self.create_publisher(Twist, '/turtle>
+        self.subscription = self.create_subscription(
+            Joy,
+            'joy',
+            self.joy_callback,
+            10)
+        self.subscription
+  
+        self.get_logger().info('Open Port')
+        self.ser = serial.Serial()
+        self.ser.port = "/dev/ttyACM0"
+        self.ser.baudrate = 9600
+        self.ser.open()
+          
+    def joy_callback(self, joy_msg):
+        twist = Twist()
+        if joy_msg.buttons[0] == 1:
+            self.get_logger().info('LED ON')
+            self.ser.write(b"1")
+        elif joy_msg.buttons[0] == 0:
+            self.get_logger().info('LED OFF')
+            self.ser.write(b"0")
+        else:
+            pass
+        self.publisher_.publish(twist)
+          
+def main(args=None):
+    rclpy.init(args=args)
+          
+    joy_led = JoyLed()
+          
+    rclpy.spin(joy_led)
+          
+    # Destroy the node explicitly
+    # (optional - otherwise it will be done automatically
+    # when the garbage collector destroys the node object)
+    joy_led.destroy_node()
+    rclpy.shutdown()
+          
+if __name__ == '__main__':
+    main()</pre>
+      </ul>
+      <br>
+
+      <p>package.xml</p>
+      
+      <ul>
+        <pre style="background-color: #FFFACD;">&lt?xml version="1.0"?&gt
+&lt?xml-model href="http://download.ros.org/schema/package_format&gt
+&ltpackage format="3"&gt
+  &ltname&gtzm_test&lt/name&gt
+  &ltversion&gt0.0.0&lt/version&gt
+  &ltdescription&gtTODO: Package description&lt/description&gt
+  &ltmaintainer email="pi@todo.todo"&gtpi&lt/maintainer&gt
+  &ltlicense&gtTODO: License declaration&lt/license&gt
+          
+  &ltexec_depend&gtrclpy&lt/exec_depend&gt
+  &ltexec_depend&gtstd_msgs&lt/exec_depend&gt
+  &ltexec_depend&gtgeometry_msgs&lt/exec_depend&gt
+  &ltexec_depend&gtsensor_msgs&lt/exec_depend&gt
+          
+  &lttest_depend&gtament_copyright&lt/test_depend&gt
+  &lttest_depend&gtament_flake8&lt/test_depend&gt
+  &lttest_depend&gtament_pep257&lt/test_depend&gt
+  &lttest_depend&gtpython3-pytest&lt/test_depend&gt
+          
+  &ltexport&gt
+    &ltbuild_type&gtament_python&lt/build_type&gt
+  &lt/export&gt
+&lt/package&gt</pre>
+      </ul>
+      <br>
+      
+      <p>setup.py</p>
+
+      <ul>
+        <pre style="background-color: #FFFACD;">mport os
+from glob import glob
+          
+from setuptools import setup
+          
+package_name = 'zm_test'
+          
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=[package_name],
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+        (os.path.join('share', package_name), glob('launch/*_la>
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='pi',
+    maintainer_email='pi@todo.todo',
+    description='TODO: Package description',
+    license='TODO: License declaration',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            'joy_led = zm_test.serial_led:main',
+        ],
+    },
+)</pre>
+      </ul>
+      <br>
+
       <li>
         ジョイスティックの方向キーでZumoを操縦する
         プログラムを作ってください。
-        Pythonのプログラムは、joy_testパッケージの
+        Pythonのプログラムは、zm_testパッケージの
         「serial_motor.py」とします。
         また、スケッチの名前は「SerialMotor」とします。
       </li>
