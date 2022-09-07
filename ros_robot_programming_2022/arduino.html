@@ -758,7 +758,7 @@ class JoyLed(Node):
           
     def __init__(self):
         super().__init__('joy_led')
-        self.publisher_ = self.create_publisher(Twist, '/turtle>
+        self.publisher_ = self.create_publisher(Twist, '/turtle1/cmd_vel', 10)
         self.subscription = self.create_subscription(
             Joy,
             'joy',
@@ -806,7 +806,7 @@ if __name__ == '__main__':
       
       <ul>
         <pre style="background-color: #FFFACD;">&lt?xml version="1.0"?&gt
-&lt?xml-model href="http://download.ros.org/schema/package_format&gt
+&lt?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematyp&gt
 &ltpackage format="3"&gt
   &ltname&gtzm_test&lt/name&gt
   &ltversion&gt0.0.0&lt/version&gt
@@ -834,7 +834,7 @@ if __name__ == '__main__':
       <p>setup.py</p>
 
       <ul>
-        <pre style="background-color: #FFFACD;">mport os
+        <pre style="background-color: #FFFACD;">import os
 from glob import glob
           
 from setuptools import setup
