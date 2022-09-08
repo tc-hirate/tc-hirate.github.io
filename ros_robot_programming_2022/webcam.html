@@ -20,7 +20,7 @@
       <li><a href="#画像処理をするプログラムを作る">画像処理をするプログラムを作る</a></li>
       <li><a href="#画像処理をするプログラムを実行する">画像処理をするプログラムを実行する</a></li>
       <li><a href="#演習4「Webカメラで取得した画像から顔を検出する」">演習4「Webカメラで取得した画像から顔を検出する」</a></li>
-      <li><a href="#「image_view」の使い方について">「image_view」の使い方について</a></li>
+      <li><a href="#フレームレートを変更・確認する方法">フレームレートを変更・確認する方法</a></li>
     </ul>
     <section>
 
@@ -277,7 +277,7 @@ setup(
 
     <h3 id="演習4「Webカメラで取得した画像から顔を検出する」">演習4「Webカメラで取得した画像から顔を検出する」</h3>
     
-    <ol>
+    <ol>v4l2_camera_nodeを160x120で起動する
       <li>
         Webカメラの画像を使って、
         顔認識するプログラムを作ってください。
@@ -295,6 +295,73 @@ setup(
     </ol>
     <br>
 
+    <h3 id="フレームレートを変更・確認する方法">フレームレートを変更・確認する方法</h3>
+
+    <p>ユーティリティをインストールする</p>
+
+    <ul>
+      <pre style="background-color: #FFFACD;">$ sudo apt install v4l-utils</pre>
+    </ul>
+    <br>
+
+
+    <p>カメラのフォーマットを確認する</p>
+
+    <ul>
+      <pre style="background-color: #FFFACD;">$ v4l2-ctl --list-formats-ext
+ioctl: VIDIOC_ENUM_FMT
+        Type: Video Capture
+        
+        [0]: 'YUYV' (YUYV 4:2:2)
+                Size: Discrete 640x480
+                        Interval: Discrete 0.033s (30.000 fps)
+                        Interval: Discrete 0.040s (25.000 fps)
+                        Interval: Discrete 0.050s (20.000 fps)
+                        Interval: Discrete 0.067s (15.000 fps)
+                        Interval: Discrete 0.100s (10.000 fps)
+                        Interval: Discrete 0.200s (5.000 fps)
+                Size: Discrete 160x120
+                        Interval: Discrete 0.033s (30.000 fps)
+                        Interval: Discrete 0.040s (25.000 fps)
+                        Interval: Discrete 0.050s (20.000 fps)
+                        Interval: Discrete 0.067s (15.000 fps)
+                        Interval: Discrete 0.100s (10.000 fps)
+                        Interval: Discrete 0.200s (5.000 fps)
+  ・・・</pre>
+    </ul>
+    <br>
+
+    <p>カメラのフレームレートを確認する</p>
+
+    <ul>
+      <pre style="background-color: #FFFACD;">$ v4l2-ctl -P
+Streaming Parameters Video Capture:
+        Capabilities     : timeperframe
+        Frames per second: 30.000 (30/1)
+        Read buffers     : 0</pre>
+    </ul>
+    <br>
+
+    <p>カメラのフレームレートを変更する</p>
+
+    <ul>
+      <pre style="background-color: #FFFACD;">$ v4l2-ctl -p 5
+Frame rate set to 5.000 fps
+$ v4l2-ctl -P
+Streaming Parameters Video Capture:
+        Capabilities     : timeperframe
+        Frames per second: 5.000 (5/1)
+        Read buffers     : 0</pre>
+    </ul>
+    <br>
+
+    <p>v4l2_camera_nodeを160x120で起動する</p>
+
+    <ul>
+      <pre style="background-color: #FFFACD;">$ ros2 run v4l2_camera v4l2_camera_node --ros-args -p image_size:=[160,120]</pre>
+    </ul>
+    <br>
+    
   </div>
   </body>
 </html>
