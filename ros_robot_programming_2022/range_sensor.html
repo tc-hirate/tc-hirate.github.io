@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <title>測域センサについて</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+  <div class="main">
+    <h1>測域センサについて</h1>
+
+    <p>
+      PCでジョイスティックが使えるように設定します。
+    </p>
+    <br>
+
+    <ul>
+      <li><a href="#必要なパッケージをインストールする">必要なパッケージをインストールする</a></li>
+      <li><a href="#ジョイスティックの動作確認">ジョイスティックの動作確認</a></li>
+      <li><a href="#パッケージを作る">パッケージを作る</a></li>
+      <li><a href="#演習1「ジョイスティックを使ってturtlesimを動かす」">演習1「ジョイスティックを使ってturtlesimを動かす」</a></li>
+    </ul>
+    <section>
+
+    <h3 id="必要なパッケージをインストールする">必要なパッケージをインストールする</h3>
+
+    <p>
+      ジョイスティックを使うために必要なパッケージを
+      インストールします。
+    </p>
+
+    <ul>
+      <pre>$ sudo apt install ros-galactic-joy</pre>
+    </ul>
+    <ul>
+      <pre>$ sudo apt install ros-galactic-teleop-tools</pre>
+    </ul>
+
+    <br>
+    <h3 id="ジョイスティックの動作確認">ジョイスティックの動作確認</h3>
+
+    <p>
+      PCにジョイスティックを接続し、
+      次のコマンドを実行してください。
+      接続したジョイスティックが確認できます。
+    </p>
+
+    <ul>
+      <pre>$ lsusb
+・・・
+Bus 002 Device 005: ID 046d:c21d Logitech, Inc. F310 Gamepad [XInput Mode]
+・・・</pre>
+    </ul>
+    <br>
+
+    <p>
+      続いて、次のコマンドを実行してください。
+      js0があればジョイスティックは認識されています。
+    </p>
+
+    <ul>
+      <pre>$ ls /dev/input/
+by-id    event0  event10  event12  event2  event4  event6  event8  js0   mouse0
+by-path  event1  event11  event13  event3  event5  event7  event9  mice  mouse1</pre>
+    </ul>
+    <br>
+
+    <p>
+      joyパッケージのjoy-nodeを実行します。
+    </p>
+
+    <ul>
+      <pre>$ ros2 run joy joy_node
+[INFO] [1629868060.164242832] [joy_node]: Opened joystick: Logitech Gamepad F310.  deadzone: 0.050000</pre>
+    </ul>
+    <br>
+
+    <p>
+      Topicを確認します。
+    </p>
+
+    <ul>
+      <pre>$ ros2 topic list
+/joy
+/joy/set_feedback
+/parameter_events
+/rosout</pre>
+    </ul>
+    <br>
+
+    <p>
+      /joyを表示します。
+    </p>
+
+    <ul>
+      <pre>$ ros2 topic echo /joy
+header:
+  stamp:
+    sec: 1629868280
+    nanosec: 378502125
+  frame_id: joy
+axes:
+- -0.0
+- -0.0
+- 1.0
+- -0.0
+- -0.0
+- 1.0
+- 0.0
+- 0.0
+buttons:
+- 0
+- 0
+- 0
+- 0
+- 0
+- 0
+- 0
+- 0
+- 0
+- 0
+- 0
+---</pre>
+    </ul>
+    <br>
+
+    <p>
+      teleop_twist_joyパッケージのteleop-nodeを実行します。
+    </p>
+
+    <ul>
+      <pre>$ ros2 run teleop_twist_joy teleop_node 
+[INFO] [1629868740.510404297] [TeleopTwistJoy]: Teleop enable button 5.
+[INFO] [1629868740.510494888] [TeleopTwistJoy]: Linear axis x on 5 at scale 0.500000.
+[INFO] [1629868740.510528504] [TeleopTwistJoy]: Angular axis yaw on 2 at scale 0.500000.</pre>
+    </ul>
+    <br>
+
+    <p>
+      Topicを確認します。
+    </p>
+
+    <ul>
+      <pre>$ ros2 topic list
+/cmd_vel
+/joy
+/joy/set_feedback
+/parameter_events
+/rosout</pre>
+    </ul>
+    <br>
+
+    <p>
+      /cmd_velを表示します。<br>
+      RBを押しながらRTを操作するとxの値が-0.5〜0.5で変化し、
+      LTを操作するとzの値が-0.5〜0.5で変化します。
+    </p>
+
+    <ul>
+      <pre>$ ros2 topic echo /cmd_vel 
+linear:
+  x: 0.5
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.5
+---</pre>
+    </ul>
+    <br>
+
+    <h3 id="パッケージを作る">パッケージを作る</h3>
+
+    <p>joy_testという名前のパッケージを作ります。</p>
+
+    <ul>
+      <pre>$ cd dev_ws/src/
+$ ros2 pkg create --build-type ament_python joy_test</pre>
+    </ul>
+    <br>
+    <p>launchファイル用のディレクトリを作ります。</p>
+    <ul>
+      <pre>$ cd joy_test/
+$ mkdir launch</pre>
+    </ul>
+    <br>
+
+    <h3 id="演習1「ジョイスティックを使ってturtlesimを動かす」">演習1「ジョイスティックを使ってturtlesimを動かす」</h3>
+
+    <ol>
+      <li>
+        joy-nodeとteleop-nodeを使ってturtlesimを
+        動かしてください。
+      </li>
+      <br>
+
+      <ul>
+        <pre>$ ros2 run turtlesim turtlesim_node</pre>
+      </ul>
+
+      <ul>
+        <pre>$ ros2 run joy joy_node</pre>
+      </ul>
+
+      <ul>
+        <pre>$ ros2 run teleop_twist_joy teleop_node --ros-args --remap /cmd_vel:=/turtle1/cmd_vel</pre>
+      </ul>
+      <br>
+
+      <li>
+        joy-nodeとteleop-nodeを使ってturtlesimを
+        動かすためのlaunchファイルを作ってください。
+        ファイル名は「turtle_teleop_joy_launch.py」とします。
+      </li>
+      <br>
+
+      <p>
+        turtle_teleop_joy_launch.py
+      </p>
+
+<!--
+      <ul>
+        <pre></pre>
+      </ul>
+      <br>
+-->
+
+      <ul>
+        <pre>from launch import LaunchDescription
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    return LaunchDescription([
+        Node(
+            package='turtlesim',
+            executable='turtlesim_node',
+            name='sim'
+        ),
+        Node(
+            package='joy',
+            executable='joy_node',
+            name='joy'
+        ),
+        Node(
+            package='teleop_twist_joy',
+            executable='teleop_node',
+            name='teleop',
+            remappings=[
+                ('/cmd_vel', '/turtle1/cmd_vel'),
+            ]
+        ),
+    ])</pre>
+      </ul>
+      <br>
+
+      <p>
+        setup.py
+      </p>
+
+<!--
+      <ul>
+        <pre></pre>
+      </ul>
+      <br>
+-->
+
+      <ul>
+        <pre><font color="#ff0000">import os</font>
+<font color="#ff0000">from glob import glob</font>
+
+from setuptools import setup
+
+package_name = 'joy_test'
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=[package_name],
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+        <font color="#ff0000">(os.path.join('share', package_name), glob('launch/*_launch.py')),</font>
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='ubuntu',
+    maintainer_email='ubuntu@todo.todo',
+    description='TODO: Package description',
+    license='TODO: License declaration',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+        ],
+    },
+)</pre>
+      </ul>
+      <br>
+
+      <p>
+        launchファイルを実行する。
+      </p>
+
+      <ul>
+        <pre>$ ros2 launch joy_test turtle_teleop_joy_launch.py</pre>
+      </ul>
+      <br>
+
+      <li>
+        ジョイスティックの方向キーでturtlesimを動かす
+        プログラムを作ってください。
+        ファイル名は「turtle_joy.py」、
+        仕様はturtle_teleop_keyと同じとします。
+      </li>
+      <br>
+
+      <p>
+        turtle_joy.py
+      </p>
+
+<!--
+      <ul>
+        <pre>import rclpy
+from rclpy.node import Node
+          
+from std_msgs.msg import String
+from geometry_msgs.msg import Twist
+from sensor_msgs.msg import Joy
+          
+class JoyTwist(Node):
+          
+    def __init__(self):
+        super().__init__('joy_twist')
+        self.publisher_ = self.create_publisher(Twist, '/turtle1/cmd_vel', 10)
+        self.subscription = self.create_subscription(
+            Joy,
+            'joy',
+            self.joy_callback,
+            10)
+        self.subscription
+          
+    def joy_callback(self, joy_msg):
+        twist = Twist()
+        if joy_msg.axes[7] == 1:
+            self.get_logger().info('Up')
+            # twistのlinear.xに2.0を代入する
+        elif joy_msg.axes[7] == -1:
+            self.get_logger().info('Down')
+            # twistのlinear.xに-2.0を代入する
+        elif joy_msg.axes[6] == 1:
+            self.get_logger().info('Left')
+            # twistのangular.zに2.0を代入する
+        elif joy_msg.axes[6] == -1:
+            self.get_logger().info('Right')
+            # twistのangular.zに-2.0を代入する
+        else:
+            pass
+        # twistをパブリッシュする
+          
+def main(args=None):
+    rclpy.init(args=args)
+          
+    joy_twist = JoyTwist()
+          
+    rclpy.spin(joy_twist)
+          
+    # Destroy the node explicitly
+    # (optional - otherwise it will be done automatically
+    # when the garbage collector destroys the node object)
+    joy_twist.destroy_node()
+    rclpy.shutdown()
+          
+          
+if __name__ == '__main__':
+    main()</pre>
+      </ul>
+      <br>
+-->
+
+      <ul>
+        <pre>import rclpy
+from rclpy.node import Node
+
+from std_msgs.msg import String
+from geometry_msgs.msg import Twist
+from sensor_msgs.msg import Joy
+
+class JoyTwist(Node):
+
+    def __init__(self):
+        super().__init__('joy_twist')
+        self.publisher_ = self.create_publisher(Twist, '/turtle1/cmd_vel', 10)
+        self.subscription = self.create_subscription(
+            Joy,
+            'joy',
+            self.joy_callback,
+            10)
+        self.subscription
+
+    def joy_callback(self, joy_msg):
+        twist = Twist()
+        if joy_msg.axes[7] == 1:
+            twist.linear.x = 2.0
+        elif joy_msg.axes[7] == -1:
+            twist.linear.x = -2.0
+        elif joy_msg.axes[6] == 1:
+            twist.angular.z = 2.0
+        elif joy_msg.axes[6] == -1:
+            twist.angular.z = -2.0
+        else:
+            twist.linear.x = 0.0
+        self.publisher_.publish(twist)
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    joy_twist = JoyTwist()
+
+    rclpy.spin(joy_twist)
+
+    # Destroy the node explicitly
+    # (optional - otherwise it will be done automatically
+    # when the garbage collector destroys the node object)
+    joy_twist.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()</pre>
+      </ul>
+      <br>
+
+
+      <p>
+        package.xml
+      </p>
+
+<!--
+      <ul>
+        <pre></pre>
+      </ul>
+      <br>
+-->
+
+      <ul>
+        <pre>&lt?xml version="1.0"?&gt
+&lt?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematyp&gt
+&ltpackage format="3"&gt
+  &ltname&gtjoy_test&lt/name&gt
+  &ltversion&gt0.0.0&lt/version&gt
+  &ltdescription&gtTODO: Package description&lt/description&gt
+  &ltmaintainer email="ubuntu@todo.todo"&gtubuntu&lt/maintainer&gt
+  &ltlicense&gtTODO: License declaration&lt/license&gt
+
+  &ltexec_depend&gtrclpy&lt/exec_depend&gt
+  &ltexec_depend&gtstd_msgs&lt/exec_depend&gt
+  <font color="#ff0000">&ltexec_depend&gtgeometry_msgs&lt/exec_depend&gt</font>
+  <font color="#ff0000">&ltexec_depend&gtsensor_msgs&lt/exec_depend&gt</font>
+
+  &lttest_depend&gtament_copyright&lt/test_depend&gt
+  &lttest_depend&gtament_flake8&lt/test_depend&gt
+  &lttest_depend&gtament_pep257&lt/test_depend&gt
+  &lttest_depend&gtpython3-pytest&lt/test_depend&gt
+
+  &ltexport&gt
+    &ltbuild_type&gtament_python&lt/build_type&gt
+  &lt/export&gt
+&lt/package&gt</pre>
+      </ul>
+      <br>
+
+      <p>
+        setup.py
+      </p>
+
+<!--
+      <ul>
+        <pre></pre>
+      </ul>
+      <br>
+-->
+
+      <ul>
+        <pre>import os
+from glob import glob
+
+from setuptools import setup
+
+package_name = 'joy_test'
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=[package_name],
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+        (os.path.join('share', package_name), glob('launch/*_launch.py')),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='ubuntu',
+    maintainer_email='ubuntu@todo.todo',
+    description='TODO: Package description',
+    license='TODO: License declaration',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            <font color="#ff0000">'joy_twist = joy_test.turtle_joy:main',</font>
+        ],
+    },
+)</pre>
+      </ul>
+      <br>
+
+      <p>
+        joy_testパッケージのjoy_twistノードを実行する。
+      </p>
+
+      <ul>
+        <pre>$ ros2 run turtlesim turtlesim_node</pre>
+      </ul>
+
+      <ul>
+        <pre>$ ros2 run joy joy_node</pre>
+      </ul>
+
+      <ul>
+        <pre>$ ros2 run joy_test joy_twist</pre>
+      </ul>
+      <br>
+
+      <li>
+        「turtle_joy.py」を実行するlaunchファイルを作ってください。
+        ファイル名は「turtle_joy_launch.py」とします。
+      </li>
+      <br>
+
+      <p>
+        turtle_joy_launch.py
+      </p>
+
+<!--
+      <ul>
+        <pre></pre>
+      </ul>
+      <br>
+-->
+
+      <ul>
+        <pre>from launch import LaunchDescription
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    return LaunchDescription([
+        Node(
+            package='turtlesim',
+            executable='turtlesim_node',
+            name='sim'
+        ),
+        Node(
+            package='joy',
+            executable='joy_node',
+            name='joy'
+        ),
+        Node(
+            package='joy_test',
+            executable='joy_twist',
+            name='test'
+        ),
+    ])</pre>
+      </ul>
+    </ol>
+    <br>
+
+
+      <p>
+        launchファイルを実行する。
+      </p>
+
+      <ul>
+        <pre>$ ros2 launch joy_test turtle_joy_launch.py</pre>
+      </ul>
+      <br>
+
+  </div>
+  </body>
+</html>
